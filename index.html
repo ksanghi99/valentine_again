@@ -325,91 +325,89 @@
             </div>
         </section>
         
-      <!-- ===== NOSTALGIC DANCE VIDEO ===== -->
+    <!-- ===== VIDEO SECTION WITH ONLINE VIDEO ===== -->
 <section id="page22" class="page">
     <div class="page-content">
         <h2>Our First Dance 💃🕺</h2>
-        <p class="subtitle">A trip down memory lane...</p>
+        <p class="subtitle">Relive our magical moment...</p>
         
-        <!-- Video Container -->
-        <div class="video-container" id="video-container">
-            <div class="video-placeholder">
-                <div class="play-button-overlay" onclick="playNostalgicVideo()">
-                    <i class="fas fa-play-circle"></i>
-                    <span>Click to Relive Our Moment</span>
-                </div>
-                <div class="video-message">
-                    <i class="fas fa-heart"></i>
-                    <p>Our first dance together - awkward, funny, and perfectly us!</p>
-                </div>
-            </div>
+        <!-- Video Player -->
+        <div class="video-player">
+            <video controls width="100%" height="450">
+                <!-- ONLINE VIDEO - THIS WILL WORK -->
+                <source src="https://cdn.pixabay.com/video/2023/03/08/160902-801156655_large.mp4" type="video/mp4">
+                Your browser doesn't support video
+            </video>
             
-           <!-- Video Element (Hidden Initially) -->
-<video id="nostalgic-video" controls style="display: none;" 
-       preload="metadata"
-       playsinline
-       webkit-playsinline>
-    <!-- UPDATED SOURCE - Case sensitive! -->
-    <source src="https://assets.codepen.io/6093409/running.mp4" type="video/mp4">
-</video>
-        
-        <!-- Video Details -->
-        <div class="video-details">
-            <div class="detail-card">
-                <i class="fas fa-calendar-heart"></i>
-                <div>
-                    <h4>When:</h4>
-                    <p>That magical evening when we didn't care who was watching</p>
-                </div>
-            </div>
-            
-            <div class="detail-card">
-                <i class="fas fa-music"></i>
-                <div>
-                    <h4>The Song:</h4>
-                    <p>The random song that became "our song" forever</p>
-                </div>
-            </div>
-            
-            <div class="detail-card">
-                <i class="fas fa-laugh-beam"></i>
-                <div>
-                    <h4>Memory:</h4>
-                    <p>Two left feet, endless laughter, and pure joy</p>
-                </div>
+            <div class="video-note">
+                <i class="fas fa-heart"></i>
+                <p>Click play to watch our beautiful memory!<br>
+                <small>(Using a placeholder video to test - your actual dance video will be here!)</small></p>
             </div>
         </div>
         
-        <!-- Cute Message -->
-        <div class="cute-message-box">
-            <div class="message-content">
-                <i class="fas fa-quote-left"></i>
-                <p class="message-text">
-                    I still remember how nervous we both were, 
-                    how your hand felt in mine, 
-                    how we kept stepping on each other's feet, 
-                    and how we didn't stop laughing the entire time. 
-                    That clumsy, perfect dance was the moment I knew...
-                </p>
-                <p class="message-signature">- Forever Yours</p>
-                <i class="fas fa-quote-right"></i>
-            </div>
+        <!-- Romantic Text -->
+        <div class="love-note">
+            <p>"That awkward, perfect dance where we stepped on each other's feet more times than we count... 
+            and I wouldn't change a single moment of it. You were, and always will be, my perfect dance partner."</p>
+            <p class="signature">— Forever your dance partner</p>
         </div>
         
-        <!-- Video Controls -->
-        <div class="video-controls">
-            <button class="btn play-btn" onclick="playNostalgicVideo()" id="play-btn">
-                <i class="fas fa-play"></i> Watch Our Dance Again
-            </button>
-            <button class="btn secondary-btn" onclick="replayVideo()">
-                <i class="fas fa-redo"></i> Watch Once More
-            </button>
-            <button class="btn secondary-btn" onclick="goToPage(23)">
-                Continue <i class="fas fa-arrow-right"></i>
+        <div style="text-align:center; margin-top:40px;">
+            <button class="btn" onclick="goToPage(23)">
+                Continue Journey <i class="fas fa-arrow-right"></i>
             </button>
         </div>
     </div>
 </section>
+
+<style>
+.video-player {
+    max-width: 800px;
+    margin: 40px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(255, 107, 139, 0.3);
+    background: black;
+}
+
+.video-note {
+    background: linear-gradient(135deg, #ff6b8b, #e74c89);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.video-note i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.video-note small {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.love-note {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #fff9fa, #ffeef1);
+    border-radius: 20px;
+    border: 3px solid #ffccd5;
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #5a3d5c;
+}
+
+.signature {
+    text-align: right;
+    font-weight: bold;
+    color: #e74c89;
+    margin-top: 20px;
+}
+</style>
         
         <!-- PAGE 18: TRANSITION 4 -->
         <section id="page18" class="page">
