@@ -10,10 +10,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Inline critical styles to ensure UI looks good immediately */
         .page { display: none; }
         .page.active { display: flex; }
         .btn { transition: all 0.3s; }
+        
+        /* Video play button styling */
+        .video-play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(231, 76, 137, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            border: 5px solid white;
+            box-shadow: 0 0 30px rgba(231, 76, 137, 0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .video-play-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(255, 107, 139, 0.9);
+        }
+        
+        .video-play-button i {
+            font-size: 2.5rem;
+            color: white;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -127,6 +157,21 @@
                     </div>
                 </div>
                 
+                <div class="key-instructions">
+                    <div class="key-row">
+                        <div class="key">↑</div>
+                        <div class="key">W</div>
+                    </div>
+                    <div class="key-row">
+                        <div class="key">←</div>
+                        <div class="key">A</div>
+                        <div class="key">↓</div>
+                        <div class="key">S</div>
+                        <div class="key">→</div>
+                        <div class="key">D</div>
+                    </div>
+                </div>
+                
                 <p class="controls"><i class="fas fa-keyboard"></i> Use arrow keys or WASD</p>
                 <button class="btn" onclick="resetMaze()">
                     Reset Maze <i class="fas fa-redo"></i>
@@ -182,7 +227,7 @@
                     <button class="day-btn" onclick="goToPage(16)">7</button>
                 </div>
                 <button class="btn" onclick="goToPage(17)">
-                    Continue to Music <i class="fas fa-arrow-right"></i>
+                    Continue to Riddles <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
@@ -205,7 +250,7 @@
                     <button class="day-btn" onclick="goToPage(16)">7</button>
                 </div>
                 <button class="btn" onclick="goToPage(17)">
-                    Continue to Music <i class="fas fa-arrow-right"></i>
+                    Continue to Riddles <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
@@ -228,7 +273,7 @@
                     <button class="day-btn" onclick="goToPage(16)">7</button>
                 </div>
                 <button class="btn" onclick="goToPage(17)">
-                    Continue to Music <i class="fas fa-arrow-right"></i>
+                    Continue to Riddles <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
@@ -251,7 +296,7 @@
                     <button class="day-btn" onclick="goToPage(16)">7</button>
                 </div>
                 <button class="btn" onclick="goToPage(17)">
-                    Continue to Music <i class="fas fa-arrow-right"></i>
+                    Continue to Riddles <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
@@ -274,7 +319,7 @@
                     <button class="day-btn" onclick="goToPage(16)">7</button>
                 </div>
                 <button class="btn" onclick="goToPage(17)">
-                    Continue to Music <i class="fas fa-arrow-right"></i>
+                    Continue to Riddles <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
@@ -297,7 +342,7 @@
                     <button class="day-btn" onclick="goToPage(16)">7</button>
                 </div>
                 <button class="btn" onclick="goToPage(17)">
-                    Continue to Music <i class="fas fa-arrow-right"></i>
+                    Continue to Riddles <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
@@ -320,44 +365,13 @@
                     <button class="day-btn active" onclick="goToPage(16)">7</button>
                 </div>
                 <button class="btn" onclick="goToPage(17)">
-                    Continue to Music <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-        
-        <!-- PAGE 17: MUSIC PLAYER -->
-        <section id="page17" class="page">
-            <div class="page-content">
-                <h2>Our Song 🎵</h2>
-                <p>This song reminds me of us. Every beat, every lyric, every melody feels like our love story.</p>
-                
-                <div class="music-player">
-                    <div class="player-placeholder">
-                        <i class="fas fa-music"></i>
-                        <p>Click play to listen to our special song!</p>
-                    </div>
-                </div>
-                
-                <div class="music-controls">
-                    <button class="control-btn" onclick="playMusic()" title="Play">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <button class="control-btn" onclick="pauseMusic()" title="Pause">
-                        <i class="fas fa-pause"></i>
-                    </button>
-                    <button class="control-btn" onclick="replayMusic()" title="Replay">
-                        <i class="fas fa-redo"></i>
-                    </button>
-                </div>
-                
-                <button class="btn" onclick="goToPage(18)">
                     Continue to Riddles <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
         
-        <!-- PAGE 18: TRANSITION 4 -->
-        <section id="page18" class="page">
+        <!-- PAGE 17: TRANSITION 4 -->
+        <section id="page17" class="page">
             <div class="page-content">
                 <img src="https://media.giphy.com/media/yjvfyJN1regrQLDxGl/giphy.gif" alt="Panda with heart" class="gif">
                 <h2>Love Riddles Time!</h2>
@@ -366,8 +380,8 @@
             </div>
         </section>
         
-        <!-- PAGE 19: GAME 3 - RIDDLES -->
-        <section id="page19" class="page">
+        <!-- PAGE 18: GAME 3 - RIDDLES -->
+        <section id="page18" class="page">
             <div class="page-content">
                 <h2>Love Riddles <span id="riddle-number">1</span>/10</h2>
                 
@@ -392,8 +406,8 @@
             </div>
         </section>
         
-        <!-- PAGE 20: TRANSITION 5 -->
-        <section id="page20" class="page">
+        <!-- PAGE 19: TRANSITION 5 -->
+        <section id="page19" class="page">
             <div class="page-content">
                 <img src="https://media.giphy.com/media/ZqihO0jGDKc8SJYmRB/giphy.gif" class="gif">
                 <h2>Great thinking! ❤️</h2>
@@ -402,8 +416,8 @@
             </div>
         </section>
         
-        <!-- PAGE 21: GAME 4 - LOVE STORY MATCH -->
-        <section id="page21" class="page">
+        <!-- PAGE 20: GAME 4 - LOVE STORY MATCH -->
+        <section id="page20" class="page">
             <div class="page-content">
                 <h2>Match Our Love Stories 💖</h2>
                 <p>Connect each memory with its beautiful answer</p>
@@ -484,30 +498,35 @@
                     <button class="btn" onclick="resetMatchGame()">
                         <i class="fas fa-redo"></i> Reset Game
                     </button>
-                    <button class="btn secondary-btn" onclick="goToPage(22)" id="match-next-btn" style="display:none;">
+                    <button class="btn secondary-btn" onclick="goToPage(21)" id="match-next-btn" style="display:none;">
                         Continue to Video <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
         </section>
         
-        <!-- PAGE 22: NOSTALGIC DANCE VIDEO -->
-        <section id="page22" class="page">
+        <!-- PAGE 21: NOSTALGIC DANCE VIDEO -->
+        <section id="page21" class="page">
             <div class="page-content">
                 <h2>Our First Dance 💃🕺</h2>
                 <p class="subtitle">Relive our magical moment...</p>
                 
-                <!-- Simple Video Player -->
-                <div class="video-player">
-                    <video controls width="100%" height="450">
-                        <!-- YOUR DANCE VIDEO -->
-                        <source src="videos/our-dance.mp4" type="video/mp4">
-                        Your browser doesn't support video
-                    </video>
+                <!-- Video Player with Play Button -->
+                <div class="video-player-container">
+                    <div class="video-wrapper">
+                        <video id="nostalgic-video" width="100%" height="450">
+                            <!-- YOUR DANCE VIDEO -->
+                            <source src="videos/our-dance.mp4" type="video/mp4">
+                            Your browser doesn't support video
+                        </video>
+                        <div class="video-play-button" onclick="playVideo()">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
                     
                     <div class="video-note">
                         <i class="fas fa-heart"></i>
-                        <p>Click play to watch our beautiful memory!</p>
+                        <p>Click the play button to watch our beautiful memory!</p>
                     </div>
                 </div>
                 
@@ -519,15 +538,15 @@
                 </div>
                 
                 <div style="text-align:center; margin-top:40px;">
-                    <button class="btn" onclick="goToPage(23)">
+                    <button class="btn" onclick="goToPage(22)">
                         Continue to Final Message <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
         </section>
         
-        <!-- PAGE 23: FINAL MESSAGE -->
-        <section id="page23" class="page">
+        <!-- PAGE 22: FINAL MESSAGE -->
+        <section id="page22" class="page">
             <div class="page-content">
                 <div class="heart-icon">💖</div>
                 <h2>My Dearest Mithi,</h2>
@@ -566,7 +585,6 @@
     
     <!-- Simple fallback navigation -->
     <script>
-        // Basic navigation if main script fails
         if (typeof goToPage !== 'function') {
             window.goToPage = function(pageNum) {
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -574,6 +592,34 @@
                 if (page) page.classList.add('active');
             };
         }
+        
+        // Video play function
+        function playVideo() {
+            const video = document.getElementById('nostalgic-video');
+            const playButton = document.querySelector('.video-play-button');
+            
+            if (video && playButton) {
+                video.play();
+                playButton.style.display = 'none';
+                video.setAttribute('controls', 'controls');
+            }
+        }
+        
+        // Hide play button when video starts playing
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('nostalgic-video');
+            if (video) {
+                video.addEventListener('play', function() {
+                    const playButton = document.querySelector('.video-play-button');
+                    if (playButton) playButton.style.display = 'none';
+                });
+                
+                video.addEventListener('pause', function() {
+                    const playButton = document.querySelector('.video-play-button');
+                    if (playButton) playButton.style.display = 'flex';
+                });
+            }
+        });
     </script>
 </body>
 </html>
