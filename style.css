@@ -911,6 +911,143 @@ p {
     flex-grow: 1;
 }
 
+/* ===== PICTURE DISPLAY FOR LOVE STORY MATCH ===== */
+
+.picture-display-container {
+    text-align: center;
+    margin: 30px auto 40px auto;
+    max-width: 800px;
+    min-height: 320px;
+    background: linear-gradient(135deg, #fff9fa, #ffeef1);
+    border-radius: 20px;
+    border: 3px solid #ffccd5;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(255, 140, 171, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.memory-picture {
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+    border: 5px solid #ffccd5;
+    box-shadow: 0 15px 35px rgba(255, 140, 171, 0.3);
+    object-fit: cover;
+    transition: all 0.5s ease;
+    display: none; /* Hidden by default */
+    margin-bottom: 20px;
+}
+
+.memory-picture.active {
+    display: block;
+    animation: pictureReveal 0.8s ease;
+}
+
+.memory-picture:hover {
+    transform: scale(1.05);
+    border-color: #ff6b8b;
+    box-shadow: 0 20px 40px rgba(255, 107, 139, 0.4);
+}
+
+.picture-caption {
+    font-size: 1.3rem;
+    color: #e74c89;
+    font-style: italic;
+    text-align: center;
+    padding: 15px 25px;
+    background: rgba(255, 204, 213, 0.2);
+    border-radius: 15px;
+    border: 2px dashed #ffccd5;
+    display: none;
+    max-width: 500px;
+    line-height: 1.5;
+}
+
+.picture-caption.active {
+    display: block;
+    animation: fadeIn 1s ease;
+}
+
+.picture-placeholder {
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+    border: 5px dashed #ffccd5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 204, 213, 0.1);
+    margin-bottom: 20px;
+    color: #e74c89;
+    font-size: 1.2rem;
+}
+
+.picture-placeholder i {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    opacity: 0.7;
+}
+
+@keyframes pictureReveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) rotate(-10deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+/* Animation for picture caption */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive design for pictures */
+@media (max-width: 768px) {
+    .picture-display-container {
+        padding: 20px;
+        margin: 20px auto;
+        min-height: 280px;
+    }
+    
+    .memory-picture,
+    .picture-placeholder {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .picture-caption {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .memory-picture,
+    .picture-placeholder {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .picture-caption {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+}
+
 /* ===== FIXED REVEAL POPUP ===== */
 .romantic-reveal-popup {
     position: fixed;
