@@ -45,12 +45,12 @@ const riddles = [
             "You 😉", 
             "Cold leftovers from dinner 🍕"
         ],
-        correct: [0, 1], // Both A and B are correct
+        correct: [0, 1],
         hint: "It's definitely not C!"
     },
     {
         section: "Cheesy",
-        question: "f we were alone right now in a room, what would we be doing?",
+        question: "If we were alone right now in a room, what would we be doing?",
         options: [
             "Slow dancing to silent music 💃",
             "Playing a game of 'who can stay quiet longest' 😏",
@@ -149,990 +149,7 @@ const riddles = [
     }
 ];
 
-// Game 4: Memory - Our Love Story Pairs
-let memoryCards = [];
-let flippedCards = [];
-let matchedPairs = 0;
-
-// Define our love story pairs: [Question, Answer, Reveal Message]
-const loveStoryPairs = [
-    {
-        question: "🎯 What I remember as our first meeting?",
-        answer: "Mechanical Workshop 🔧",
-        reveal: "Saloni, tera number dena! The start of everything..."
-    },
-    {
-        question: "💖 Our first date - your favorite order?",
-        answer: "Kathi King: Kaju Curry & Malai Kofta 🍛",
-        reveal: "Watching you enjoy that food... I was already falling"
-    },
-    {
-        question: "Our first trip?",
-        answer: "✈️ Kasauli",
-        reveal: "tried to get for the first time?"
-    },
-    {
-        question: "Our funniest inside joke is...😂 ",
-        answer: "Krishna had fever, and in bukhar halat mein bhi nahi baksha! 🤒",
-        reveal: "Our laughs are my favorite soundtrack"
-    },
-    {
-        question: "🛋️ My favorite cuddle spot?",
-        answer: "Anywhere with you 🥰",
-        reveal: "All spots are magical when you're in my arms"
-    },
-    {
-        question: "One day, I want us to...",
-        answer: "One day we'll marry, have kids ",
-        reveal: "then...My son will take revenge from you! 😈"
-    },
-    {
-        question: "💝 Why do I love you the most?",
-        answer: "Because you're MINE 👑",
-        reveal: "You're my everything, always and forever"
-    },
-    {
-        question: "❓ Your most memorable moment?",
-        answer: "Tosh trip ❄️",
-        reveal: "Snow and you are the most deadly combination! ⛄"
-    }
-];
-
-function clearConnections() {
-    // Empty function - does nothing but prevents error
-    console.log("clearConnections called");
-}
-
-function resetConnectGame() {
-    // Empty function - does nothing but prevents error  
-    console.log("resetConnectGame called");
-}
-
-// ======================
-// PAGE NAVIGATION
-// ======================
-
-function goToPage(pageNumber) {
-    console.log("Navigating to page", pageNumber);
-    currentPage = pageNumber;
-    
-    // Clear all auto-transition timers
-    clearAllAutoTimers();
-    
-    // Stop any running games
-    stopGame1();
-    stopMazeControls();
-    
-    // Hide all pages
-    const allPages = document.querySelectorAll('.page');
-    allPages.forEach(page => {
-        page.classList.remove('active');
-    });
-    
-    // Show target page
-    const targetPage = document.getElementById('page' + pageNumber);
-    if (targetPage) {
-        targetPage.classList.add('active');
-        
-        // Initialize the page
-        initializePage(pageNumber);
-        
-        // Scroll to top
-        window.scrollTo(0, 0);
-        
-        // Update skip panel
-        updateSkipPanel();
-    }
-}
-console.log("🔄 Initializing Page:", pageNumber);
-
-function initializePage(pageNumber) {
-    console.log("Initializing page", pageNumber);
-    
-    switch(pageNumber) {
-        case 3: // Transition 1
-            startAutoTransition(8, 4, 'countdown1');
-            break;
-        case 4: // Game 1
-            setupGame1();
-            break;
-        case 5: // Transition 2
-            startAutoTransition(8, 6, 'countdown2');
-            break;
-        case 7: // Game 2
-            setupMaze();
-            break;
-        case 8: // Transition 3
-            startAutoTransition(8, 9, 'countdown3');
-            break;
-        case 10: // Day 1
-        case 11: // Day 2
-        case 12: // Day 3
-        case 13: // Day 4
-        case 14: // Day 5
-        case 15: // Day 6
-        case 16: // Day 7
-            updateDayNavigation(pageNumber - 9);
-            break;
-        case 18: // Transition 4
-            startAutoTransition(8, 19, 'countdown4');
-            break;
-        case 19: // Game 3
-            setupRiddles();
-            break;
-        case 20: // Transition 5
-            startAutoTransition(8, 21, 'countdown5');
-            break;
-        case 21: // Game 4
-            initializeMatchGame();
-
-        case 22: // Video Page
-    console.log("🎬 Initializing Video Page");
-    // Initialize video page if needed  
-    break;
-    }
-}
-
-function startAutoTransition(seconds, nextPage, countdownId) {
-    let countdown = seconds;
-    const countdownElement = document.getElementById(countdownId);
-    
-    if (countdownElement) {
-        const updateCountdown = () => {
-            countdownElement.textContent = countdown;
-            countdown--;
-            
-            if (countdown < 0) {
-                clearInterval(timer);
-                goToPage(nextPage);
-            }
-        };
-        
-        // Update immediately
-        updateCountdown();
-        
-        // Then update every second
-        const timer = setInterval(updateCountdown, 1000);
-        
-        // Store timer for cleanup
-        autoTransitionTimers.push({
-            timer: timer,
-            timeout: setTimeout(() => {
-                clearInterval(timer);
-                goToPage(nextPage);
-            }, seconds * 1000)
-        });
-    } else {
-        // Fallback if countdown element not found
-        const timeout = setTimeout(() => {
-            goToPage(nextPage);
-        }, seconds * 1000);
-        
-        autoTransitionTimers.push({ timeout: timeout });
-    }
-}
-
-function clearAllAutoTimers() {
-    autoTransitionTimers.forEach(timerObj => {
-        if (timerObj.timer) clearInterval(timerObj.timer);
-        if (timerObj.timeout) clearTimeout(timerObj.timeout);
-    });
-    autoTransitionTimers = [];
-}
-
-// ======================
-// PAGE 2: FUNNY NO BUTTON
-// ======================
-
-function funnyNo() {
-    const messages = [
-        "Are you sure? 🥺",
-        "Think about it again! 💖",
-        "Pretty please? 🥰",
-        "I'll wait forever for you! ⏳",
-        "Try the YES button! 😊",
-        "My heart says you mean YES! ❤️",
-        "Let's try that again... 😉",
-        "You know you want to say YES! 💕"
-    ];
-    
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    
-    // Create floating message
-    const messageDiv = document.createElement('div');
-    messageDiv.textContent = randomMessage;
-    messageDiv.className = 'floating-message';
-    
-    // Add CSS for animation
-    if (!document.querySelector('#funnyNoStyle')) {
-        const style = document.createElement('style');
-        style.id = 'funnyNoStyle';
-        style.textContent = `
-            .floating-message {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: linear-gradient(45deg, #e74c89, #ff6b8b);
-                color: white;
-                padding: 20px 40px;
-                border-radius: 50px;
-                font-size: 1.5rem;
-                font-weight: bold;
-                z-index: 9999;
-                animation: floatMessage 2s ease forwards;
-                box-shadow: 0 15px 35px rgba(231, 76, 137, 0.4);
-                text-align: center;
-                min-width: 300px;
-                max-width: 80%;
-            }
-            
-            @keyframes floatMessage {
-                0% {
-                    opacity: 0;
-                    transform: translate(-50%, -50%) scale(0.5);
-                }
-                20% {
-                    opacity: 1;
-                    transform: translate(-50%, -50%) scale(1.1);
-                }
-                40% {
-                    transform: translate(-50%, -50%) scale(1);
-                }
-                80% {
-                    opacity: 1;
-                    transform: translate(-50%, -50%) scale(1);
-                }
-                100% {
-                    opacity: 0;
-                    transform: translate(-50%, -50%) scale(0.8);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    document.body.appendChild(messageDiv);
-    
-    // Remove after animation
-    setTimeout(() => {
-        if (messageDiv.parentNode) {
-            messageDiv.remove();
-        }
-    }, 2000);
-}
-
-// ======================
-// GAME 1: TAP HEARTS
-// ======================
-
-function setupGame1() {
-    heartsCollected = 0;
-    updateLoveBar('love-fill-1', 'love-percent-1', 0);
-    updateHeartCounter();
-    
-    const container = document.getElementById('game1-container');
-    const complimentDisplay = document.getElementById('compliment-display');
-    
-    if (container) {
-        container.innerHTML = '';
-        if (complimentDisplay) {
-            complimentDisplay.innerHTML = '';
-            complimentDisplay.classList.remove('show');
-        }
-        
-        // Start the game after a short delay
-        setTimeout(() => {
-            showNextHeart();
-        }, 500);
-    }
-}
-
-function showNextHeart() {
-    if (heartsCollected >= totalHearts) {
-        // Game completed
-        setTimeout(() => {
-            goToPage(5); // Auto go to transition 2
-        }, 2000);
-        return;
-    }
-    
-    const container = document.getElementById('game1-container');
-    if (!container) return;
-    
-    // Remove previous heart
-    if (currentHeart) {
-        currentHeart.remove();
-    }
-    
-    // Clear any existing timer
-    if (game1Timer) {
-        clearTimeout(game1Timer);
-    }
-    
-    // Create new heart
-    currentHeart = document.createElement('button');
-    currentHeart.className = 'floating-heart-btn';
-    currentHeart.innerHTML = '❤️';
-    currentHeart.title = 'Tap me!';
-    
-    // Random position (avoid edges)
-    const containerRect = container.getBoundingClientRect();
-    const maxX = containerRect.width - 85;
-    const maxY = containerRect.height - 85;
-    const minPadding = 20;
-    
-    const randomX = minPadding + Math.random() * (maxX - 2 * minPadding);
-    const randomY = minPadding + Math.random() * (maxY - 2 * minPadding);
-    
-    currentHeart.style.left = `${randomX}px`;
-    currentHeart.style.top = `${randomY}px`;
-    
-    // Random animation delay
-    currentHeart.style.animationDelay = `${Math.random() * 2}s`;
-    
-    // Add click handler
-    currentHeart.onclick = collectHeart;
-    
-    container.appendChild(currentHeart);
-    
-    // Auto move to new position after 4 seconds if not clicked
-    game1Timer = setTimeout(() => {
-        showNextHeart();
-    }, 4000);
-}
-
-function collectHeart() {
-    if (!currentHeart) return;
-    
-    heartsCollected++;
-    
-    // Show compliment
-    showCompliment(compliments[heartsCollected - 1]);
-    
-    // Update UI
-    updateHeartCounter();
-    const percent = (heartsCollected / totalHearts) * 100;
-    updateLoveBar('love-fill-1', 'love-percent-1', percent);
-    
-    // Animate heart collection
-    currentHeart.style.animation = 'pop 0.5s ease forwards';
-    
-    // Remove heart after animation
-    setTimeout(() => {
-        if (currentHeart && currentHeart.parentNode) {
-            currentHeart.remove();
-            currentHeart = null;
-        }
-    }, 500);
-    
-    // Clear auto-move timer
-    if (game1Timer) {
-        clearTimeout(game1Timer);
-        game1Timer = null;
-    }
-    
-    // Show next heart after compliment shows
-    setTimeout(() => {
-        showNextHeart();
-    }, 3000);
-}
-
-function showCompliment(text) {
-    const complimentDisplay = document.getElementById('compliment-display');
-    if (complimentDisplay) {
-        complimentDisplay.innerHTML = `<i class="fas fa-heart" style="color:#e74c89; margin-right:10px;"></i> ${text}`;
-        complimentDisplay.classList.add('show');
-        
-        // Hide after 3 seconds
-        setTimeout(() => {
-            complimentDisplay.classList.remove('show');
-        }, 3000);
-    }
-}
-
-function updateHeartCounter() {
-    const counter = document.getElementById('heart-count');
-    if (counter) {
-        counter.textContent = heartsCollected;
-        // Add animation
-        counter.style.animation = 'none';
-        setTimeout(() => {
-            counter.style.animation = 'pop 0.3s ease';
-        }, 10);
-    }
-}
-
-function stopGame1() {
-    if (game1Timer) {
-        clearTimeout(game1Timer);
-        game1Timer = null;
-    }
-    if (currentHeart) {
-        currentHeart.remove();
-        currentHeart = null;
-    }
-}
-
-// ======================
-// GAME 2: MAZE
-// ======================
-
-function setupMaze() {
-    playerPosition = { x: 15, y: 15 };  // Red heart start
-    mazeCompleted = false;
-    
-    const container = document.getElementById('maze-container');
-    const player = document.getElementById('player');
-    
-    if (container && player) {
-        // ... walls drawing code ...
-        
-        // Position player (RED HEART)
-        player.style.left = '15px';
-        player.style.top = '15px';
-        
-        // Position end point (GREEN HEART)
-        const endPoint = document.getElementById('end-point');
-        if (endPoint) {
-            endPoint.style.left = '550px';  // Must match walls array
-            endPoint.style.top = '400px';   // Must match walls array
-        }
-        
-        // ... rest of code ...
-    }
-}
-
-function drawMazeWalls() {
-    const container = document.getElementById('maze-container');
-    if (!container) return;
-    
-    // Define walls [x, y, width, height]
-    // FIXED MAZE - Always the same, never blocks start or end
-    const walls = [
-        // ===== OUTER WALLS (Border) =====
-        [0, 0, 650, 12],      // Top wall
-        [0, 0, 12, 500],      // Left wall
-        [638, 0, 12, 500],    // Right wall (650-12=638)
-        [0, 488, 650, 12],    // Bottom wall (500-12=488)
-        
-        // ===== SAFE START ZONE (Clear around red heart) =====
-        // No walls within 60px of start position (15,15)
-        
-        // ===== MAZE PATH WALLS =====
-        // Left section
-        [80, 0, 12, 120],
-        [160, 40, 12, 160],
-        [80, 120, 100, 12],
-        
-        // Center top
-        [240, 0, 12, 80],
-        [320, 0, 12, 120],
-        [240, 80, 100, 12],
-        
-        // Right section
-        [400, 0, 12, 100],
-        [480, 40, 12, 140],
-        [400, 100, 100, 12],
-        
-        // Middle vertical barriers
-        [120, 160, 12, 100],
-        [200, 200, 12, 120],
-        [280, 160, 12, 80],
-        [360, 200, 12, 100],
-        [440, 160, 12, 120],
-        
-        // Middle horizontal barriers
-        [0, 200, 120, 12],
-        [160, 240, 120, 12],
-        [320, 200, 120, 12],
-        [480, 240, 120, 12],
-        
-        // Bottom left section
-        [40, 280, 12, 100],
-        [120, 320, 12, 80],
-        [40, 380, 100, 12],
-        
-        // Bottom center section
-        [200, 320, 12, 100],
-        [280, 360, 12, 80],
-        [200, 420, 100, 12],
-        
-        // Bottom right section
-        [360, 300, 12, 120],
-        [440, 360, 12, 80],
-        [360, 420, 100, 12],
-        
-        // ===== SAFE END ZONE (Clear around green heart) =====
-        // Path to end point (550,400)
-        [520, 350, 100, 12],    // Wall above end
-        [580, 400, 60, 12],     // Wall to the right
-        [500, 450, 100, 12],    // Wall below end
-        
-        // Final approach walls
-        [550, 300, 12, 50],     // Left of final path
-        [600, 300, 12, 100],    // Right of final path
-    ];
-    
-    // Clear any existing walls
-    container.querySelectorAll('.maze-wall').forEach(wall => wall.remove());
-    
-    // Create new walls
-    walls.forEach(([x, y, width, height]) => {
-        const wall = document.createElement('div');
-        wall.className = 'maze-wall';
-        wall.style.left = `${x}px`;
-        wall.style.top = `${y}px`;
-        wall.style.width = `${width}px`;
-        wall.style.height = `${height}px`;
-        container.appendChild(wall);
-    });
-    
-    // DEBUG: Visualize safe zones (optional - remove after testing)
-    drawSafeZonesForTesting();
-}
-
-// Optional helper function to visualize safe zones
-function drawSafeZonesForTesting() {
-    const container = document.getElementById('maze-container');
-    if (!container) return;
-    
-    // Remove any existing debug zones
-    container.querySelectorAll('.debug-zone').forEach(zone => zone.remove());
-    
-    // Start safe zone (60px radius around red heart)
-    const startZone = document.createElement('div');
-    startZone.className = 'debug-zone';
-    startZone.style.cssText = `
-        position: absolute;
-        left: ${15-60}px;
-        top: ${15-60}px;
-        width: 120px;
-        height: 120px;
-        border: 2px dashed rgba(255, 0, 0, 0.3);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 5;
-    `;
-    container.appendChild(startZone);
-    
-    // End safe zone (60px radius around green heart)
-    const endZone = document.createElement('div');
-    endZone.className = 'debug-zone';
-    endZone.style.cssText = `
-        position: absolute;
-        left: ${550-60}px;
-        top: ${400-60}px;
-        width: 120px;
-        height: 120px;
-        border: 2px dashed rgba(0, 255, 0, 0.3);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 5;
-    `;
-    container.appendChild(endZone);
-}
-function handleMazeKeyPress(event) {
-    if (mazeCompleted) return;
-    
-    const step = 20;
-    let newX = playerPosition.x;
-    let newY = playerPosition.y;
-    
-    // Determine movement direction
-    switch(event.key.toLowerCase()) {
-        case 'arrowup':
-        case 'w':
-            newY -= step;
-            break;
-        case 'arrowdown':
-        case 's':
-            newY += step;
-            break;
-        case 'arrowleft':
-        case 'a':
-            newX -= step;
-            break;
-        case 'arrowright':
-        case 'd':
-            newX += step;
-            break;
-        default:
-            return; // Ignore other keys
-    }
-    
-    // Prevent default for game keys
-    event.preventDefault();
-    
-    // Check collision with walls
-    if (!checkMazeCollision(newX, newY)) {
-        playerPosition.x = newX;
-        playerPosition.y = newY;
-        
-        const player = document.getElementById('player');
-        if (player) {
-            player.style.left = `${newX}px`;
-            player.style.top = `${newY}px`;
-            
-            // Add movement animation
-            player.style.transition = 'left 0.1s linear, top 0.1s linear';
-        }
-        
-        // Check if reached end (within 30px of end point)
-        const endPoint = document.getElementById('end-point');
-        if (endPoint) {
-            const endRect = endPoint.getBoundingClientRect();
-            const playerRect = player.getBoundingClientRect();
-            
-            const distance = Math.sqrt(
-                Math.pow(endRect.left - playerRect.left, 2) +
-                Math.pow(endRect.top - playerRect.top, 2)
-            );
-            
-            if (distance < 40) {
-                mazeCompleted = true;
-                stopMazeControls();
-                
-                // Celebration
-                player.style.animation = 'pop 0.5s ease infinite';
-                setTimeout(() => {
-                    player.style.animation = '';
-                    alert('🎉 You found your way to my heart! ❤️');
-                    setTimeout(() => {
-                        goToPage(8); // Auto go to transition 3
-                    }, 500);
-                }, 1000);
-            }
-        }
-    }
-}
-
-function checkMazeCollision(x, y) {
-    const playerSize = 45;
-    
-    // Check boundaries
-    if (x < 10 || x > 595 || y < 10 || y > 435) {
-        return true;
-    }
-    
-    // Check against all walls
-    const walls = document.querySelectorAll('.maze-wall');
-    for (const wall of walls) {
-        const wallRect = wall.getBoundingClientRect();
-        const containerRect = document.getElementById('maze-container').getBoundingClientRect();
-        
-        const wallX = wallRect.left - containerRect.left;
-        const wallY = wallRect.top - containerRect.top;
-        const wallWidth = wallRect.width;
-        const wallHeight = wallRect.height;
-        
-        // Simple AABB collision detection
-        if (x < wallX + wallWidth &&
-            x + playerSize > wallX &&
-            y < wallY + wallHeight &&
-            y + playerSize > wallY) {
-            return true;
-        }
-    }
-    
-    return false;
-}
-
-function stopMazeControls() {
-    document.removeEventListener('keydown', handleMazeKeyPress);
-}
-
-function resetMaze() {
-    stopMazeControls();
-    setupMaze();
-}
-
-// ======================
-// DAY NAVIGATION
-// ======================
-
-function updateDayNavigation(activeDay) {
-    const dayButtons = document.querySelectorAll('.day-btn');
-    dayButtons.forEach((btn, index) => {
-        btn.classList.remove('active');
-        if (index + 1 === activeDay) {
-            btn.classList.add('active');
-        }
-    });
-}
-/* ===== NOSTALGIC DANCE VIDEO FUNCTIONS ===== */
-
-function playNostalgicVideo() {
-    const video = document.getElementById('nostalgic-video');
-    const placeholder = document.querySelector('.video-placeholder');
-    const playBtn = document.getElementById('play-btn');
-    const videoContainer = document.getElementById('video-container');
-    
-    // Hide placeholder, show video
-    placeholder.style.display = 'none';
-    video.style.display = 'block';
-    videoContainer.classList.add('video-playing');
-    
-    // Try to play with error handling
-    const playPromise = video.play();
-    
-    if (playPromise !== undefined) {
-        playPromise.then(() => {
-            // Video started successfully
-            console.log("✅ Video playing successfully!");
-            playBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Our Dance';
-            playBtn.onclick = pauseNostalgicVideo;
-            
-            // Show success toast
-            showVideoToast("Reliving our perfect moment... 💖");
-        }).catch(error => {
-            // Show error message
-            console.error("❌ Video play failed:", error);
-            
-            // Show helpful error to user
-            const errorMsg = document.createElement('div');
-            errorMsg.className = 'video-error';
-            errorMsg.innerHTML = `
-                <i class="fas fa-exclamation-triangle"></i>
-                <div>
-                    <strong>Video won't play automatically</strong><br>
-                    Click the play button in the video controls above.
-                </div>
-            `;
-            
-            // Insert after video container
-            videoContainer.parentNode.insertBefore(errorMsg, videoContainer.nextSibling);
-            
-            // Still update button
-            playBtn.innerHTML = '<i class="fas fa-play"></i> Try Playing Again';
-        });
-    }
-}
-function pauseNostalgicVideo() {
-    const video = document.getElementById('nostalgic-video');
-    const playBtn = document.getElementById('play-btn');
-    
-    video.pause();
-    
-    // Update button text
-    playBtn.innerHTML = '<i class="fas fa-play"></i> Continue Watching';
-    playBtn.onclick = playNostalgicVideo;
-}
-
-function replayVideo() {
-    const video = document.getElementById('nostalgic-video');
-    const playBtn = document.getElementById('play-btn');
-    
-    // Reset and play again
-    video.currentTime = 0;
-    video.play();
-    
-    // Update button
-    playBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Our Dance';
-    playBtn.onclick = pauseNostalgicVideo;
-    
-    // Show replay message
-    showVideoToast("Watching it again? Me too! 💕");
-}
-
-function showVideoToast(message) {
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = 'video-toast';
-    toast.innerHTML = `
-        <i class="fas fa-heart"></i>
-        <span>${message}</span>
-    `;
-    
-    // Add to page
-    document.querySelector('.page-content').appendChild(toast);
-    
-    // Remove after 3 seconds
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
-}
-
-// Add toast CSS
-const style = document.createElement('style');
-style.textContent = `
-    .video-toast {
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: linear-gradient(135deg, #ff6b8b, #e74c89);
-        color: white;
-        padding: 15px 30px;
-        border-radius: 50px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        z-index: 1000;
-        box-shadow: 0 10px 30px rgba(231, 76, 137, 0.4);
-        animation: slideUp 0.3s ease;
-    }
-    
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateX(-50%) translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-    }
-    
-    .video-toast i {
-        font-size: 1.5rem;
-    }
-`;
-document.head.appendChild(style);
-
-// ======================
-// GAME 3: RIDDLES
-// ======================
-
-function setupRiddles() {
-    currentRiddle = 0;
-    riddleScore = 0;
-    updateLoveBar('love-fill-3', 'love-percent-3', 0);
-    showRiddle();
-}
-
-function showRiddle() {
-    if (currentRiddle >= riddles.length) {
-        // All riddles completed
-        setTimeout(() => {
-            goToPage(20); // Auto go to transition 5
-        }, 1500);
-        return;
-    }
-    
-    const riddle = riddles[currentRiddle];
-    document.getElementById('riddle-text').textContent = riddle.question;
-    document.getElementById('riddle-number').textContent = currentRiddle + 1;
-    
-    // Update section indicator
-    const riddleBox = document.querySelector('.riddle-box');
-    if (riddleBox) {
-        riddleBox.style.borderColor = getSectionColor(riddle.section);
-        riddleBox.style.background = getSectionBackground(riddle.section);
-    }
-    
-    const optionsContainer = document.getElementById('options-container');
-    optionsContainer.innerHTML = '';
-    
-    // Create option buttons
-    riddle.options.forEach((option, index) => {
-        const button = document.createElement('button');
-        button.className = 'option-btn';
-        button.setAttribute('data-option', ['A', 'B', 'C'][index]);
-        button.innerHTML = option;
-        button.onclick = () => checkRiddleAnswer(index);
-        optionsContainer.appendChild(button);
-    });
-    
-    // Reset hint button
-    const hintBtn = document.getElementById('hint-btn');
-    if (hintBtn) {
-        hintBtn.innerHTML = `Need a hint? <i class="fas fa-lightbulb"></i>`;
-        hintBtn.style.display = 'inline-block';
-        hintBtn.style.pointerEvents = 'auto';
-        hintBtn.onclick = showHint;
-    }
-}
-
-function getSectionColor(section) {
-    switch(section) {
-        case 'Cheesy': return '#ff9900'; // Orange
-        case 'Romantic': return '#e74c89'; // Pink
-        case 'Naughty/Adult Teasing': return '#9b59b6'; // Purple
-        default: return '#ffcc00';
-    }
-}
-
-function getSectionBackground(section) {
-    switch(section) {
-        case 'Cheesy': return '#fff9e6';
-        case 'Romantic': return '#fff9fa';
-        case 'Naughty/Adult Teasing': return '#f9f0ff';
-        default: return '#fff9e6';
-    }
-}
-
-function checkRiddleAnswer(selectedIndex) {
-    const riddle = riddles[currentRiddle];
-    const buttons = document.querySelectorAll('.option-btn');
-    
-    // Disable all buttons
-    buttons.forEach(btn => {
-        btn.style.pointerEvents = 'none';
-    });
-    
-    // Mark correct options (A or B)
-    buttons.forEach((btn, index) => {
-        if (riddle.correct.includes(index)) {
-            btn.classList.add('correct');
-        } else if (index === selectedIndex && !riddle.correct.includes(index)) {
-            btn.classList.add('wrong');
-        }
-    });
-    
-    // Check if answer is correct (either A or B)
-    if (riddle.correct.includes(selectedIndex)) {
-        riddleScore++;
-        
-        // Update love bar
-        const percent = (riddleScore / riddles.length) * 100;
-        updateLoveBar('love-fill-3', 'love-percent-3', percent);
-        
-        // Show success and move to next riddle after delay
-        setTimeout(() => {
-            currentRiddle++;
-            showRiddle();
-        }, 1500);
-    } else {
-        // Wrong answer - show correct options
-        setTimeout(() => {
-            // Remove wrong class and re-enable buttons
-            buttons.forEach(btn => {
-                btn.classList.remove('wrong');
-                btn.style.pointerEvents = 'auto';
-            });
-            
-            // Keep correct options marked
-            buttons.forEach((btn, index) => {
-                if (riddle.correct.includes(index)) {
-                    btn.classList.add('correct');
-                }
-            });
-        }, 2000);
-    }
-}
-
-function showHint() {
-    const riddle = riddles[currentRiddle];
-    const hintBtn = document.getElementById('hint-btn');
-    
-    if (hintBtn && riddle) {
-        hintBtn.innerHTML = `Hint: ${riddle.hint} <i class="fas fa-lightbulb"></i>`;
-        hintBtn.style.pointerEvents = 'none';
-        
-        // Reset hint button after 5 seconds
-        setTimeout(() => {
-            hintBtn.innerHTML = `Need a hint? <i class="fas fa-lightbulb"></i>`;
-            hintBtn.style.pointerEvents = 'auto';
-        }, 5000);
-    }
-}
-
-// ======================
-// GAME 4: LOVE STORY MATCH
-// ======================
-
-// Love story data
+// Game 4: Memory
 const loveStoryMatchData = [
     {   id: 1,
         question: "🎯 What do I remember as our first meeting?",
@@ -1199,7 +216,7 @@ const loveStoryMatchData = [
     }
 ];
 
-// Game state
+// Game 4 state
 let matchGameState = {
     selectedQuestion: null,
     completedPairs: [],
@@ -1207,11 +224,700 @@ let matchGameState = {
     shuffledAnswers: []
 };
 
-// Initialize game
+// ======================
+// HELPER FUNCTIONS
+// ======================
+
+function clearConnections() {
+    console.log("clearConnections called");
+}
+
+function resetConnectGame() {
+    console.log("resetConnectGame called");
+}
+
+// ======================
+// PAGE NAVIGATION
+// ======================
+
+function goToPage(pageNumber) {
+    console.log("Navigating to page", pageNumber);
+    currentPage = pageNumber;
+    
+    // Clear all auto-transition timers
+    clearAllAutoTimers();
+    
+    // Stop any running games
+    stopGame1();
+    stopMazeControls();
+    
+    // Hide all pages
+    const allPages = document.querySelectorAll('.page');
+    allPages.forEach(page => {
+        page.classList.remove('active');
+    });
+    
+    // Show target page
+    const targetPage = document.getElementById('page' + pageNumber);
+    if (targetPage) {
+        targetPage.classList.add('active');
+        
+        // Initialize the page
+        initializePage(pageNumber);
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
+        
+        // Update skip panel
+        updateSkipPanel();
+    }
+}
+
+function initializePage(pageNumber) {
+    console.log("Initializing page", pageNumber);
+    
+    switch(pageNumber) {
+        case 3: // Transition 1
+            startAutoTransition(8, 4, 'countdown1');
+            break;
+        case 4: // Game 1
+            setupGame1();
+            break;
+        case 5: // Transition 2
+            startAutoTransition(8, 6, 'countdown2');
+            break;
+        case 7: // Game 2 - MAZE (FIXED)
+            setupMaze();
+            break;
+        case 8: // Transition 3
+            startAutoTransition(8, 9, 'countdown3');
+            break;
+        case 10: case 11: case 12: case 13: case 14: case 15: case 16:
+            updateDayNavigation(pageNumber - 9);
+            break;
+        case 18: // Transition 4
+            startAutoTransition(8, 19, 'countdown4');
+            break;
+        case 19: // Game 3
+            setupRiddles();
+            break;
+        case 20: // Transition 5
+            startAutoTransition(8, 21, 'countdown5');
+            break;
+        case 21: // Game 4
+            initializeMatchGame();
+            break;
+        case 22: // Video Page
+            console.log("🎬 Video page initialized");
+            break;
+    }
+}
+
+function startAutoTransition(seconds, nextPage, countdownId) {
+    let countdown = seconds;
+    const countdownElement = document.getElementById(countdownId);
+    
+    if (countdownElement) {
+        const updateCountdown = () => {
+            countdownElement.textContent = countdown;
+            countdown--;
+            
+            if (countdown < 0) {
+                clearInterval(timer);
+                goToPage(nextPage);
+            }
+        };
+        
+        updateCountdown();
+        const timer = setInterval(updateCountdown, 1000);
+        
+        autoTransitionTimers.push({
+            timer: timer,
+            timeout: setTimeout(() => {
+                clearInterval(timer);
+                goToPage(nextPage);
+            }, seconds * 1000)
+        });
+    } else {
+        const timeout = setTimeout(() => {
+            goToPage(nextPage);
+        }, seconds * 1000);
+        autoTransitionTimers.push({ timeout: timeout });
+    }
+}
+
+function clearAllAutoTimers() {
+    autoTransitionTimers.forEach(timerObj => {
+        if (timerObj.timer) clearInterval(timerObj.timer);
+        if (timerObj.timeout) clearTimeout(timerObj.timeout);
+    });
+    autoTransitionTimers = [];
+}
+
+// ======================
+// PAGE 2: FUNNY NO BUTTON
+// ======================
+
+function funnyNo() {
+    const messages = [
+        "Are you sure? 🥺",
+        "Think about it again! 💖",
+        "Pretty please? 🥰",
+        "I'll wait forever for you! ⏳",
+        "Try the YES button! 😊",
+        "My heart says you mean YES! ❤️",
+        "Let's try that again... 😉",
+        "You know you want to say YES! 💕"
+    ];
+    
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.textContent = randomMessage;
+    messageDiv.className = 'floating-message';
+    
+    if (!document.querySelector('#funnyNoStyle')) {
+        const style = document.createElement('style');
+        style.id = 'funnyNoStyle';
+        style.textContent = `
+            .floating-message {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(45deg, #e74c89, #ff6b8b);
+                color: white;
+                padding: 20px 40px;
+                border-radius: 50px;
+                font-size: 1.5rem;
+                font-weight: bold;
+                z-index: 9999;
+                animation: floatMessage 2s ease forwards;
+                box-shadow: 0 15px 35px rgba(231, 76, 137, 0.4);
+                text-align: center;
+                min-width: 300px;
+                max-width: 80%;
+            }
+            
+            @keyframes floatMessage {
+                0% {
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(0.5);
+                }
+                20% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1.1);
+                }
+                40% {
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                80% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(0.8);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(messageDiv);
+    setTimeout(() => {
+        if (messageDiv.parentNode) messageDiv.remove();
+    }, 2000);
+}
+
+// ======================
+// GAME 1: TAP HEARTS
+// ======================
+
+function setupGame1() {
+    heartsCollected = 0;
+    updateLoveBar('love-fill-1', 'love-percent-1', 0);
+    updateHeartCounter();
+    
+    const container = document.getElementById('game1-container');
+    const complimentDisplay = document.getElementById('compliment-display');
+    
+    if (container) {
+        container.innerHTML = '';
+        if (complimentDisplay) {
+            complimentDisplay.innerHTML = '';
+            complimentDisplay.classList.remove('show');
+        }
+        
+        setTimeout(() => {
+            showNextHeart();
+        }, 500);
+    }
+}
+
+function showNextHeart() {
+    if (heartsCollected >= totalHearts) {
+        setTimeout(() => {
+            goToPage(5);
+        }, 2000);
+        return;
+    }
+    
+    const container = document.getElementById('game1-container');
+    if (!container) return;
+    
+    if (currentHeart) currentHeart.remove();
+    if (game1Timer) clearTimeout(game1Timer);
+    
+    currentHeart = document.createElement('button');
+    currentHeart.className = 'floating-heart-btn';
+    currentHeart.innerHTML = '❤️';
+    currentHeart.title = 'Tap me!';
+    
+    const containerRect = container.getBoundingClientRect();
+    const maxX = containerRect.width - 85;
+    const maxY = containerRect.height - 85;
+    const minPadding = 20;
+    
+    const randomX = minPadding + Math.random() * (maxX - 2 * minPadding);
+    const randomY = minPadding + Math.random() * (maxY - 2 * minPadding);
+    
+    currentHeart.style.left = `${randomX}px`;
+    currentHeart.style.top = `${randomY}px`;
+    currentHeart.style.animationDelay = `${Math.random() * 2}s`;
+    currentHeart.onclick = collectHeart;
+    
+    container.appendChild(currentHeart);
+    
+    game1Timer = setTimeout(() => {
+        showNextHeart();
+    }, 4000);
+}
+
+function collectHeart() {
+    if (!currentHeart) return;
+    
+    heartsCollected++;
+    showCompliment(compliments[heartsCollected - 1]);
+    updateHeartCounter();
+    const percent = (heartsCollected / totalHearts) * 100;
+    updateLoveBar('love-fill-1', 'love-percent-1', percent);
+    
+    currentHeart.style.animation = 'pop 0.5s ease forwards';
+    
+    setTimeout(() => {
+        if (currentHeart && currentHeart.parentNode) {
+            currentHeart.remove();
+            currentHeart = null;
+        }
+    }, 500);
+    
+    if (game1Timer) {
+        clearTimeout(game1Timer);
+        game1Timer = null;
+    }
+    
+    setTimeout(() => {
+        showNextHeart();
+    }, 3000);
+}
+
+function showCompliment(text) {
+    const complimentDisplay = document.getElementById('compliment-display');
+    if (complimentDisplay) {
+        complimentDisplay.innerHTML = `<i class="fas fa-heart" style="color:#e74c89; margin-right:10px;"></i> ${text}`;
+        complimentDisplay.classList.add('show');
+        
+        setTimeout(() => {
+            complimentDisplay.classList.remove('show');
+        }, 3000);
+    }
+}
+
+function updateHeartCounter() {
+    const counter = document.getElementById('heart-count');
+    if (counter) {
+        counter.textContent = heartsCollected;
+        counter.style.animation = 'none';
+        setTimeout(() => {
+            counter.style.animation = 'pop 0.3s ease';
+        }, 10);
+    }
+}
+
+function stopGame1() {
+    if (game1Timer) {
+        clearTimeout(game1Timer);
+        game1Timer = null;
+    }
+    if (currentHeart) {
+        currentHeart.remove();
+        currentHeart = null;
+    }
+}
+
+// ======================
+// GAME 2: MAZE (FIXED)
+// ======================
+
+function setupMaze() {
+    playerPosition = { x: 15, y: 15 };
+    mazeCompleted = false;
+    
+    const container = document.getElementById('maze-container');
+    const player = document.getElementById('player');
+    
+    if (container && player) {
+        // FIX: Call drawMazeWalls to create the maze
+        drawMazeWalls();
+        
+        player.style.left = '15px';
+        player.style.top = '15px';
+        
+        const endPoint = document.getElementById('end-point');
+        if (endPoint) {
+            endPoint.style.left = '550px';
+            endPoint.style.top = '400px';
+        }
+        
+        // FIX: Add event listener for keyboard controls
+        document.addEventListener('keydown', handleMazeKeyPress);
+        
+        console.log("✅ Maze initialized with keyboard controls");
+    }
+}
+
+function drawMazeWalls() {
+    const container = document.getElementById('maze-container');
+    if (!container) return;
+    
+    const walls = [
+        // Outer walls
+        [0, 0, 650, 12],
+        [0, 0, 12, 500],
+        [638, 0, 12, 500],
+        [0, 488, 650, 12],
+        
+        // Maze structure
+        [80, 0, 12, 120],
+        [160, 40, 12, 160],
+        [80, 120, 100, 12],
+        [240, 0, 12, 80],
+        [320, 0, 12, 120],
+        [240, 80, 100, 12],
+        [400, 0, 12, 100],
+        [480, 40, 12, 140],
+        [400, 100, 100, 12],
+        [120, 160, 12, 100],
+        [200, 200, 12, 120],
+        [280, 160, 12, 80],
+        [360, 200, 12, 100],
+        [440, 160, 12, 120],
+        [0, 200, 120, 12],
+        [160, 240, 120, 12],
+        [320, 200, 120, 12],
+        [480, 240, 120, 12],
+        [40, 280, 12, 100],
+        [120, 320, 12, 80],
+        [40, 380, 100, 12],
+        [200, 320, 12, 100],
+        [280, 360, 12, 80],
+        [200, 420, 100, 12],
+        [360, 300, 12, 120],
+        [440, 360, 12, 80],
+        [360, 420, 100, 12],
+        
+        // Path to end
+        [520, 350, 100, 12],
+        [580, 400, 60, 12],
+        [500, 450, 100, 12],
+        [550, 300, 12, 50],
+        [600, 300, 12, 100],
+    ];
+    
+    container.querySelectorAll('.maze-wall').forEach(wall => wall.remove());
+    
+    walls.forEach(([x, y, width, height]) => {
+        const wall = document.createElement('div');
+        wall.className = 'maze-wall';
+        wall.style.left = `${x}px`;
+        wall.style.top = `${y}px`;
+        wall.style.width = `${width}px`;
+        wall.style.height = `${height}px`;
+        container.appendChild(wall);
+    });
+}
+
+function handleMazeKeyPress(event) {
+    if (mazeCompleted) return;
+    
+    const step = 20;
+    let newX = playerPosition.x;
+    let newY = playerPosition.y;
+    
+    switch(event.key.toLowerCase()) {
+        case 'arrowup':
+        case 'w':
+            newY -= step;
+            break;
+        case 'arrowdown':
+        case 's':
+            newY += step;
+            break;
+        case 'arrowleft':
+        case 'a':
+            newX -= step;
+            break;
+        case 'arrowright':
+        case 'd':
+            newX += step;
+            break;
+        default:
+            return;
+    }
+    
+    event.preventDefault();
+    
+    if (!checkMazeCollision(newX, newY)) {
+        playerPosition.x = newX;
+        playerPosition.y = newY;
+        
+        const player = document.getElementById('player');
+        if (player) {
+            player.style.left = `${newX}px`;
+            player.style.top = `${newY}px`;
+            player.style.transition = 'left 0.1s linear, top 0.1s linear';
+        }
+        
+        const endPoint = document.getElementById('end-point');
+        if (endPoint) {
+            const endRect = endPoint.getBoundingClientRect();
+            const playerRect = player.getBoundingClientRect();
+            
+            const distance = Math.sqrt(
+                Math.pow(endRect.left - playerRect.left, 2) +
+                Math.pow(endRect.top - playerRect.top, 2)
+            );
+            
+            if (distance < 40) {
+                mazeCompleted = true;
+                stopMazeControls();
+                
+                player.style.animation = 'pop 0.5s ease infinite';
+                setTimeout(() => {
+                    player.style.animation = '';
+                    alert('🎉 You found your way to my heart! ❤️');
+                    setTimeout(() => {
+                        goToPage(8);
+                    }, 500);
+                }, 1000);
+            }
+        }
+    }
+}
+
+function checkMazeCollision(x, y) {
+    const playerSize = 45;
+    
+    if (x < 10 || x > 595 || y < 10 || y > 435) {
+        return true;
+    }
+    
+    const walls = document.querySelectorAll('.maze-wall');
+    for (const wall of walls) {
+        const wallRect = wall.getBoundingClientRect();
+        const containerRect = document.getElementById('maze-container').getBoundingClientRect();
+        
+        const wallX = wallRect.left - containerRect.left;
+        const wallY = wallRect.top - containerRect.top;
+        const wallWidth = wallRect.width;
+        const wallHeight = wallRect.height;
+        
+        if (x < wallX + wallWidth &&
+            x + playerSize > wallX &&
+            y < wallY + wallHeight &&
+            y + playerSize > wallY) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+function stopMazeControls() {
+    document.removeEventListener('keydown', handleMazeKeyPress);
+}
+
+function resetMaze() {
+    stopMazeControls();
+    setupMaze();
+}
+
+// ======================
+// DAY NAVIGATION
+// ======================
+
+function updateDayNavigation(activeDay) {
+    const dayButtons = document.querySelectorAll('.day-btn');
+    dayButtons.forEach((btn, index) => {
+        btn.classList.remove('active');
+        if (index + 1 === activeDay) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+// ======================
+// MUSIC PLAYER
+// ======================
+
+function setupMusicPlayer() {
+    console.log("Music player ready");
+}
+
+function playMusic() {
+    showToast('🎵 Playing our song...');
+}
+
+function pauseMusic() {
+    showToast('⏸️ Music paused');
+}
+
+function replayMusic() {
+    showToast('🔄 Replaying our song!');
+}
+
+// ======================
+// GAME 3: RIDDLES
+// ======================
+
+function setupRiddles() {
+    currentRiddle = 0;
+    riddleScore = 0;
+    updateLoveBar('love-fill-3', 'love-percent-3', 0);
+    showRiddle();
+}
+
+function showRiddle() {
+    if (currentRiddle >= riddles.length) {
+        setTimeout(() => {
+            goToPage(20);
+        }, 1500);
+        return;
+    }
+    
+    const riddle = riddles[currentRiddle];
+    document.getElementById('riddle-text').textContent = riddle.question;
+    document.getElementById('riddle-number').textContent = currentRiddle + 1;
+    
+    const riddleBox = document.querySelector('.riddle-box');
+    if (riddleBox) {
+        riddleBox.style.borderColor = getSectionColor(riddle.section);
+        riddleBox.style.background = getSectionBackground(riddle.section);
+    }
+    
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+    
+    riddle.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.setAttribute('data-option', ['A', 'B', 'C'][index]);
+        button.innerHTML = option;
+        button.onclick = () => checkRiddleAnswer(index);
+        optionsContainer.appendChild(button);
+    });
+    
+    const hintBtn = document.getElementById('hint-btn');
+    if (hintBtn) {
+        hintBtn.innerHTML = `Need a hint? <i class="fas fa-lightbulb"></i>`;
+        hintBtn.style.display = 'inline-block';
+        hintBtn.style.pointerEvents = 'auto';
+        hintBtn.onclick = showHint;
+    }
+}
+
+function getSectionColor(section) {
+    switch(section) {
+        case 'Cheesy': return '#ff9900';
+        case 'Romantic': return '#e74c89';
+        case 'Naughty/Adult Teasing': return '#9b59b6';
+        default: return '#ffcc00';
+    }
+}
+
+function getSectionBackground(section) {
+    switch(section) {
+        case 'Cheesy': return '#fff9e6';
+        case 'Romantic': return '#fff9fa';
+        case 'Naughty/Adult Teasing': return '#f9f0ff';
+        default: return '#fff9e6';
+    }
+}
+
+function checkRiddleAnswer(selectedIndex) {
+    const riddle = riddles[currentRiddle];
+    const buttons = document.querySelectorAll('.option-btn');
+    
+    buttons.forEach(btn => {
+        btn.style.pointerEvents = 'none';
+    });
+    
+    buttons.forEach((btn, index) => {
+        if (riddle.correct.includes(index)) {
+            btn.classList.add('correct');
+        } else if (index === selectedIndex && !riddle.correct.includes(index)) {
+            btn.classList.add('wrong');
+        }
+    });
+    
+    if (riddle.correct.includes(selectedIndex)) {
+        riddleScore++;
+        const percent = (riddleScore / riddles.length) * 100;
+        updateLoveBar('love-fill-3', 'love-percent-3', percent);
+        
+        setTimeout(() => {
+            currentRiddle++;
+            showRiddle();
+        }, 1500);
+    } else {
+        setTimeout(() => {
+            buttons.forEach(btn => {
+                btn.classList.remove('wrong');
+                btn.style.pointerEvents = 'auto';
+            });
+            
+            buttons.forEach((btn, index) => {
+                if (riddle.correct.includes(index)) {
+                    btn.classList.add('correct');
+                }
+            });
+        }, 2000);
+    }
+}
+
+function showHint() {
+    const riddle = riddles[currentRiddle];
+    const hintBtn = document.getElementById('hint-btn');
+    
+    if (hintBtn && riddle) {
+        hintBtn.innerHTML = `Hint: ${riddle.hint} <i class="fas fa-lightbulb"></i>`;
+        hintBtn.style.pointerEvents = 'none';
+        
+        setTimeout(() => {
+            hintBtn.innerHTML = `Need a hint? <i class="fas fa-lightbulb"></i>`;
+            hintBtn.style.pointerEvents = 'auto';
+        }, 5000);
+    }
+}
+
+// ======================
+// GAME 4: LOVE STORY MATCH
+// ======================
+
 function initializeMatchGame() {
     console.log("Initializing Love Match Game...");
     
-    // Reset game state
     matchGameState = {
         selectedQuestion: null,
         completedPairs: [],
@@ -1219,25 +925,18 @@ function initializeMatchGame() {
         shuffledAnswers: []
     };
     
-    // Shuffle answers
     const answers = loveStoryMatchData.map(item => item.answer);
     matchGameState.shuffledAnswers = shuffleArray([...answers]);
     
-    // Render UI
     renderQuestions();
     renderAnswers();
     updateProgress();
     clearQuestionDisplay();
     hideHint();
-    // clearConnections();
     
-    // Hide next button
     document.getElementById('match-next-btn').style.display = 'none';
-    
-    console.log("Game initialized with shuffled answers:", matchGameState.shuffledAnswers);
 }
 
-// Render question numbers
 function renderQuestions() {
     const container = document.getElementById('question-items');
     container.innerHTML = '';
@@ -1256,7 +955,6 @@ function renderQuestions() {
         questionItem.innerHTML = `
             <div class="question-number">${item.id}</div>
             <div class="question-text">
-                <span class="question-icon">${item.icon}</span>
                 ${matchGameState.completedPairs.includes(item.id) ? '✓ Matched!' : 'Click to select'}
             </div>
         `;
@@ -1265,7 +963,6 @@ function renderQuestions() {
     });
 }
 
-// Render shuffled answers
 function renderAnswers() {
     const container = document.getElementById('answer-items');
     container.innerHTML = '';
@@ -1278,7 +975,6 @@ function renderAnswers() {
         answerItem.dataset.index = index;
         answerItem.onclick = () => selectAnswer(index);
         
-        // Check if this answer is already completed
         const completedItem = loveStoryMatchData.find(item => 
             matchGameState.completedPairs.includes(item.id) && 
             matchGameState.shuffledAnswers[index] === item.answer
@@ -1298,13 +994,10 @@ function renderAnswers() {
 }
 
 function selectQuestion(questionId) {
-    // Don't select if already completed
     if (matchGameState.completedPairs.includes(questionId)) return;
     
-    // Update selected question
     matchGameState.selectedQuestion = questionId;
     
-    // Update UI
     document.querySelectorAll('.question-item').forEach(item => {
         item.classList.remove('selected');
     });
@@ -1314,27 +1007,23 @@ function selectQuestion(questionId) {
         selectedItem.classList.add('selected');
     }
     
-    // Display question
     const questionData = loveStoryMatchData.find(item => item.id === questionId);
     if (questionData) {
         document.getElementById('current-question-text').textContent = questionData.question;
-        document.querySelector('.question-icon').textContent = questionData.icon;
+        document.querySelector('.question-icon').textContent = '💭';
         document.getElementById('question-hint').textContent = '';
         
-        // ===== SHOW PICTURE =====
         const pictureElement = document.getElementById('memory-picture');
         const placeholderElement = document.getElementById('picture-placeholder');
         const captionElement = document.getElementById('picture-caption');
         
         if (questionData.image) {
-            // Show actual picture
             pictureElement.src = questionData.image;
             pictureElement.classList.add('active');
             placeholderElement.style.display = 'none';
             captionElement.textContent = "This beautiful memory 💖";
             captionElement.classList.add('active');
         } else {
-            // Show placeholder
             pictureElement.classList.remove('active');
             placeholderElement.style.display = 'flex';
             captionElement.textContent = "No picture available for this memory";
@@ -1342,16 +1031,12 @@ function selectQuestion(questionId) {
         }
     }
     
-    // Clear any wrong selection styling
     document.querySelectorAll('.answer-item.wrong').forEach(item => {
         item.classList.remove('wrong');
     });
 }
 
-// Select an answer
 function selectAnswer(answerIndex) {
-    console.log("Selecting answer index:", answerIndex);
-    
     if (!matchGameState.selectedQuestion) {
         showHint("First select a question number from the left!");
         return;
@@ -1361,49 +1046,27 @@ function selectAnswer(answerIndex) {
     const questionData = loveStoryMatchData.find(item => item.id === questionId);
     const selectedAnswer = matchGameState.shuffledAnswers[answerIndex];
     
-    console.log("Checking:", {
-        questionId: questionId,
-        question: questionData.question,
-        selectedAnswer: selectedAnswer,
-        correctAnswer: questionData.answer
-    });
-    
-    // Get answer item
     const answerItems = document.querySelectorAll('.answer-item');
     const selectedAnswerItem = answerItems[answerIndex];
     
-    // Check if correct
     if (questionData.answer === selectedAnswer) {
-        console.log("CORRECT MATCH!");
-        
-        // CORRECT MATCH!
         if (!matchGameState.completedPairs.includes(questionId)) {
             matchGameState.completedPairs.push(questionId);
         }
         
-        // Draw connection line
-       // drawSimpleConnection(questionId, answerIndex);
-        
-        // Update UI
         updateQuestionItem(questionId, 'completed');
         updateAnswerItem(answerIndex, 'completed');
         
-        // Show romantic reveal
-        showRomanticReveal(questionData.reveal, questionData.icon);
-        
-        // Update progress
+        showRomanticReveal(questionData.reveal, '💖');
         updateProgress();
         
-        // Clear selection
         matchGameState.selectedQuestion = null;
         clearQuestionDisplay();
         
-        // Remove selected class from all questions
         document.querySelectorAll('.question-item.selected').forEach(item => {
             item.classList.remove('selected');
         });
         
-        // Check if game is complete
         if (matchGameState.completedPairs.length === loveStoryMatchData.length) {
             setTimeout(() => {
                 document.getElementById('match-next-btn').style.display = 'inline-block';
@@ -1412,117 +1075,35 @@ function selectAnswer(answerIndex) {
         }
         
     } else {
-        console.log("WRONG ANSWER");
-        
-        // WRONG ANSWER
         selectedAnswerItem.classList.add('wrong');
         
-        // Track wrong attempts
         if (!matchGameState.wrongAttempts[questionId]) {
             matchGameState.wrongAttempts[questionId] = 0;
         }
         matchGameState.wrongAttempts[questionId]++;
         
-        // Show hint after 2 wrong attempts
         if (matchGameState.wrongAttempts[questionId] >= 2) {
             showHint(questionData.hint);
         }
         
-        // Show wrong feedback
         document.getElementById('question-hint').textContent = "Not quite right! Try another answer.";
         document.getElementById('question-hint').style.color = "#ff6b6b";
         
-        // Reset selection after delay
         setTimeout(() => {
             selectedAnswerItem.classList.remove('wrong');
         }, 1000);
     }
 }
 
-// Draw simple straight connection line (reliable version)
-function drawSimpleConnection(questionId, answerIndex) {
-    console.log("Drawing connection for question:", questionId, "answer index:", answerIndex);
-    
-    // Remove old connection if exists
-    const oldConnection = document.querySelector(`.connection-line[data-pair="${questionId}"]`);
-    if (oldConnection) {
-        oldConnection.remove();
-    }
-    
-    // Get positions
-    const questionItem = document.querySelector(`.question-item[data-id="${questionId}"]`);
-    const answerItem = document.querySelector(`.answer-item[data-index="${answerIndex}"]`);
-    
-    if (!questionItem || !answerItem) {
-        console.error("Could not find question or answer item");
-        return;
-    }
-    
-    const questionRect = questionItem.getBoundingClientRect();
-    const answerRect = answerItem.getBoundingClientRect();
-    const gameRect = document.getElementById('love-match-game').getBoundingClientRect();
-    
-    // Calculate positions relative to game container
-    const startX = questionRect.right - gameRect.left;
-    const startY = questionRect.top + questionRect.height / 2 - gameRect.top;
-    const endX = answerRect.left - gameRect.left;
-    const endY = answerRect.top + answerRect.height / 2 - gameRect.top;
-    
-    // Create connection line
-    const connectionLine = document.createElement('div');
-    connectionLine.className = 'connection-line';
-    connectionLine.dataset.pair = questionId;
-    
-    // Calculate line properties
-    const length = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
-    const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-    
-    // Set line position and rotation
-    connectionLine.style.width = `${length}px`;
-    connectionLine.style.left = `${startX}px`;
-    connectionLine.style.top = `${startY}px`;
-    connectionLine.style.transform = `rotate(${angle}deg)`;
-    
-    // Add to game container
-    if (!document.querySelector('.connection-visual')) {
-        const visualContainer = document.createElement('div');
-        visualContainer.className = 'connection-visual';
-        visualContainer.style.position = 'absolute';
-        visualContainer.style.top = '0';
-        visualContainer.style.left = '0';
-        visualContainer.style.width = '100%';
-        visualContainer.style.height = '100%';
-        visualContainer.style.pointerEvents = 'none';
-        visualContainer.style.zIndex = '5';
-        document.getElementById('love-match-game').appendChild(visualContainer);
-    }
-    
-    document.querySelector('.connection-visual').appendChild(connectionLine);
-    
-    // After animation, make it glow
-    setTimeout(() => {
-        connectionLine.classList.add('completed');
-    }, 300);
-    
-    console.log("Connection drawn successfully");
-}
-
-// Show romantic reveal popup
 function showRomanticReveal(message, icon) {
-    console.log("Showing romantic reveal:", message);
-    
     const popup = document.getElementById('romantic-reveal-popup');
     const messageElement = document.getElementById('reveal-message');
     const iconElement = document.getElementById('reveal-icon');
     
-    // Set message and icon
     messageElement.textContent = message;
     iconElement.textContent = icon || '💖';
-    
-    // Show popup
     popup.classList.add('active');
     
-    // Auto-close after 5 seconds
     setTimeout(() => {
         if (popup.classList.contains('active')) {
             closeReveal();
@@ -1530,12 +1111,10 @@ function showRomanticReveal(message, icon) {
     }, 5000);
 }
 
-// Close reveal popup
 function closeReveal() {
     document.getElementById('romantic-reveal-popup').classList.remove('active');
 }
 
-// Show hint box
 function showHint(hintText) {
     const hintBox = document.getElementById('hint-box');
     const hintTextElement = document.getElementById('hint-text');
@@ -1543,44 +1122,33 @@ function showHint(hintText) {
     hintTextElement.textContent = hintText;
     hintBox.style.display = 'flex';
     
-    // Auto-hide after 8 seconds
     setTimeout(() => {
         hideHint();
     }, 8000);
 }
 
-// Hide hint box
 function hideHint() {
     document.getElementById('hint-box').style.display = 'none';
 }
 
-// Update progress bar and counter
 function updateProgress() {
     const connected = matchGameState.completedPairs.length;
     const total = loveStoryMatchData.length;
     const percent = (connected / total) * 100;
     
-    // Update counter
     document.getElementById('connected-count').textContent = connected;
-    
-    // Update love bar
     updateLoveBar('love-fill-4', 'love-percent-4', percent);
 }
 
-// Helper functions
 function updateQuestionItem(questionId, state) {
     const item = document.querySelector(`.question-item[data-id="${questionId}"]`);
     if (item) {
         item.className = 'match-item question-item';
         if (state === 'completed') {
             item.classList.add('completed');
-            // Update text
             const textElement = item.querySelector('.question-text');
             if (textElement) {
-                textElement.innerHTML = `
-                    <span class="question-icon">${loveStoryMatchData.find(q => q.id === questionId).icon}</span>
-                    ✓ Matched!
-                `;
+                textElement.innerHTML = '✓ Matched!';
             }
         }
     }
@@ -1603,74 +1171,8 @@ function clearQuestionDisplay() {
     document.getElementById('question-hint').style.color = "#888";
 }
 
-
-
 function resetMatchGame() {
     initializeMatchGame();
-}
-
-// Helper: Shuffle array
-function shuffleArray(array) {
-    const newArray = [...array];
-    for (let i = newArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-    }
-    return newArray;
-}
-
-// Make functions available globally
-window.resetMatchGame = resetMatchGame;
-window.closeReveal = closeReveal;
-
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're on page 21
-    if (document.getElementById('page21')) {
-        console.log("Page 21 (Love Match Game) loaded, initializing...");
-        initializeMatchGame();
-    }
-});
-// ======================
-// MUSIC PLAYER
-// ======================
-
-function setupMusicPlayer() {
-    console.log("Music player ready");
-    // YouTube iframe handles playback
-}
-
-function playMusic() {
-    const iframe = document.querySelector('iframe');
-    if (iframe) {
-        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-        showToast('🎵 Playing our song...');
-    } else {
-        showToast('🎵 Music playing!');
-    }
-}
-
-function pauseMusic() {
-    const iframe = document.querySelector('iframe');
-    if (iframe) {
-        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-        showToast('⏸️ Music paused');
-    } else {
-        showToast('⏸️ Music paused');
-    }
-}
-
-function replayMusic() {
-    const iframe = document.querySelector('iframe');
-    if (iframe) {
-        iframe.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[0,true]}', '*');
-        setTimeout(() => {
-            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-        }, 100);
-        showToast('🔄 Replaying our song!');
-    } else {
-        showToast('🔄 Replaying our song!');
-    }
 }
 
 // ======================
@@ -1682,10 +1184,8 @@ function updateLoveBar(fillId, percentId, percent) {
     const percentElement = document.getElementById(percentId);
     
     if (fill && percentElement) {
-        // Animate the fill
         fill.style.width = `${percent}%`;
         
-        // Animate the percentage text
         let currentPercent = parseInt(percentElement.textContent) || 0;
         const targetPercent = Math.round(percent);
         const step = Math.ceil(Math.abs(targetPercent - currentPercent) / 10);
@@ -1709,13 +1209,9 @@ function updateLoveBar(fillId, percentId, percent) {
 }
 
 function showToast(message) {
-    // Remove existing toast
     const existingToast = document.querySelector('.toast-message');
-    if (existingToast) {
-        existingToast.remove();
-    }
+    if (existingToast) existingToast.remove();
     
-    // Create new toast
     const toast = document.createElement('div');
     toast.className = 'toast-message';
     toast.textContent = message;
@@ -1737,18 +1233,14 @@ function showToast(message) {
     
     document.body.appendChild(toast);
     
-    // Remove after 3 seconds
     setTimeout(() => {
         toast.style.animation = 'toastSlideDown 0.3s ease forwards';
         setTimeout(() => {
-            if (toast.parentNode) {
-                toast.remove();
-            }
+            if (toast.parentNode) toast.remove();
         }, 300);
     }, 3000);
 }
 
-// Add toast animation styles
 if (!document.querySelector('#toastStyles')) {
     const style = document.createElement('style');
     style.id = 'toastStyles';
@@ -1779,7 +1271,7 @@ if (!document.querySelector('#toastStyles')) {
 }
 
 // ======================
-// SKIP PANEL
+// SKIP PANEL (FIXED)
 // ======================
 
 function setupSkipPanel() {
@@ -1805,7 +1297,6 @@ function setupSkipPanel() {
         };
     }
     
-    // Keyboard shortcut (Ctrl+Shift+S)
     document.addEventListener('keydown', function(event) {
         if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 's') {
             event.preventDefault();
@@ -1813,7 +1304,6 @@ function setupSkipPanel() {
         }
     });
     
-    // Close when clicking overlay
     const overlay = document.getElementById('skip-overlay');
     if (overlay) {
         overlay.onclick = closeSkipPanel;
@@ -1837,7 +1327,6 @@ function updateSkipPanel() {
     
     skipPages.innerHTML = '';
     
-    // Page names for display
     const pageNames = {
         1: "Start",
         2: "Question",
@@ -1860,16 +1349,15 @@ function updateSkipPanel() {
         19: "Game 3: Riddles",
         20: "Transition 5",
         21: "Game 4: Memory",
-        22: "Final Message"
+        22: "Nostalgic Dance Video",
+        23: "Final Message"
     };
     
-    // Create buttons for all pages
-    for (let i = 1; i <= 22; i++) {
+    for (let i = 1; i <= 23; i++) {
         const btn = document.createElement('button');
         btn.className = 'skip-page-btn';
         btn.textContent = `${i}. ${pageNames[i] || `Page ${i}`}`;
         
-        // Mark current page
         if (i === currentPage) {
             btn.classList.add('current');
         }
@@ -1884,39 +1372,22 @@ function updateSkipPanel() {
 }
 
 // ======================
-// INITIALIZATION
+// HELPER FUNCTIONS
 // ======================
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("✅ Valentine Website Loaded!");
-    
-    // Setup skip panel
-    setupSkipPanel();
-    
-    // Make functions available globally
-    window.goToPage = goToPage;
-    window.funnyNo = funnyNo;
-    window.resetMaze = resetMaze;
-    window.playMusic = playMusic;
-    window.pauseMusic = pauseMusic;
-    window.replayMusic = replayMusic;
-    window.showHint = showHint;
-//    window.resetMemoryGame = resetMemoryGame;
-   window.resetConnectGame = resetConnectGame;
-   window.closeReveal = closeReveal;
-   //   window.closeSkipPanel = closeSkipPanel;
-    
-    // Add floating hearts animation
-    createFloatingHearts();
-    
-    console.log("🎉 Everything ready! Enjoy the Valentine's surprise!");
-});
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
 
 function createFloatingHearts() {
     const container = document.querySelector('.floating-hearts');
     if (!container) return;
     
-    // Create 20 floating hearts
     for (let i = 0; i < 20; i++) {
         const heart = document.createElement('div');
         heart.innerHTML = '❤️';
@@ -1933,7 +1404,6 @@ function createFloatingHearts() {
         container.appendChild(heart);
     }
     
-    // Add floating animation
     if (!document.querySelector('#floatingHeartsStyle')) {
         const style = document.createElement('style');
         style.id = 'floatingHeartsStyle';
@@ -1959,9 +1429,32 @@ function createFloatingHearts() {
     }
 }
 
-// Global error handler
+// ======================
+// INITIALIZATION
+// ======================
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("✅ Valentine Website Loaded!");
+    
+    setupSkipPanel();
+    
+    window.goToPage = goToPage;
+    window.funnyNo = funnyNo;
+    window.resetMaze = resetMaze;
+    window.playMusic = playMusic;
+    window.pauseMusic = pauseMusic;
+    window.replayMusic = replayMusic;
+    window.showHint = showHint;
+    window.resetMatchGame = resetMatchGame;
+    window.closeReveal = closeReveal;
+    window.closeSkipPanel = closeSkipPanel;
+    
+    createFloatingHearts();
+    
+    console.log("🎉 Everything ready! Enjoy the Valentine's surprise!");
+});
+
 window.onerror = function(message, source, lineno, colno, error) {
     console.error("Script Error:", message);
-    // Don't show alerts to avoid disturbing user experience
     return true;
 };
