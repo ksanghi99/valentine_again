@@ -39,99 +39,99 @@ let riddleScore = 0;
 const riddles = [
     {
         section: "Cheesy",
-        question: "What do you call a couple who's always laughing together?",
+        question: "What's my favorite midnight snack?",
         options: [
-            "A) Perfect Match 💞",
-            "B) Us 😉", 
-            "C) Professional Comedians 🎭"
+            "Your kisses under moonlight 🌙",
+            "You 😉", 
+            "Cold leftovers from dinner 🍕"
         ],
         correct: [0, 1], // Both A and B are correct
         hint: "It's definitely not C!"
     },
     {
         section: "Cheesy",
-        question: "If you were a fruit, you'd be a fine-apple! Because...",
+        question: "f we were alone right now in a room, what would we be doing?",
         options: [
-            "A) You're always ripe for love 🍎",
-            "B) You make my heart go core-azy ❤️",
-            "C) You belong in a fruit salad 🥗"
+            "Slow dancing to silent music 💃",
+            "Playing a game of 'who can stay quiet longest' 😏",
+            "Watching paint dry 🎨"
         ],
-        correct: [0, 1],
-        hint: "Think sweet, not salad!"
+        correct: [1],
+        hint: "You Think too loud"
     },
     {
         section: "Romantic",
-        question: "When we're together, time feels like...",
+        question: "What's the most exciting sound I love to hear?",
         options: [
-            "A) A beautiful melody 🎵",
-            "B) My favorite chapter 📖",
-            "C) A boring meeting 😴"
+            "The whisper of sheets moving 🌙",
+            "Your heartbeat against mine 💓",
+            "Traffic noise outside 🚗"
         ],
         correct: [0, 1],
         hint: "It's definitely not boring!"
     },
     {
         section: "Romantic", 
-        question: "Your smile does to me what coffee does to mornings...",
+        question: "What's the best way to warm up on a cold night?",
         options: [
-            "A) Makes everything better ✨",
-            "B) Is my daily addiction 💘",
-            "C) Gives me stomach ache 🤢"
+            "Making our own heat ❤️🔥",
+            "Skin-to-skin cuddles 🥵",
+            "An electric blanket 🔌"
         ],
         correct: [0, 1],
         hint: "It's a good thing!"
     },
     {
         section: "Romantic",
-        question: "If love were a language, ours would be spoken in...",
+        question: "What should be our secret code for 'I want you'?",
         options: [
-            "A) Whispers and secrets 🤫",
-            "B) Silences that say everything 🤍",
-            "C) Angry shouting 😡"
+            "Have you seen my socks? 🧦",
+            "I'm feeling... adventurous 😈",
+            "The moon looks beautiful tonight 🌝"
         ],
-        correct: [0, 1],
-        hint: "We communicate beautifully"
+        correct: [1, 2],
+        hint: "Too easy"
     },
     {
         section: "Naughty/Adult Teasing",
-        question: "What's my favorite place to get lost with you?",
+        question: "What's my favorite kind of workout?",
         options: [
-            "A) Between the sheets 🛏️",
-            "B) In each other's arms 🤗",
-            "C) At the grocery store 🛒"
+            "The kind where we're both breathless 😮💨",
+            "Late night cardio in bed 🛏️",
+            "Doing laundry 💪"
         ],
         correct: [0, 1],
         hint: "Somewhere cozy..."
     },
     {
         section: "Naughty/Adult Teasing",
-        question: "Your kisses taste better than...",
+        question: "What's the most delicious thing I've ever tasted?",
         options: [
-            "A) The finest wine 🍷",
-            "B) Forbidden fruit 🍎",
-            "C) Boiled broccoli 🥦"
+            "Apple Pie 🍑",
+            "The nape of your neck 😘",
+            "Store-bought cookies 🍪"
         ],
         correct: [0, 1],
-        hint: "Definitely not vegetables!"
+        hint: "Definitely not cookies!"
     },
     {
         section: "Naughty/Adult Teasing",
         question: "What's the secret ingredient in our recipe for love?",
         options: [
-            "A) Spice and everything nice 🌶️",
-            "B) Late nights and soft whispers 🌙",
-            "C) Boring routines ⏰"
+            "Spice and everything nice 🌶️",
+            "Late nights and soft whispers 🌙",
+            "Boring routines ⏰"
         ],
         correct: [0, 1],
         hint: "Nothing boring about us!"
     },
     {
         section: "Naughty/Adult Teasing",
-        question: "If we were a movie, our rating would be...",
+        question: "What's the game I'd never get tired of playing?",
         options: [
-            "A) R - Romantically Risqué 😏",
-            "B) A - Absolutely Addicting ❤️",
-            "C) B - Boring as heck 😒"
+            "How many kisses before sunrise? 🌅",
+            "Guess where I'm touching 👆",
+            "Solitaire"
         ],
         correct: [0, 1],
         hint: "We're definitely exciting!"
@@ -140,9 +140,9 @@ const riddles = [
         section: "Naughty/Adult Teasing",
         question: "What's the game I always want to play with you?",
         options: [
-            "A) Hide and seek under covers 🙈",
-            "B) Staring contest that ends with kisses 👄",
-            "C) Monopoly (and argue about rules) 🎲"
+            "Hide and seek under covers 🙈",
+            "Staring contest that ends with kisses 👄",
+            "Monopoly (and argue about rules) 🎲"
         ],
         correct: [0, 1],
         hint: "It's more fun than board games!"
