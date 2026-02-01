@@ -521,32 +521,27 @@ function stopGame1() {
 // ======================
 
 function setupMaze() {
-    playerPosition = { x: 15, y: 15 };
+    playerPosition = { x: 15, y: 15 };  // Red heart start
     mazeCompleted = false;
     
     const container = document.getElementById('maze-container');
     const player = document.getElementById('player');
     
     if (container && player) {
-        // Clear previous walls
-        container.querySelectorAll('.maze-wall').forEach(wall => wall.remove());
+        // ... walls drawing code ...
         
-        // Draw maze walls
-        drawMazeWalls();
+        // Position player (RED HEART)
+        player.style.left = '15px';
+        player.style.top = '15px';
         
-        // Position player
-        player.style.left = `${playerPosition.x}px`;
-        player.style.top = `${playerPosition.y}px`;
-        
-        // Position end point
+        // Position end point (GREEN HEART)
         const endPoint = document.getElementById('end-point');
         if (endPoint) {
-            endPoint.style.left = '550px';
-            endPoint.style.top = '400px';
+            endPoint.style.left = '550px';  // Must match walls array
+            endPoint.style.top = '400px';   // Must match walls array
         }
         
-        // Add keyboard controls
-        document.addEventListener('keydown', handleMazeKeyPress);
+        // ... rest of code ...
     }
 }
 
@@ -555,54 +550,76 @@ function drawMazeWalls() {
     if (!container) return;
     
     // Define walls [x, y, width, height]
-const walls = [
-    // Outer walls
-    [0, 0, 650, 10],      // Top
-    [0, 0, 10, 500],      // Left
-    [640, 0, 10, 500],    // Right
-    [0, 490, 650, 10],    // Bottom
+    // FIXED MAZE - Always the same, never blocks start or end
+    const walls = [
+        // ===== OUTER WALLS (Border) =====
+        [0, 0, 650, 12],      // Top wall
+        [0, 0, 12, 500],      // Left wall
+        [638, 0, 12, 500],    // Right wall (650-12=638)
+        [0, 488, 650, 12],    // Bottom wall (500-12=488)
+        
+        // ===== SAFE START ZONE (Clear around red heart) =====
+        // No walls within 60px of start position (15,15)
+        
+        // ===== MAZE PATH WALLS =====
+        // Left section
+        [80, 0, 12, 120],
+        [160, 40, 12, 160],
+        [80, 120, 100, 12],
+        
+        // Center top
+        [240, 0, 12, 80],
+        [320, 0, 12, 120],
+        [240, 80, 100, 12],
+        
+        // Right section
+        [400, 0, 12, 100],
+        [480, 40, 12, 140],
+        [400, 100, 100, 12],
+        
+        // Middle vertical barriers
+        [120, 160, 12, 100],
+        [200, 200, 12, 120],
+        [280, 160, 12, 80],
+        [360, 200, 12, 100],
+        [440, 160, 12, 120],
+        
+        // Middle horizontal barriers
+        [0, 200, 120, 12],
+        [160, 240, 120, 12],
+        [320, 200, 120, 12],
+        [480, 240, 120, 12],
+        
+        // Bottom left section
+        [40, 280, 12, 100],
+        [120, 320, 12, 80],
+        [40, 380, 100, 12],
+        
+        // Bottom center section
+        [200, 320, 12, 100],
+        [280, 360, 12, 80],
+        [200, 420, 100, 12],
+        
+        // Bottom right section
+        [360, 300, 12, 120],
+        [440, 360, 12, 80],
+        [360, 420, 100, 12],
+        
+        // ===== SAFE END ZONE (Clear around green heart) =====
+        // Path to end point (550,400)
+        [520, 350, 100, 12],    // Wall above end
+        [580, 400, 60, 12],     // Wall to the right
+        [500, 450, 100, 12],    // Wall below end
+        
+        // Final approach walls
+        [550, 300, 12, 50],     // Left of final path
+        [600, 300, 12, 100],    // Right of final path
+    ];
     
-    // Dense vertical walls
-    [80, 0, 10, 120],
-    [160, 40, 10, 160],
-    [240, 0, 10, 200],
-    [320, 60, 10, 180],
-    [400, 0, 10, 140],
-    [480, 80, 10, 220],
-    [560, 20, 10, 160],
+    // Clear any existing walls
+    container.querySelectorAll('.maze-wall').forEach(wall => wall.remove());
     
-    // Dense horizontal walls
-    [0, 80, 160, 10],
-    [200, 120, 150, 10],
-    [360, 80, 140, 10],
-    [80, 160, 120, 10],
-    [240, 200, 150, 10],
-    [400, 160, 120, 10],
-    [560, 120, 80, 10],
-    
-    // Middle section - very challenging
-    [160, 240, 10, 100],
-    [240, 280, 10, 80],
-    [320, 240, 10, 120],
-    [400, 280, 10, 100],
-    [480, 240, 10, 80],
-    
-    [80, 320, 150, 10],
-    [280, 360, 140, 10],
-    [440, 320, 120, 10],
-    [200, 400, 150, 10],
-    [360, 440, 140, 10],
-    
-    // Bottom section
-    [120, 440, 10, 50],
-    [280, 480, 10, 20],
-    [440, 440, 10, 50],
-    
-    // Final challenge before end
-    [520, 350, 100, 10],
-    [580, 400, 60, 10],
-    [500, 450, 100, 10]
-];  
+    // Create new walls
     walls.forEach(([x, y, width, height]) => {
         const wall = document.createElement('div');
         wall.className = 'maze-wall';
@@ -612,8 +629,51 @@ const walls = [
         wall.style.height = `${height}px`;
         container.appendChild(wall);
     });
+    
+    // DEBUG: Visualize safe zones (optional - remove after testing)
+    drawSafeZonesForTesting();
 }
 
+// Optional helper function to visualize safe zones
+function drawSafeZonesForTesting() {
+    const container = document.getElementById('maze-container');
+    if (!container) return;
+    
+    // Remove any existing debug zones
+    container.querySelectorAll('.debug-zone').forEach(zone => zone.remove());
+    
+    // Start safe zone (60px radius around red heart)
+    const startZone = document.createElement('div');
+    startZone.className = 'debug-zone';
+    startZone.style.cssText = `
+        position: absolute;
+        left: ${15-60}px;
+        top: ${15-60}px;
+        width: 120px;
+        height: 120px;
+        border: 2px dashed rgba(255, 0, 0, 0.3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 5;
+    `;
+    container.appendChild(startZone);
+    
+    // End safe zone (60px radius around green heart)
+    const endZone = document.createElement('div');
+    endZone.className = 'debug-zone';
+    endZone.style.cssText = `
+        position: absolute;
+        left: ${550-60}px;
+        top: ${400-60}px;
+        width: 120px;
+        height: 120px;
+        border: 2px dashed rgba(0, 255, 0, 0.3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 5;
+    `;
+    container.appendChild(endZone);
+}
 function handleMazeKeyPress(event) {
     if (mazeCompleted) return;
     
