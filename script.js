@@ -1153,25 +1153,18 @@ function renderAnswers() {
     });
 }
 
-// Select a question
 function selectQuestion(questionId) {
-    console.log("Selecting question:", questionId);
-    
     // Don't select if already completed
-    if (matchGameState.completedPairs.includes(questionId)) {
-        console.log("Question already completed");
-        return;
-    }
+    if (matchGameState.completedPairs.includes(questionId)) return;
     
     // Update selected question
     matchGameState.selectedQuestion = questionId;
     
-    // Update UI - Remove selected class from all questions
+    // Update UI
     document.querySelectorAll('.question-item').forEach(item => {
         item.classList.remove('selected');
     });
     
-    // Add selected class to clicked question
     const selectedItem = document.querySelector(`.question-item[data-id="${questionId}"]`);
     if (selectedItem) {
         selectedItem.classList.add('selected');
@@ -1183,15 +1176,32 @@ function selectQuestion(questionId) {
         document.getElementById('current-question-text').textContent = questionData.question;
         document.querySelector('.question-icon').textContent = questionData.icon;
         document.getElementById('question-hint').textContent = '';
-        document.getElementById('question-hint').style.color = "#888";
+        
+        // ===== SHOW PICTURE =====
+        const pictureElement = document.getElementById('memory-picture');
+        const placeholderElement = document.getElementById('picture-placeholder');
+        const captionElement = document.getElementById('picture-caption');
+        
+        if (questionData.image) {
+            // Show actual picture
+            pictureElement.src = questionData.image;
+            pictureElement.classList.add('active');
+            placeholderElement.style.display = 'none';
+            captionElement.textContent = "This beautiful memory 💖";
+            captionElement.classList.add('active');
+        } else {
+            // Show placeholder
+            pictureElement.classList.remove('active');
+            placeholderElement.style.display = 'flex';
+            captionElement.textContent = "No picture available for this memory";
+            captionElement.classList.add('active');
+        }
     }
     
     // Clear any wrong selection styling
     document.querySelectorAll('.answer-item.wrong').forEach(item => {
         item.classList.remove('wrong');
     });
-    
-    console.log("Question selected, waiting for answer...");
 }
 
 // Select an answer
