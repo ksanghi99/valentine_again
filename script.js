@@ -850,25 +850,19 @@ function updateDayNavigation(activeDay) {
 function playNostalgicVideo() {
     const video = document.getElementById('nostalgic-video');
     const placeholder = document.querySelector('.video-placeholder');
-    const playBtn = document.getElementById('play-btn');
-    const videoContainer = document.getElementById('video-container');
     
-    // Hide placeholder, show video
+    // Hide placeholder
     placeholder.style.display = 'none';
     video.style.display = 'block';
-    videoContainer.classList.add('video-playing');
     
-    // Play video
-    video.play();
+    // Don't auto-play, let user click play in video controls
+    // Just show the video with controls
     
-    // Update button text
-    playBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Our Dance';
-    playBtn.onclick = pauseNostalgicVideo;
+    // Show message
+    showVideoToast("Click the play button above to watch our dance! 🎬");
     
-    // Show romantic toast when video starts
-    setTimeout(() => {
-        showVideoToast("Reliving our perfect moment... 💖");
-    }, 1000);
+    // Scroll to video
+    video.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function pauseNostalgicVideo() {
