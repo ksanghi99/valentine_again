@@ -1,15 +1,83 @@
 /* ============================================
-   VALENTINE SURPRISE - SIMPLE & WORKING SCRIPT
+   VALENTINE SURPRISE - COMPLETE FIXED VERSION
    ============================================ */
 
 console.log("💝 Valentine Surprise Started!");
 
 // ======================
-// SIMPLE PAGE NAVIGATION
+// GLOBAL VARIABLES
+// ======================
+let currentPage = 1;
+let autoTransitionTimer = null;
+
+// Game 1 variables
+let heartsCollected = 0;
+let totalHearts = 10;
+let game1Timer = null;
+let currentHeart = null;
+const compliments = [
+    "You have the most beautiful smile!",
+    "Your eyes sparkle like stars!",
+    "You make my heart skip a beat!",
+    "You're the best thing that ever happened to me!",
+    "Your laugh is my favorite sound!",
+    "You're more amazing than you know!",
+    "Being with you feels like home!",
+    "You make every day brighter!",
+    "You're my dream come true!",
+    "I fall for you more every day!"
+];
+
+// Game 2 variables
+let playerPosition = { x: 10, y: 10 };
+let mazeCompleted = false;
+const mazeWalls = [];
+
+// Game 3 variables
+let currentRiddle = 0;
+let riddleScore = 0;
+const riddles = [
+    {
+        question: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
+        options: ["Wind", "Echo", "Whisper", "Silence"],
+        correct: 1,
+        hint: "It's what you hear in mountains"
+    },
+    {
+        question: "What has keys but can't open locks?",
+        options: ["Door", "Piano", "Keyboard", "Map"],
+        correct: 1,
+        hint: "You play music with it"
+    },
+    {
+        question: "The more you take, the more you leave behind. What am I?",
+        options: ["Memory", "Time", "Footsteps", "Love"],
+        correct: 2,
+        hint: "You make them when you walk"
+    }
+];
+
+// Game 4 variables
+let memoryCards = [];
+let flippedCards = [];
+let matchedPairs = 0;
+
+// ======================
+// PAGE NAVIGATION
 // ======================
 
 function goToPage(pageNumber) {
     console.log("Going to page", pageNumber);
+    currentPage = pageNumber;
+    
+    // Clear any auto-transition timer
+    if (autoTransitionTimer) {
+        clearTimeout(autoTransitionTimer);
+        autoTransitionTimer = null;
+    }
+    
+    // Stop Game 1 if active
+    stopGame1();
     
     // Hide all pages
     const allPages = document.querySelectorAll('.page');
@@ -22,7 +90,7 @@ function goToPage(pageNumber) {
     if (targetPage) {
         targetPage.classList.add('active');
         
-        // Initialize page if needed
+        // Initialize page
         initializePage(pageNumber);
         
         // Scroll to top
@@ -30,8 +98,6 @@ function goToPage(pageNumber) {
         
         // Update skip panel
         updateSkipPanel();
-    } else {
-        console.error("Page not found: page" + pageNumber);
     }
 }
 
@@ -39,21 +105,62 @@ function initializePage(pageNumber) {
     console.log("Initializing page", pageNumber);
     
     switch(pageNumber) {
-        case 3:
-            setupHeartsGame();
+        case 3: // Transition 1 (auto to game 1)
+            startAutoTransition(8, 4);
             break;
-        case 6:
+        case 4: // Game 1
+            setupGame1();
+            break;
+        case 5: // Transition 2 (auto to maze intro)
+            startAutoTransition(8, 6);
+            break;
+        case 7: // Game 2
             setupMaze();
             break;
-        case 17:
+        case 8: // Transition 3 (auto to days intro)
+            startAutoTransition(8, 9);
+            break;
+        case 18: // Transition 4 (auto to riddles)
+            startAutoTransition(8, 19);
+            break;
+        case 19: // Game 3
             setupRiddles();
             break;
-        case 18:
+        case 20: // Transition 5 (auto to memory game)
+            startAutoTransition(8, 21);
+            break;
+        case 21: // Game 4
             setupMemoryGame();
             break;
-        case 15:
+        case 17: // Music
             setupMusicPlayer();
             break;
+    }
+}
+
+function startAutoTransition(seconds, nextPage) {
+    let countdown = seconds;
+    const countdownElement = document.querySelector(`#page${currentPage} .countdown span`);
+    
+    if (countdownElement) {
+        const timer = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(timer);
+                goToPage(nextPage);
+            }
+        }, 1000);
+        
+        autoTransitionTimer = setTimeout(() => {
+            clearInterval(timer);
+            goToPage(nextPage);
+        }, seconds * 1000);
+    } else {
+        autoTransitionTimer = setTimeout(() => {
+            goToPage(nextPage);
+        }, seconds * 1000);
     }
 }
 
@@ -72,7 +179,6 @@ function funnyNo() {
     
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
     
-    // Create a floating message
     const messageDiv = document.createElement('div');
     messageDiv.textContent = randomMessage;
     messageDiv.style.cssText = `
@@ -92,68 +198,122 @@ function funnyNo() {
     
     document.body.appendChild(messageDiv);
     
-    // Remove after animation
     setTimeout(() => {
         messageDiv.remove();
     }, 2000);
 }
 
-// Add CSS for animation
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInOut {
-        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-        20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-        40% { transform: translate(-50%, -50%) scale(1); }
-        80% { opacity: 1; }
-        100% { opacity: 0; }
-    }
-`;
-document.head.appendChild(style);
-
 // ======================
-// GAME 1: 10 HEARTS
+// GAME 1: TAP HEARTS
 // ======================
 
-let heartsCollected = 0;
-
-function setupHeartsGame() {
+function setupGame1() {
     heartsCollected = 0;
+    updateLoveBar('love-fill', 'love-percent', 0);
     updateHeartCounter();
     
-    const container = document.getElementById('hearts-container');
-    if (!container) return;
+    const container = document.getElementById('game1-container');
+    const complimentDisplay = document.getElementById('compliment-display');
     
-    container.innerHTML = '';
-    
-    // Create 10 empty hearts
-    for (let i = 0; i < 10; i++) {
-        const heartBtn = document.createElement('button');
-        heartBtn.className = 'heart-btn';
-        heartBtn.innerHTML = '🤍';
-        heartBtn.style.animationDelay = (i * 0.2) + 's';
+    if (container && complimentDisplay) {
+        container.innerHTML = '';
+        complimentDisplay.innerHTML = '';
+        complimentDisplay.classList.remove('show');
         
-        heartBtn.onclick = function() {
-            if (!heartBtn.classList.contains('clicked')) {
-                heartBtn.innerHTML = '❤️';
-                heartBtn.classList.add('clicked');
-                heartsCollected++;
-                updateHeartCounter();
-                
-                // Create floating heart
-                createFloatingHeart(heartBtn);
-                
-                // Check if all hearts collected
-                if (heartsCollected === 10) {
-                    document.getElementById('next-btn').style.display = 'inline-block';
-                }
-            }
-        };
-        
-        container.appendChild(heartBtn);
+        // Start the game
+        showNextHeart();
+    }
+}
+
+function showNextHeart() {
+    if (heartsCollected >= totalHearts) {
+        // Game completed
+        setTimeout(() => {
+            goToPage(5); // Auto go to transition 2
+        }, 2000);
+        return;
     }
     
-    document.getElementById('next-btn').style.display = 'none';
+    const container = document.getElementById('game1-container');
+    if (!container) return;
+    
+    // Remove previous heart
+    if (currentHeart) {
+        currentHeart.remove();
+    }
+    
+    // Create new heart at random position
+    currentHeart = document.createElement('button');
+    currentHeart.className = 'floating-heart-btn';
+    currentHeart.innerHTML = '❤️';
+    currentHeart.style.animationDelay = '0s';
+    
+    // Random position (avoid edges)
+    const containerWidth = container.clientWidth - 80;
+    const containerHeight = container.clientHeight - 80;
+    const randomX = Math.floor(Math.random() * containerWidth);
+    const randomY = Math.floor(Math.random() * containerHeight);
+    
+    currentHeart.style.left = `${randomX}px`;
+    currentHeart.style.top = `${randomY}px`;
+    
+    // Add click handler
+    currentHeart.onclick = function() {
+        collectHeart();
+    };
+    
+    container.appendChild(currentHeart);
+    
+    // Auto move to new position after 3 seconds if not clicked
+    game1Timer = setTimeout(() => {
+        showNextHeart();
+    }, 3000);
+}
+
+function collectHeart() {
+    if (currentHeart) {
+        heartsCollected++;
+        
+        // Show compliment
+        showCompliment(compliments[heartsCollected - 1]);
+        
+        // Update UI
+        updateHeartCounter();
+        const percent = (heartsCollected / totalHearts) * 100;
+        updateLoveBar('love-fill', 'love-percent', percent);
+        
+        // Remove current heart with animation
+        currentHeart.style.animation = 'pop 0.5s ease';
+        setTimeout(() => {
+            if (currentHeart) {
+                currentHeart.remove();
+                currentHeart = null;
+            }
+        }, 500);
+        
+        // Clear auto-move timer
+        if (game1Timer) {
+            clearTimeout(game1Timer);
+        }
+        
+        // Show next heart after compliment
+        setTimeout(() => {
+            showNextHeart();
+        }, 3000);
+    }
+}
+
+function showCompliment(text) {
+    const complimentDisplay = document.getElementById('compliment-display');
+    if (complimentDisplay) {
+        complimentDisplay.innerHTML = text;
+        complimentDisplay.classList.add('show');
+        
+        // Hide after 3 seconds
+        setTimeout(() => {
+            complimentDisplay.classList.remove('show');
+        }, 3000);
+    }
 }
 
 function updateHeartCounter() {
@@ -163,11 +323,14 @@ function updateHeartCounter() {
     }
 }
 
-function checkHeartsGame() {
-    if (heartsCollected === 10) {
-        goToPage(4);
-    } else {
-        alert(`You need to collect all 10 hearts! You have ${heartsCollected}/10.`);
+function stopGame1() {
+    if (game1Timer) {
+        clearTimeout(game1Timer);
+        game1Timer = null;
+    }
+    if (currentHeart) {
+        currentHeart.remove();
+        currentHeart = null;
     }
 }
 
@@ -175,27 +338,68 @@ function checkHeartsGame() {
 // GAME 2: MAZE
 // ======================
 
-let playerPosition = { x: 10, y: 10 };
-let mazeCompleted = false;
-
 function setupMaze() {
     playerPosition = { x: 10, y: 10 };
     mazeCompleted = false;
     
+    const container = document.getElementById('maze-container');
     const player = document.getElementById('player');
-    if (player) {
+    
+    if (container && player) {
+        // Clear previous walls
+        container.querySelectorAll('.maze-wall').forEach(wall => wall.remove());
+        
+        // Draw maze walls
+        drawMazeWalls();
+        
+        // Position player
         player.style.left = '10px';
         player.style.top = '10px';
+        
+        // Add keyboard controls
+        document.addEventListener('keydown', handleMazeKeyPress);
     }
+}
+
+function drawMazeWalls() {
+    const container = document.getElementById('maze-container');
+    if (!container) return;
     
-    // Add keyboard controls
-    document.addEventListener('keydown', handleMazeKeyPress);
+    // Define walls [x, y, width, height]
+    const walls = [
+        // Outer walls
+        [0, 0, 600, 10],
+        [0, 0, 10, 450],
+        [590, 0, 10, 450],
+        [0, 440, 600, 10],
+        
+        // Inner walls
+        [100, 0, 10, 150],
+        [200, 50, 10, 200],
+        [300, 0, 10, 180],
+        [400, 100, 10, 250],
+        [150, 100, 150, 10],
+        [250, 200, 150, 10],
+        [100, 250, 200, 10],
+        [350, 300, 150, 10],
+        [200, 350, 200, 10]
+    ];
+    
+    walls.forEach(([x, y, width, height]) => {
+        const wall = document.createElement('div');
+        wall.className = 'maze-wall';
+        wall.style.left = `${x}px`;
+        wall.style.top = `${y}px`;
+        wall.style.width = `${width}px`;
+        wall.style.height = `${height}px`;
+        container.appendChild(wall);
+    });
 }
 
 function handleMazeKeyPress(event) {
     if (mazeCompleted) return;
     
-    const step = 20;
+    const step = 15;
     let newX = playerPosition.x;
     let newY = playerPosition.y;
     
@@ -224,8 +428,8 @@ function handleMazeKeyPress(event) {
             return;
     }
     
-    // Check boundaries (simple maze)
-    if (newX >= 0 && newX <= 460 && newY >= 0 && newY <= 360) {
+    // Check collision with walls
+    if (!checkCollision(newX, newY)) {
         playerPosition.x = newX;
         playerPosition.y = newY;
         
@@ -235,116 +439,150 @@ function handleMazeKeyPress(event) {
             player.style.top = newY + 'px';
         }
         
-        // Check if reached end (bottom right corner)
-        if (newX > 400 && newY > 300) {
+        // Check if reached end (550, 380)
+        if (newX > 550 && newY > 380) {
             mazeCompleted = true;
             document.removeEventListener('keydown', handleMazeKeyPress);
             
             setTimeout(() => {
                 alert('🎉 You found your way to my heart!');
-                goToPage(7);
+                goToPage(8); // Auto go to transition 3
             }, 500);
         }
     }
 }
 
+function checkCollision(x, y) {
+    const playerSize = 40;
+    
+    // Check against all walls
+    const walls = document.querySelectorAll('.maze-wall');
+    for (const wall of walls) {
+        const wallRect = wall.getBoundingClientRect();
+        const containerRect = document.getElementById('maze-container').getBoundingClientRect();
+        
+        const wallX = wallRect.left - containerRect.left;
+        const wallY = wallRect.top - containerRect.top;
+        const wallWidth = wallRect.width;
+        const wallHeight = wallRect.height;
+        
+        if (x < wallX + wallWidth &&
+            x + playerSize > wallX &&
+            y < wallY + wallHeight &&
+            y + playerSize > wallY) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 function resetMaze() {
+    document.removeEventListener('keydown', handleMazeKeyPress);
     setupMaze();
-}
-
-// ======================
-// MUSIC PLAYER
-// ======================
-
-function setupMusicPlayer() {
-    console.log("Music player ready");
-}
-
-function playMusic() {
-    alert("🎵 Music playing! Enjoy our song for 45 seconds!");
-}
-
-function pauseMusic() {
-    alert("⏸️ Music paused");
-}
-
-function replayMusic() {
-    alert("🔄 Replaying our song!");
 }
 
 // ======================
 // GAME 3: RIDDLES
 // ======================
 
-let currentRiddle = 0;
-const riddles = [
-    {
-        question: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
-        answer: "echo",
-        hint: "It's what you hear in mountains"
-    },
-    {
-        question: "What has keys but can't open locks?",
-        answer: "piano",
-        hint: "You play music with it"
-    },
-    {
-        question: "The more you take, the more you leave behind. What am I?",
-        answer: "footsteps",
-        hint: "You make them when you walk"
-    }
-];
-
 function setupRiddles() {
     currentRiddle = 0;
+    riddleScore = 0;
+    updateLoveBar('riddle-love-fill', 'riddle-love-percent', 0);
     showRiddle();
 }
 
 function showRiddle() {
-    if (currentRiddle < riddles.length) {
-        document.getElementById('riddle-text').textContent = riddles[currentRiddle].question;
-        document.getElementById('riddle-number').textContent = currentRiddle + 1;
-        document.getElementById('answer-input').value = '';
-        document.getElementById('hint').style.display = 'none';
-    } else {
-        goToPage(18); // Go to memory game after all riddles
+    if (currentRiddle >= riddles.length) {
+        // All riddles completed
+        setTimeout(() => {
+            goToPage(20); // Auto go to transition 5
+        }, 1500);
+        return;
+    }
+    
+    const riddle = riddles[currentRiddle];
+    document.getElementById('riddle-text').textContent = riddle.question;
+    document.getElementById('riddle-number').textContent = currentRiddle + 1;
+    
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+    
+    // Create option buttons
+    riddle.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.textContent = option;
+        button.onclick = () => checkRiddleAnswer(index);
+        optionsContainer.appendChild(button);
+    });
+    
+    // Reset hint button
+    const hintBtn = document.getElementById('hint-btn');
+    if (hintBtn) {
+        hintBtn.style.display = 'inline-block';
     }
 }
 
-function checkRiddle() {
-    const userAnswer = document.getElementById('answer-input').value.trim().toLowerCase();
-    const correctAnswer = riddles[currentRiddle].answer;
+function checkRiddleAnswer(selectedIndex) {
+    const riddle = riddles[currentRiddle];
+    const buttons = document.querySelectorAll('.option-btn');
     
-    if (userAnswer === correctAnswer) {
-        currentRiddle++;
-        if (currentRiddle < riddles.length) {
-            alert('✅ Correct! Next riddle...');
-            showRiddle();
-        } else {
-            alert('🎊 Brilliant! You solved all riddles!');
-            goToPage(18);
+    // Disable all buttons
+    buttons.forEach(btn => {
+        btn.style.pointerEvents = 'none';
+    });
+    
+    // Mark correct/wrong
+    buttons.forEach((btn, index) => {
+        if (index === riddle.correct) {
+            btn.classList.add('correct');
+        } else if (index === selectedIndex && index !== riddle.correct) {
+            btn.classList.add('wrong');
         }
+    });
+    
+    if (selectedIndex === riddle.correct) {
+        riddleScore++;
+        
+        // Update love bar
+        const percent = (riddleScore / riddles.length) * 100;
+        updateLoveBar('riddle-love-fill', 'riddle-love-percent', percent);
+        
+        // Show success and move to next riddle
+        setTimeout(() => {
+            currentRiddle++;
+            showRiddle();
+        }, 1500);
     } else {
-        alert('❌ Not quite right. Try again!');
-        document.getElementById('answer-input').select();
+        // Show failure and stay on same riddle
+        setTimeout(() => {
+            buttons.forEach(btn => {
+                btn.classList.remove('correct', 'wrong');
+                btn.style.pointerEvents = 'auto';
+            });
+        }, 1500);
     }
 }
 
 function showHint() {
-    document.getElementById('hint').style.display = 'block';
+    const riddle = riddles[currentRiddle];
+    const hintBtn = document.getElementById('hint-btn');
+    
+    if (hintBtn && riddle) {
+        hintBtn.innerHTML = `Hint: ${riddle.hint} <i class="fas fa-lightbulb"></i>`;
+        hintBtn.style.pointerEvents = 'none';
+    }
 }
 
 // ======================
 // GAME 4: MEMORY GAME
 // ======================
 
-let memoryCards = [];
-let flippedCards = [];
-let matchedPairs = 0;
-
 function setupMemoryGame() {
-    memoryCards = ['❤️', '🎁', '💌', '💝', '🎀', '🎊', '💖', '💕'];
-    memoryCards = [...memoryCards, ...memoryCards]; // Duplicate for pairs
+    const symbols = ['❤️', '🎁', '💌', '💝', '🎀', '🎊', '💖', '💕'];
+    memoryCards = [...symbols, ...symbols]; // Duplicate for pairs
     
     // Shuffle
     for (let i = memoryCards.length - 1; i > 0; i--) {
@@ -354,7 +592,7 @@ function setupMemoryGame() {
     
     flippedCards = [];
     matchedPairs = 0;
-    updateMatchCounter();
+    updateLoveBar('memory-love-fill', 'memory-love-percent', 0);
     
     const container = document.getElementById('memory-game');
     if (!container) return;
@@ -395,7 +633,10 @@ function flipCard(card) {
                 card2.classList.add('matched');
                 flippedCards = [];
                 matchedPairs++;
-                updateMatchCounter();
+                
+                // Update love bar
+                const percent = (matchedPairs / 8) * 100;
+                updateLoveBar('memory-love-fill', 'memory-love-percent', percent);
                 
                 if (matchedPairs === 8) {
                     document.getElementById('memory-next-btn').style.display = 'inline-block';
@@ -414,15 +655,55 @@ function flipCard(card) {
     }
 }
 
-function updateMatchCounter() {
-    const counter = document.getElementById('match-count');
-    if (counter) {
-        counter.textContent = matchedPairs;
+function resetMemoryGame() {
+    setupMemoryGame();
+}
+
+// ======================
+// MUSIC PLAYER
+// ======================
+
+function setupMusicPlayer() {
+    console.log("Music player ready");
+    // YouTube iframe will handle playback
+}
+
+function playMusic() {
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
 }
 
-function resetMemoryGame() {
-    setupMemoryGame();
+function pauseMusic() {
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    }
+}
+
+function replayMusic() {
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+        iframe.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[0,true]}', '*');
+        setTimeout(() => {
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        }, 100);
+    }
+}
+
+// ======================
+// UTILITY FUNCTIONS
+// ======================
+
+function updateLoveBar(fillId, percentId, percent) {
+    const fill = document.getElementById(fillId);
+    const percentElement = document.getElementById(percentId);
+    
+    if (fill && percentElement) {
+        fill.style.width = `${percent}%`;
+        percentElement.textContent = `${Math.round(percent)}%`;
+    }
 }
 
 // ======================
@@ -449,7 +730,6 @@ function setupSkipPanel() {
         }
     };
     
-    // Keyboard shortcut
     document.addEventListener('keydown', function(event) {
         if (event.ctrlKey && event.shiftKey && event.key === 'S') {
             event.preventDefault();
@@ -457,7 +737,6 @@ function setupSkipPanel() {
         }
     });
     
-    // Close when clicking overlay
     document.getElementById('skip-overlay').onclick = closeSkipPanel;
 }
 
@@ -478,15 +757,12 @@ function updateSkipPanel() {
     
     skipPages.innerHTML = '';
     
-    // Create buttons for all 19 pages
-    for (let i = 1; i <= 19; i++) {
+    for (let i = 1; i <= 22; i++) {
         const btn = document.createElement('button');
         btn.className = 'skip-page-btn';
         btn.textContent = getPageName(i);
         
-        // Mark current page
-        const currentPage = document.querySelector('.page.active');
-        if (currentPage && currentPage.id === 'page' + i) {
+        if (i === currentPage) {
             btn.classList.add('current');
         }
         
@@ -503,69 +779,30 @@ function getPageName(pageNumber) {
     const names = {
         1: "Start",
         2: "Question",
-        3: "10 Hearts Game",
-        4: "Transition",
-        5: "Maze Intro",
-        6: "Maze Game",
-        7: "7 Days Intro",
-        8: "Day 1",
-        9: "Day 2",
-        10: "Day 3",
-        11: "Day 4",
-        12: "Day 5",
-        13: "Day 6",
-        14: "Day 7",
-        15: "Music Player",
-        16: "Riddles Intro",
-        17: "Riddles Game",
-        18: "Memory Game",
-        19: "Final Message"
+        3: "Transition 1",
+        4: "Tap Hearts Game",
+        5: "Transition 2",
+        6: "Maze Intro",
+        7: "Maze Game",
+        8: "Transition 3",
+        9: "7 Days Intro",
+        10: "Day 1",
+        11: "Day 2",
+        12: "Day 3",
+        13: "Day 4",
+        14: "Day 5",
+        15: "Day 6",
+        16: "Day 7",
+        17: "Music Player",
+        18: "Transition 4",
+        19: "Riddles Game",
+        20: "Transition 5",
+        21: "Memory Game",
+        22: "Final Message"
     };
     
     return names[pageNumber] || `Page ${pageNumber}`;
 }
-
-// ======================
-// UTILITY FUNCTIONS
-// ======================
-
-function createFloatingHeart(sourceElement) {
-    const heart = document.createElement('div');
-    heart.innerHTML = '❤️';
-    heart.style.cssText = `
-        position: absolute;
-        font-size: 30px;
-        pointer-events: none;
-        z-index: 100;
-        animation: floatUp 2s ease forwards;
-    `;
-    
-    const rect = sourceElement.getBoundingClientRect();
-    heart.style.left = (rect.left + rect.width / 2 - 15) + 'px';
-    heart.style.top = (rect.top - 15) + 'px';
-    
-    document.body.appendChild(heart);
-    
-    setTimeout(() => {
-        heart.remove();
-    }, 2000);
-}
-
-// Add floating animation
-const floatStyle = document.createElement('style');
-floatStyle.textContent = `
-    @keyframes floatUp {
-        0% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        100% {
-            opacity: 0;
-            transform: translateY(-100px) scale(0.5);
-        }
-    }
-`;
-document.head.appendChild(floatStyle);
 
 // ======================
 // INITIALIZE EVERYTHING
@@ -574,24 +811,30 @@ document.head.appendChild(floatStyle);
 document.addEventListener('DOMContentLoaded', function() {
     console.log("✅ Website loaded!");
     
+    // Add CSS animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            40% { transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+    
     // Setup skip panel
     setupSkipPanel();
     
-    // Setup games
-    setupHeartsGame();
-    setupMaze();
-    setupRiddles();
-    setupMemoryGame();
-    
-    // Make goToPage available globally (for onclick in HTML)
+    // Make functions available globally
     window.goToPage = goToPage;
     window.funnyNo = funnyNo;
-    window.checkHeartsGame = checkHeartsGame;
     window.resetMaze = resetMaze;
     window.playMusic = playMusic;
     window.pauseMusic = pauseMusic;
     window.replayMusic = replayMusic;
-    window.checkRiddle = checkRiddle;
+    window.checkRiddleAnswer = checkRiddleAnswer;
     window.showHint = showHint;
     window.resetMemoryGame = resetMemoryGame;
     window.closeSkipPanel = closeSkipPanel;
@@ -599,9 +842,8 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("🎉 Everything ready! Starting on page 1");
 });
 
-// Global error handler
-window.onerror = function(message, source, lineno, colno, error) {
+// Error handler
+window.onerror = function(message) {
     console.error("Error:", message);
-    // Don't show alert to avoid disturbing user
     return true;
 };
