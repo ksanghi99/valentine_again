@@ -198,6 +198,16 @@ const loveStoryPairs = [
     }
 ];
 
+function clearConnections() {
+    // Empty function - does nothing but prevents error
+    console.log("clearConnections called");
+}
+
+function resetConnectGame() {
+    // Empty function - does nothing but prevents error  
+    console.log("resetConnectGame called");
+}
+
 // ======================
 // PAGE NAVIGATION
 // ======================
@@ -234,6 +244,7 @@ function goToPage(pageNumber) {
         updateSkipPanel();
     }
 }
+console.log("🔄 Initializing Page:", pageNumber);
 
 function initializePage(pageNumber) {
     console.log("Initializing page", pageNumber);
@@ -274,6 +285,10 @@ function initializePage(pageNumber) {
             break;
         case 21: // Game 4
             initializeMatchGame();
+
+        case 22: // Video Page
+    console.log("🎬 Initializing Video Page");
+    // Initialize video page if needed  
     break;
     }
 }
@@ -1950,12 +1965,3 @@ window.onerror = function(message, source, lineno, colno, error) {
     // Don't show alerts to avoid disturbing user experience
     return true;
 };
-function clearConnections() {
-    // Empty function - does nothing but prevents error
-    console.log("clearConnections called");
-}
-
-function resetConnectGame() {
-    // Empty function - does nothing but prevents error  
-    console.log("resetConnectGame called");
-}
