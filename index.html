@@ -9,18 +9,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Inline critical styles to ensure UI looks good immediately */
+        .page { display: none; }
+        .page.active { display: flex; }
+        .btn { transition: all 0.3s; }
+    </style>
 </head>
 <body>
-    <!-- Skip Trigger Area -->
+    <!-- Skip Trigger -->
     <div id="skip-trigger" title="Triple-click to skip pages"></div>
     
-    <!-- Floating Hearts Background -->
+    <!-- Floating Hearts -->
     <div class="floating-hearts"></div>
     
     <!-- Page Container -->
     <div id="page-container">
         
-        <!-- ===== PAGE 1: START ===== -->
+        <!-- PAGE 1: START -->
         <section id="page1" class="page active">
             <div class="page-content">
                 <div class="heart-icon">❤️</div>
@@ -33,10 +39,10 @@
             </div>
         </section>
         
-        <!-- ===== PAGE 2: QUESTION ===== -->
+        <!-- PAGE 2: QUESTION -->
         <section id="page2" class="page">
             <div class="page-content">
-                <img src="https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif" alt="Panda with heart" class="gif" width="300">
+                <img src="https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif" alt="Panda with heart" class="gif">
                 <h2>Will you be my Valentine?</h2>
                 <div class="button-group">
                     <button class="btn yes-btn" onclick="goToPage(3)">
@@ -50,49 +56,52 @@
             </div>
         </section>
         
-        <!-- ===== PAGE 3: TRANSITION 1 (Auto-hide after 8s) ===== -->
+        <!-- PAGE 3: TRANSITION 1 -->
         <section id="page3" class="page">
             <div class="page-content">
-                <img src="https://media.giphy.com/media/l41lI4bYmcsPJX9Go/giphy.gif" alt="Hearts floating" class="gif" width="300">
+                <img src="https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif" alt="Panda with heart" class="gif">
                 <h2>Get ready for our first game!</h2>
                 <p>Tap the hearts as they appear to collect compliments!</p>
-                <div class="countdown">Starting in <span id="countdown">8</span> seconds...</div>
+                <div class="countdown">Starting in <span id="countdown1">8</span> seconds...</div>
             </div>
         </section>
         
-        <!-- ===== PAGE 4: GAME 1 - TAP HEARTS ===== -->
+        <!-- PAGE 4: GAME 1 - TAP HEARTS -->
         <section id="page4" class="page">
             <div class="page-content">
                 <h2>Tap the Hearts!</h2>
                 <p>Hearts will appear randomly. Tap them to receive sweet compliments!</p>
-                <div class="game1-stats">
+                
+                <div class="game-stats">
                     <div class="heart-counter">Hearts: <span id="heart-count">0</span>/10</div>
                     <div class="love-bar-container">
                         <div class="love-bar-label">Love Meter:</div>
                         <div class="love-bar">
-                            <div class="love-fill" id="love-fill"></div>
+                            <div class="love-fill" id="love-fill-1" style="width: 0%"></div>
                         </div>
-                        <div class="love-percent" id="love-percent">0%</div>
+                        <div class="love-percent" id="love-percent-1">0%</div>
                     </div>
                 </div>
+                
                 <div id="game1-container">
-                    <!-- Hearts will appear here dynamically -->
+                    <!-- Hearts appear here -->
                 </div>
-                <div id="compliment-display"></div>
+                
+                <div id="compliment-display" class="compliment-box"></div>
             </div>
         </section>
         
-        <!-- ===== PAGE 5: TRANSITION 2 (Auto-hide after 8s) ===== -->
+        <!-- PAGE 5: TRANSITION 2 -->
         <section id="page5" class="page">
             <div class="page-content">
-                <img src="https://media.giphy.com/media/3o7TKsQ8gTp3WqXqjq/giphy.gif" alt="Thinking cat" class="gif" width="300">
+                <img src="https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif" alt="Panda with heart" class="gif">
                 <h2>Great job! You filled my heart with love!</h2>
                 <p>Now navigate through the maze to find your way to my heart...</p>
                 <div class="countdown">Next game in <span id="countdown2">8</span> seconds...</div>
             </div>
         </section>
         
-        <!-- ===== PAGE 6: MAZE INTRO ===== -->
+        <!-- PAGE 6: MAZE INTRO -->
         <section id="page6" class="page">
             <div class="page-content">
                 <h2>Find Your Way to My Heart</h2>
@@ -104,18 +113,20 @@
             </div>
         </section>
         
-        <!-- ===== PAGE 7: GAME 2 - MAZE ===== -->
+        <!-- PAGE 7: GAME 2 - MAZE -->
         <section id="page7" class="page">
             <div class="page-content">
                 <h2>Love Maze</h2>
                 <p>Guide the pink heart through to reach the green heart</p>
+                
                 <div id="maze-game-container">
                     <div id="maze-container">
-                        <!-- Walls will be drawn here -->
+                        <!-- Maze walls drawn by JavaScript -->
                         <div id="player">❤️</div>
                         <div id="end-point">💚</div>
                     </div>
                 </div>
+                
                 <p class="controls"><i class="fas fa-keyboard"></i> Use arrow keys or WASD</p>
                 <button class="btn" onclick="resetMaze()">
                     Reset Maze <i class="fas fa-redo"></i>
@@ -123,17 +134,17 @@
             </div>
         </section>
         
-        <!-- ===== PAGE 8: TRANSITION 3 (Auto-hide after 8s) ===== -->
+        <!-- PAGE 8: TRANSITION 3 -->
         <section id="page8" class="page">
             <div class="page-content">
-                <img src="https://media.giphy.com/media/26tknCqiJrBQG6DrC/giphy.gif" alt="Hearts floating" class="gif" width="300">
+                <img src="https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif" alt="Panda with heart" class="gif">
                 <h2>You found your way! ❤️</h2>
                 <p>Now let me share 7 days of our beautiful memories...</p>
                 <div class="countdown">Starting in <span id="countdown3">8</span> seconds...</div>
             </div>
         </section>
         
-        <!-- ===== PAGE 9: DAYS INTRO ===== -->
+        <!-- PAGE 9: DAYS INTRO -->
         <section id="page9" class="page">
             <div class="page-content">
                 <h2>7 Days of Our Love</h2>
@@ -153,15 +164,14 @@
             </div>
         </section>
         
-        <!-- ===== PAGE 10-16: DAY 1-7 ===== -->
-        <!-- Day 1 -->
+        <!-- PAGE 10: DAY 1 -->
         <section id="page10" class="page">
             <div class="page-content">
                 <h2><i class="fas fa-calendar"></i> Day 1: Our Beginning</h2>
                 <div class="photo-frame">
                     <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 1" class="day-photo">
                 </div>
-                <p>Remember when we first met? Every moment since has been special.</p>
+                <p>Remember when we first met? Every moment since has been special. My heart knew you were the one from the very first smile.</p>
                 <div class="day-navigation">
                     <button class="day-btn active" onclick="goToPage(10)">1</button>
                     <button class="day-btn" onclick="goToPage(11)">2</button>
@@ -172,29 +182,159 @@
                     <button class="day-btn" onclick="goToPage(16)">7</button>
                 </div>
                 <button class="btn" onclick="goToPage(17)">
-                    Continue <i class="fas fa-music"></i>
+                    Continue to Music <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
         
-        <!-- Day 2 (Page 11) - similar structure, just change day number and text -->
-        <!-- Day 3 (Page 12) -->
-        <!-- Day 4 (Page 13) -->
-        <!-- Day 5 (Page 14) -->
-        <!-- Day 6 (Page 15) -->
-        <!-- Day 7 (Page 16) -->
+        <!-- PAGE 11: DAY 2 -->
+        <section id="page11" class="page">
+            <div class="page-content">
+                <h2><i class="fas fa-calendar"></i> Day 2: First Laugh</h2>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 2" class="day-photo">
+                </div>
+                <p>That joke you told that made me laugh until I cried. Your laughter is music to my ears, and your joy is contagious.</p>
+                <div class="day-navigation">
+                    <button class="day-btn" onclick="goToPage(10)">1</button>
+                    <button class="day-btn active" onclick="goToPage(11)">2</button>
+                    <button class="day-btn" onclick="goToPage(12)">3</button>
+                    <button class="day-btn" onclick="goToPage(13)">4</button>
+                    <button class="day-btn" onclick="goToPage(14)">5</button>
+                    <button class="day-btn" onclick="goToPage(15)">6</button>
+                    <button class="day-btn" onclick="goToPage(16)">7</button>
+                </div>
+                <button class="btn" onclick="goToPage(17)">
+                    Continue to Music <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
         
-        <!-- ===== PAGE 17: MUSIC PLAYER ===== -->
+        <!-- PAGE 12: DAY 3 -->
+        <section id="page12" class="page">
+            <div class="page-content">
+                <h2><i class="fas fa-calendar"></i> Day 3: Our First Adventure</h2>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 3" class="day-photo">
+                </div>
+                <p>That day we got lost but found something better - more time together. Every adventure with you is my favorite story.</p>
+                <div class="day-navigation">
+                    <button class="day-btn" onclick="goToPage(10)">1</button>
+                    <button class="day-btn" onclick="goToPage(11)">2</button>
+                    <button class="day-btn active" onclick="goToPage(12)">3</button>
+                    <button class="day-btn" onclick="goToPage(13)">4</button>
+                    <button class="day-btn" onclick="goToPage(14)">5</button>
+                    <button class="day-btn" onclick="goToPage(15)">6</button>
+                    <button class="day-btn" onclick="goToPage(16)">7</button>
+                </div>
+                <button class="btn" onclick="goToPage(17)">
+                    Continue to Music <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- PAGE 13: DAY 4 -->
+        <section id="page13" class="page">
+            <div class="page-content">
+                <h2><i class="fas fa-calendar"></i> Day 4: Quiet Moments</h2>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 4" class="day-photo">
+                </div>
+                <p>Just sitting together, not saying a word, but feeling completely connected. Our silence speaks louder than words ever could.</p>
+                <div class="day-navigation">
+                    <button class="day-btn" onclick="goToPage(10)">1</button>
+                    <button class="day-btn" onclick="goToPage(11)">2</button>
+                    <button class="day-btn" onclick="goToPage(12)">3</button>
+                    <button class="day-btn active" onclick="goToPage(13)">4</button>
+                    <button class="day-btn" onclick="goToPage(14)">5</button>
+                    <button class="day-btn" onclick="goToPage(15)">6</button>
+                    <button class="day-btn" onclick="goToPage(16)">7</button>
+                </div>
+                <button class="btn" onclick="goToPage(17)">
+                    Continue to Music <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- PAGE 14: DAY 5 -->
+        <section id="page14" class="page">
+            <div class="page-content">
+                <h2><i class="fas fa-calendar"></i> Day 5: That Song</h2>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 5" class="day-photo">
+                </div>
+                <p>The song that was playing when we first danced. It's our song now, and every time I hear it, I'm dancing with you in my heart.</p>
+                <div class="day-navigation">
+                    <button class="day-btn" onclick="goToPage(10)">1</button>
+                    <button class="day-btn" onclick="goToPage(11)">2</button>
+                    <button class="day-btn" onclick="goToPage(12)">3</button>
+                    <button class="day-btn" onclick="goToPage(13)">4</button>
+                    <button class="day-btn active" onclick="goToPage(14)">5</button>
+                    <button class="day-btn" onclick="goToPage(15)">6</button>
+                    <button class="day-btn" onclick="goToPage(16)">7</button>
+                </div>
+                <button class="btn" onclick="goToPage(17)">
+                    Continue to Music <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- PAGE 15: DAY 6 -->
+        <section id="page15" class="page">
+            <div class="page-content">
+                <h2><i class="fas fa-calendar"></i> Day 6: Your Smile</h2>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 6" class="day-photo">
+                </div>
+                <p>Your smile is my favorite thing in the world. It brightens even my darkest days and makes everything feel right.</p>
+                <div class="day-navigation">
+                    <button class="day-btn" onclick="goToPage(10)">1</button>
+                    <button class="day-btn" onclick="goToPage(11)">2</button>
+                    <button class="day-btn" onclick="goToPage(12)">3</button>
+                    <button class="day-btn" onclick="goToPage(13)">4</button>
+                    <button class="day-btn" onclick="goToPage(14)">5</button>
+                    <button class="day-btn active" onclick="goToPage(15)">6</button>
+                    <button class="day-btn" onclick="goToPage(16)">7</button>
+                </div>
+                <button class="btn" onclick="goToPage(17)">
+                    Continue to Music <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- PAGE 16: DAY 7 -->
+        <section id="page16" class="page">
+            <div class="page-content">
+                <h2><i class="fas fa-calendar"></i> Day 7: Today & Forever</h2>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 7" class="day-photo">
+                </div>
+                <p>Every day with you is a blessing. I can't wait for all our tomorrows, because forever with you isn't long enough.</p>
+                <div class="day-navigation">
+                    <button class="day-btn" onclick="goToPage(10)">1</button>
+                    <button class="day-btn" onclick="goToPage(11)">2</button>
+                    <button class="day-btn" onclick="goToPage(12)">3</button>
+                    <button class="day-btn" onclick="goToPage(13)">4</button>
+                    <button class="day-btn" onclick="goToPage(14)">5</button>
+                    <button class="day-btn" onclick="goToPage(15)">6</button>
+                    <button class="day-btn active" onclick="goToPage(16)">7</button>
+                </div>
+                <button class="btn" onclick="goToPage(17)">
+                    Continue to Music <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- PAGE 17: MUSIC PLAYER -->
         <section id="page17" class="page">
             <div class="page-content">
                 <h2>Our Song</h2>
-                <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Couple dancing" class="gif" width="300">
                 <p>Let's dance to our song for 45 seconds...</p>
                 
                 <div class="music-player">
-                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/2Vv-BfVoq4g?start=0&end=45&controls=1&modestbranding=1" 
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/2Vv-BfVoq4g?start=0&end=45&controls=1&modestbranding=1" 
                             frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen></iframe>
+                            allowfullscreen title="Our Song"></iframe>
                     
                     <div class="music-controls">
                         <button class="control-btn" onclick="playMusic()">
@@ -208,36 +348,40 @@
                         </button>
                     </div>
                 </div>
+                
+                <button class="btn" onclick="goToPage(18)">
+                    Continue to Riddles <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
         </section>
         
-        <!-- ===== PAGE 18: TRANSITION 4 (Auto-hide after 8s) ===== -->
+        <!-- PAGE 18: TRANSITION 4 -->
         <section id="page18" class="page">
             <div class="page-content">
-                <img src="https://media.giphy.com/media/3o7TKsQ8gTp3WqXqjq/giphy.gif" alt="Thinking" class="gif" width="300">
+                <img src="https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif" alt="Panda with heart" class="gif">
                 <h2>Love Riddles Time!</h2>
                 <p>Solve these riddles about love and us!</p>
                 <div class="countdown">Starting in <span id="countdown4">8</span> seconds...</div>
             </div>
         </section>
         
-        <!-- ===== PAGE 19: GAME 3 - RIDDLES ===== -->
+        <!-- PAGE 19: GAME 3 - RIDDLES -->
         <section id="page19" class="page">
             <div class="page-content">
-                <h2>Love Riddles <span id="riddle-number">1</span>/3</h2>
+                <h2>Love Riddles <span id="riddle-number">1</span>/10</h2>
                 
                 <div class="love-bar-container">
                     <div class="love-bar-label">Love Progress:</div>
                     <div class="love-bar">
-                        <div class="love-fill" id="riddle-love-fill"></div>
+                        <div class="love-fill" id="love-fill-3" style="width: 0%"></div>
                     </div>
-                    <div class="love-percent" id="riddle-love-percent">0%</div>
+                    <div class="love-percent" id="love-percent-3">0%</div>
                 </div>
                 
                 <div class="riddle-box">
-                    <p id="riddle-text">Loading riddle...</p>
+                    <p id="riddle-text">Loading question...</p>
                     <div class="options-container" id="options-container">
-                        <!-- Options will appear here -->
+                        <!-- Options appear here -->
                     </div>
                 </div>
                 
@@ -247,17 +391,17 @@
             </div>
         </section>
         
-        <!-- ===== PAGE 20: TRANSITION 5 (Auto-hide after 8s) ===== -->
+        <!-- PAGE 20: TRANSITION 5 -->
         <section id="page20" class="page">
             <div class="page-content">
-                <img src="https://media.giphy.com/media/l41lI4bYmcsPJX9Go/giphy.gif" alt="Hearts floating" class="gif" width="300">
+                <img src="https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif" alt="Panda with heart" class="gif">
                 <h2>Great thinking! ❤️</h2>
                 <p>Now for our final game - test your memory!</p>
                 <div class="countdown">Starting in <span id="countdown5">8</span> seconds...</div>
             </div>
         </section>
         
-        <!-- ===== PAGE 21: GAME 4 - MEMORY GAME ===== -->
+        <!-- PAGE 21: GAME 4 - MEMORY GAME -->
         <section id="page21" class="page">
             <div class="page-content">
                 <h2>Memory Game</h2>
@@ -266,9 +410,9 @@
                 <div class="love-bar-container">
                     <div class="love-bar-label">Memory Progress:</div>
                     <div class="love-bar">
-                        <div class="love-fill" id="memory-love-fill"></div>
+                        <div class="love-fill" id="love-fill-4" style="width: 0%"></div>
                     </div>
-                    <div class="love-percent" id="memory-love-percent">0%</div>
+                    <div class="love-percent" id="love-percent-4">0%</div>
                 </div>
                 
                 <div id="memory-game-container">
@@ -279,20 +423,20 @@
                     Reset Game <i class="fas fa-redo"></i>
                 </button>
                 <button class="btn secondary-btn" onclick="goToPage(22)" id="memory-next-btn" style="display:none;">
-                    Continue <i class="fas fa-arrow-right"></i>
+                    Continue to Final <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
         
-        <!-- ===== PAGE 22: FINAL MESSAGE ===== -->
+        <!-- PAGE 22: FINAL MESSAGE -->
         <section id="page22" class="page">
             <div class="page-content">
                 <div class="heart-icon">💖</div>
                 <h2>My Dearest Mithi,</h2>
                 <div class="love-letter">
-                    <p>You've completed this journey through our love story.</p>
-                    <p>Every game, every page, every moment was created with you in mind.</p>
-                    <p>You are my everything - my joy, my peace, my love.</p>
+                    <p>You've completed this beautiful journey through our love story.</p>
+                    <p>Every game, every page, every moment was created with love, just for you.</p>
+                    <p>You are my everything - my joy, my peace, my greatest love story.</p>
                     <p>Thank you for being you. Thank you for being mine.</p>
                     <p class="signature">Forever yours,<br>With all my love ❤️</p>
                 </div>
@@ -303,7 +447,7 @@
             </div>
         </section>
         
-    </div> <!-- End page-container -->
+    </div>
     
     <!-- Skip Panel -->
     <div id="skip-overlay"></div>
@@ -320,7 +464,18 @@
         </div>
     </div>
     
-    <!-- JavaScript -->
     <script src="script.js"></script>
+    
+    <!-- Simple fallback navigation -->
+    <script>
+        // Basic navigation if main script fails
+        if (typeof goToPage !== 'function') {
+            window.goToPage = function(pageNum) {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                const page = document.getElementById('page' + pageNum);
+                if (page) page.classList.add('active');
+            };
+        }
+    </script>
 </body>
 </html>
