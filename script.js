@@ -149,11 +149,54 @@ const riddles = [
     }
 ];
 
-// Game 4: Memory
+// Game 4: Memory - Our Love Story Pairs
 let memoryCards = [];
 let flippedCards = [];
 let matchedPairs = 0;
-const memorySymbols = ['❤️', '💖', '💕', '💝', '💌', '🎁', '💑', '🎀'];
+
+// Define our love story pairs: [Question, Answer, Reveal Message]
+const loveStoryPairs = [
+    {
+        question: "🎯 What I remember as our first meeting?",
+        answer: "Mechanical Workshop 🔧",
+        reveal: "Saloni, tera number dena! The start of everything..."
+    },
+    {
+        question: "💖 Our first date - your favorite order?",
+        answer: "Kathi King: Kaju Curry & Malai Kofta 🍛",
+        reveal: "Watching you enjoy that food... I was already falling"
+    },
+    {
+        question: "Our first trip?",
+        answer: "✈️ Kasauli",
+        reveal: "tried to get for the first time?"
+    },
+    {
+        question: "Our funniest inside joke is...😂 ",
+        answer: "Krishna had fever, and in bukhar halat mein bhi nahi baksha! 🤒",
+        reveal: "Our laughs are my favorite soundtrack"
+    },
+    {
+        question: "🛋️ My favorite cuddle spot?",
+        answer: "Anywhere with you 🥰",
+        reveal: "All spots are magical when you're in my arms"
+    },
+    {
+        question: "One day, I want us to...",
+        answer: "One day we'll marry, have kids ",
+        reveal: "then...My son will take revenge from you! 😈"
+    },
+    {
+        question: "💝 Why do I love you the most?",
+        answer: "Because you're MINE 👑",
+        reveal: "You're my everything, always and forever"
+    },
+    {
+        question: "❓ Your most memorable moment?",
+        answer: "Tosh trip ❄️",
+        reveal: "Snow and you are the most deadly combination! ⛄"
+    }
+];
 
 // ======================
 // PAGE NAVIGATION
@@ -946,10 +989,26 @@ function showHint() {
 // ======================
 
 function setupMemoryGame() {
-    // Create pairs
-    memoryCards = [...memorySymbols, ...memorySymbols];
+    // Create pairs from our love story
+    const pairs = [];
+    loveStoryPairs.forEach(pair => {
+        pairs.push({
+            type: 'question',
+            text: pair.question,
+            pairId: loveStoryPairs.indexOf(pair),
+            reveal: pair.reveal
+        });
+        pairs.push({
+            type: 'answer', 
+            text: pair.answer,
+            pairId: loveStoryPairs.indexOf(pair),
+            reveal: pair.reveal
+        });
+    });
     
-    // Shuffle
+    memoryCards = [...pairs];
+    
+    // Shuffle the cards
     for (let i = memoryCards.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [memoryCards[i], memoryCards[j]] = [memoryCards[j], memoryCards[i]];
@@ -965,50 +1024,105 @@ function setupMemoryGame() {
     container.innerHTML = '';
     
     // Create cards
-    memoryCards.forEach((symbol, index) => {
-        const card = document.createElement('div');
-        card.className = 'memory-card';
-        card.dataset.index = index;
-        card.dataset.symbol = symbol;
-        card.textContent = '?';
+    memoryCards.forEach((card, index) => {
+        const cardElement = document.createElement('div');
+        cardElement.className = 'memory-card';
+        cardElement.dataset.index = index;
+        cardElement.dataset.pairId = card.pairId;
+        cardElement.dataset.type = card.type;
+        cardElement.dataset.reveal = card.reveal;
         
-        card.onclick = function() {
+        // Card back (shows ?)
+        const cardBack = document.createElement('div');
+        cardBack.className = 'card-back';
+        cardBack.textContent = '?';
+        cardBack.style.cssText = `
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            border-radius: 20px;
+        `;
+        
+        // Card front (shows content)
+        const cardFront = document.createElement('div');
+        cardFront.className = 'card-front';
+        cardFront.textContent = card.text;
+        cardFront.style.cssText = `
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: ${card.type === 'question' ? '1.2rem' : '1.4rem'};
+            padding: 15px;
+            text-align: center;
+            background: ${card.type === 'question' ? '#fff9fa' : '#f0f7ff'};
+            color: #5a3d5c;
+            border-radius: 20px;
+            border: 3px solid ${card.type === 'question' ? '#ffccd5' : '#d6eaf8'};
+            font-weight: ${card.type === 'question' ? '600' : '500'};
+        `;
+        
+        cardElement.appendChild(cardBack);
+        cardElement.appendChild(cardFront);
+        
+        cardElement.onclick = function() {
             if (flippedCards.length < 2 && 
-                !card.classList.contains('flipped') && 
-                !card.classList.contains('matched')) {
-                flipCard(card);
+                !cardElement.classList.contains('flipped') && 
+                !cardElement.classList.contains('matched')) {
+                flipCard(cardElement);
             }
         };
         
-        container.appendChild(card);
+        container.appendChild(cardElement);
     });
     
     document.getElementById('memory-next-btn').style.display = 'none';
+    updateProgressText();
 }
-
 function flipCard(card) {
     card.classList.add('flipped');
-    card.textContent = card.dataset.symbol;
     flippedCards.push(card);
     
     if (flippedCards.length === 2) {
         const [card1, card2] = flippedCards;
+        const pairId1 = card1.dataset.pairId;
+        const pairId2 = card2.dataset.pairId;
+        const type1 = card1.dataset.type;
+        const type2 = card2.dataset.type;
         
-        if (card1.dataset.symbol === card2.dataset.symbol) {
-            // Match found
+        // Check if it's a valid pair (question + answer with same pairId)
+        if (pairId1 === pairId2 && type1 !== type2) {
+            // Match found!
             setTimeout(() => {
                 card1.classList.add('matched');
                 card2.classList.add('matched');
                 flippedCards = [];
                 matchedPairs++;
                 
+                // Show romantic reveal message
+                showMemoryReveal(card1.dataset.reveal);
+                
                 // Update love bar
-                const percent = (matchedPairs / memorySymbols.length) * 100;
+                const percent = (matchedPairs / loveStoryPairs.length) * 100;
                 updateLoveBar('love-fill-4', 'love-percent-4', percent);
                 
+                // Update progress text
+                updateProgressText();
+                
                 // Check if game is complete
-                if (matchedPairs === memorySymbols.length) {
+                if (matchedPairs === loveStoryPairs.length) {
                     document.getElementById('memory-next-btn').style.display = 'inline-block';
+                    
+                    // Show completion message
+                    setTimeout(() => {
+                        showMemoryReveal("🎉 You've unlocked all our beautiful memories! Our love story continues... ❤️");
+                    }, 1000);
                 }
             }, 600);
         } else {
@@ -1016,15 +1130,97 @@ function flipCard(card) {
             setTimeout(() => {
                 card1.classList.remove('flipped');
                 card2.classList.remove('flipped');
-                card1.textContent = '?';
-                card2.textContent = '?';
                 flippedCards = [];
             }, 1000);
         }
     }
 }
+function showMemoryReveal(message) {
+    // Remove existing reveal if any
+    const existingReveal = document.querySelector('.memory-reveal');
+    if (existingReveal) {
+        existingReveal.remove();
+    }
+    
+    // Create reveal element
+    const revealDiv = document.createElement('div');
+    revealDiv.className = 'memory-reveal';
+    revealDiv.innerHTML = `
+        <div class="reveal-content">
+            <div class="reveal-icon">💖</div>
+            <div class="reveal-text">${message}</div>
+        </div>
+    `;
+    
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .memory-reveal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 249, 250, 0.98));
+            border-radius: 25px;
+            padding: 30px;
+            z-index: 9999;
+            box-shadow: 0 25px 60px rgba(231, 76, 137, 0.4);
+            border: 4px solid #ffccd5;
+            min-width: 300px;
+            max-width: 500px;
+            animation: revealPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+        }
+        
+        .reveal-content {
+            text-align: center;
+        }
+        
+        .reveal-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: heartbeat 1.2s infinite;
+        }
+        
+        .reveal-text {
+            font-size: 1.4rem;
+            color: #5a3d5c;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        @keyframes revealPop {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+    `;
+    
+    document.head.appendChild(style);
+    document.body.appendChild(revealDiv);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        if (revealDiv.parentNode) {
+            revealDiv.style.animation = 'revealPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) reverse';
+            setTimeout(() => {
+                if (revealDiv.parentNode) {
+                    revealDiv.remove();
+                }
+            }, 500);
+        }
+    }, 3000);
+}
+
+function updateProgressText() {
+    const progressElement = document.querySelector('.love-bar-label');
+    if (progressElement) {
+        progressElement.textContent = `Love Memories: ${matchedPairs}/${loveStoryPairs.length}`;
+    }
+}
 
 function resetMemoryGame() {
+    // Clear any reveal messages
+    document.querySelectorAll('.memory-reveal').forEach(el => el.remove());
     setupMemoryGame();
 }
 
