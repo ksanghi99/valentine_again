@@ -850,21 +850,49 @@ function updateDayNavigation(activeDay) {
 function playNostalgicVideo() {
     const video = document.getElementById('nostalgic-video');
     const placeholder = document.querySelector('.video-placeholder');
+    const playBtn = document.getElementById('play-btn');
+    const videoContainer = document.getElementById('video-container');
     
-    // Hide placeholder
+    // Hide placeholder, show video
     placeholder.style.display = 'none';
     video.style.display = 'block';
+    videoContainer.classList.add('video-playing');
     
-    // Don't auto-play, let user click play in video controls
-    // Just show the video with controls
+    // Try to play with error handling
+    const playPromise = video.play();
     
-    // Show message
-    showVideoToast("Click the play button above to watch our dance! 🎬");
-    
-    // Scroll to video
-    video.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            // Video started successfully
+            console.log("✅ Video playing successfully!");
+            playBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Our Dance';
+            playBtn.onclick = pauseNostalgicVideo;
+            
+            // Show success toast
+            showVideoToast("Reliving our perfect moment... 💖");
+        }).catch(error => {
+            // Show error message
+            console.error("❌ Video play failed:", error);
+            
+            // Show helpful error to user
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'video-error';
+            errorMsg.innerHTML = `
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <strong>Video won't play automatically</strong><br>
+                    Click the play button in the video controls above.
+                </div>
+            `;
+            
+            // Insert after video container
+            videoContainer.parentNode.insertBefore(errorMsg, videoContainer.nextSibling);
+            
+            // Still update button
+            playBtn.innerHTML = '<i class="fas fa-play"></i> Try Playing Again';
+        });
+    }
 }
-
 function pauseNostalgicVideo() {
     const video = document.getElementById('nostalgic-video');
     const playBtn = document.getElementById('play-btn');
