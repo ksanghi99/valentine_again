@@ -845,6 +845,113 @@ function updateDayNavigation(activeDay) {
         }
     });
 }
+/* ===== NOSTALGIC DANCE VIDEO FUNCTIONS ===== */
+
+function playNostalgicVideo() {
+    const video = document.getElementById('nostalgic-video');
+    const placeholder = document.querySelector('.video-placeholder');
+    const playBtn = document.getElementById('play-btn');
+    const videoContainer = document.getElementById('video-container');
+    
+    // Hide placeholder, show video
+    placeholder.style.display = 'none';
+    video.style.display = 'block';
+    videoContainer.classList.add('video-playing');
+    
+    // Play video
+    video.play();
+    
+    // Update button text
+    playBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Our Dance';
+    playBtn.onclick = pauseNostalgicVideo;
+    
+    // Show romantic toast when video starts
+    setTimeout(() => {
+        showVideoToast("Reliving our perfect moment... 💖");
+    }, 1000);
+}
+
+function pauseNostalgicVideo() {
+    const video = document.getElementById('nostalgic-video');
+    const playBtn = document.getElementById('play-btn');
+    
+    video.pause();
+    
+    // Update button text
+    playBtn.innerHTML = '<i class="fas fa-play"></i> Continue Watching';
+    playBtn.onclick = playNostalgicVideo;
+}
+
+function replayVideo() {
+    const video = document.getElementById('nostalgic-video');
+    const playBtn = document.getElementById('play-btn');
+    
+    // Reset and play again
+    video.currentTime = 0;
+    video.play();
+    
+    // Update button
+    playBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Our Dance';
+    playBtn.onclick = pauseNostalgicVideo;
+    
+    // Show replay message
+    showVideoToast("Watching it again? Me too! 💕");
+}
+
+function showVideoToast(message) {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = 'video-toast';
+    toast.innerHTML = `
+        <i class="fas fa-heart"></i>
+        <span>${message}</span>
+    `;
+    
+    // Add to page
+    document.querySelector('.page-content').appendChild(toast);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+// Add toast CSS
+const style = document.createElement('style');
+style.textContent = `
+    .video-toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #ff6b8b, #e74c89);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        z-index: 1000;
+        box-shadow: 0 10px 30px rgba(231, 76, 137, 0.4);
+        animation: slideUp 0.3s ease;
+    }
+    
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+    
+    .video-toast i {
+        font-size: 1.5rem;
+    }
+`;
+document.head.appendChild(style);
 
 // ======================
 // GAME 3: RIDDLES
