@@ -1897,3 +1897,35 @@ p {
         padding: 15px;
     }
 }
+/* Video Error Message */
+.video-error {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border: 3px solid #ffc107;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: slideIn 0.5s ease;
+}
+
+.video-error i {
+    font-size: 2rem;
+    color: #ff9800;
+    flex-shrink: 0;
+}
+
+.video-error strong {
+    color: #5a3d5c;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.video-error div {
+    color: #5a3d5c;
+    font-size: 1rem;
+    line-height: 1.5;
+}
