@@ -994,56 +994,64 @@ const loveStoryMatchData = [
         question: "🎯 What do I remember as our first meeting?",
         answer: "Mechanical Workshop 🔧",
         reveal: "Saloni, tera number dena! The start of everything...",
-        hint: "Think about where things really began for us"
+        hint: "Think about where things really began for us",
+        image: "images/memory1.jpg"
     },
     {
         id: 2,
         question: "💖 Our first date - what was your favorite order?",
         answer: "Kathi King: Kaju Curry & Malai Kofta 🍛",
         reveal: "Watching you enjoy that food... I was already falling",
-        hint: "Remember our first restaurant date?"
+        hint: "Remember our first restaurant date?",
+        image: "images/memory2.jpg"
     },
     {
         id: 3,
         question: "First trip?",
         answer: "✈️ Kasauli trip",
         reveal: "Tried to... you know 😂😂..... Adventures with you are always unforgettable!",
-        hint: "Our first trip together had some firsts..."
+        hint: "Our first trip together had some firsts...",
+        image: "images/memory3.jpg"
     },
     {
         id: 4,
         question: "our inside joke?",
         answer: "Krishna had fever, and in bukhar halat mein... bhi nahi baksha! 🤒",
         reveal: "Our laughs are my favorite soundtrack",
-        hint: "Our funniest inside joke about being stubborn"
+        hint: "Our funniest inside joke about being stubborn",
+        image: "images/memory4.jpg"
     },
     {
         id: 5,
         question: "🛋️ What's my favorite cuddle spot?",
         answer: "Anywhere with you 🥰",
         reveal: "All spots are magical when you're in my arms",
-        hint: "It's not about the place, but the company"
+        hint: "It's not about the place, but the company",
+        image: "images/memory5.jpg"
     },
     {
         id: 6,
         question: "How our future looks like?",
         answer: "👶 One day we'll marry and have kids",
         reveal: "then...My son will take revenge from you! 😈. Can't wait for our chaotic, beautiful future",
-        hint: "Our playful future parenting plans"
+        hint: "Our playful future parenting plans",
+        image: "images/memory6.jpg"
     },
     {
         id: 7,
         question: "💝 Why do I love you the most?",
         answer: "Because you're MINE 👑",
         reveal: "You're my everything, always and forever",
-        hint: "It's a possessive but loving reason"
+        hint: "It's a possessive but loving reason",
+        image: "images/memory7.jpg"
     },
     {
         id: 8,
         question: "❓ What's your most memorable moment?",
         answer: "Tosh trip ❄️",
         reveal: "Snow and you are the most deadly combination! ⛄",
-        hint: "Think about our most adventurous trip"
+        hint: "Think about our most adventurous trip",
+        image: "images/memory8.jpg"
     }
 ];
 
