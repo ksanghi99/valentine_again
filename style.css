@@ -656,9 +656,9 @@ p {
     flex-shrink: 0;
 }
 
-/* ===== GAME 4: MEMORY GAME ===== */
+/* ===== GAME 4: MEMORY GAME - UPDATED ===== */
 #memory-game-container {
-    max-width: 650px;
+    max-width: 700px;
     margin: 45px auto;
     padding: 30px;
     background: #f8f9fa;
@@ -675,20 +675,13 @@ p {
 }
 
 .memory-card {
-    width: 130px;
-    height: 130px;
-    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    width: 150px;
+    height: 150px;
     border-radius: 20px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    color: white;
     transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform-style: preserve-3d;
     position: relative;
-    box-shadow: 0 15px 35px rgba(155, 89, 182, 0.3);
     perspective: 1000px;
 }
 
@@ -698,18 +691,69 @@ p {
 
 .memory-card.flipped {
     transform: rotateY(180deg);
-    background: white;
-    color: #9b59b6;
 }
 
 .memory-card.matched {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
-    color: white;
     cursor: default;
     transform: scale(0.95);
     animation: matchedPulse 0.5s ease;
 }
 
+.card-back, .card-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.card-back {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: white;
+    font-size: 2.8rem;
+    box-shadow: 0 10px 25px rgba(155, 89, 182, 0.3);
+}
+
+.card-front {
+    background: white;
+    transform: rotateY(180deg);
+    color: #5a3d5c;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.4;
+    font-weight: 500;
+    border: 3px solid #e9ecef;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    word-break: break-word;
+    overflow: hidden;
+}
+
+.memory-card.matched .card-front {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    border-color: #2ecc71;
+}
+
+@keyframes matchedPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(0.95); }
+}
+
+/* Love bar label update */
+.love-bar-label {
+    font-size: 1.4rem;
+    color: #9b59b6;
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0.5px;
+}
 /* ===== LOVE LETTER ===== */
 .love-letter {
     text-align: left;
