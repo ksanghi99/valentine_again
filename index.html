@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Mitthi ❤️ - A Valentine's Journey</title>
+    <meta name="description" content="A special Valentine's surprise for Mitthi">
+    
+    <!-- Romantic Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+    
+    <style>
+        /* Quick loading styles - full CSS in separate file */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Playfair Display', serif; overflow: hidden; }
+        .page { display: none; position: fixed; width: 100%; height: 100%; }
+        .page.active { display: block; }
+    </style>
+</head>
+<body>
+    <!-- ==================== PAGE 00: START ==================== -->
+    <section id="page-start" class="page active" data-page="00">
+        <div class="start-container">
+            <div class="heart-pulse">❤️</div>
+            <h1 class="start-title">For My Mitthi ❤️</h1>
+            <p class="start-subtitle">A journey of our love awaits...</p>
+            <button id="start-btn" class="start-button">
+                <i class="fas fa-heart"></i> Begin Our Story
+            </button>
+            <p class="start-hint">(Open on laptop for the best experience)</p>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 01: VALENTINE QUESTION ==================== -->
+    <section id="page-question" class="page" data-page="01">
+        <div class="question-container">
+            <h1 class="question-title">Mitthi, my love...</h1>
+            <h2 class="question-main">Will you be my Valentine? 💖</h2>
+            
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" 
+                     alt="Shy panda" class="question-gif"
+                     onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"280\" height=\"200\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffe6eb\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"%23ff4d6d\" text-anchor=\"middle\" dy=\".3em\">💖 For Mitthi 💖</text></svg>'">
+            </div>
+            
+            <div class="question-buttons">
+                <button id="yes-btn" class="answer-btn yes-btn">
+                    <i class="fas fa-heart"></i> YES! A Thousand Times Yes! 💘
+                </button>
+                <button id="no-btn" class="answer-btn no-btn">
+                    <i class="fas fa-grin-tongue-wink"></i> NO 😝
+                </button>
+            </div>
+            
+            <p class="question-note">(The NO button is just for fun... you know the right answer 😉)</p>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 02: TRANSITION 1 ==================== -->
+    <section id="page-transition1" class="page" data-page="02">
+        <div class="transition-container">
+            <div class="transition-content">
+                <div class="transition-gif">
+                    <img src="https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif" 
+                         alt="Cute transition"
+                         onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"350\" height=\"250\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffd6e0\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"28\" fill=\"%23d6336c\" text-anchor=\"middle\" dy=\".3em\">💕 Loading Love 💕</text></svg>'">
+                </div>
+                <h2 class="transition-text">Preparing something special for you...</h2>
+                <div class="loading-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 03: GAME 1 - 10 HEARTS ==================== -->
+    <section id="page-game1" class="page" data-page="03">
+        <div class="game1-container">
+            <h1 class="game-title">Collect My Heart 💖</h1>
+            <p class="game-subtitle">Click each heart to reveal how I feel about you</p>
+            
+            <div class="hearts-counter">
+                <span id="hearts-collected">0</span> / 10 Hearts Collected
+            </div>
+            
+            <div id="game1-area" class="game1-area">
+                <!-- Hearts will be generated here -->
+            </div>
+            
+            <div id="compliment-box" class="compliment-box">
+                <!-- Compliments appear here -->
+            </div>
+            
+            <div class="game-instruction">
+                <i class="fas fa-mouse-pointer"></i> Click on each heart as it appears
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 04: TRANSITION 2 ==================== -->
+    <section id="page-transition2" class="page" data-page="04">
+        <div class="transition-container">
+            <div class="transition-content">
+                <div class="transition-gif">
+                    <img src="https://media.giphy.com/media/l0Hek8mXSBY772iMo/giphy.gif" 
+                         alt="Girl typing love letter"
+                         onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"350\" height=\"250\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffd6e0\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"28\" fill=\"%23d6336c\" text-anchor=\"middle\" dy=\".3em\">📝 Writing Love 📝</text></svg>'">
+                </div>
+                <h2 class="transition-text">Your next adventure awaits...</h2>
+                <div class="loading-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 05: GAME 2 - MAZE ==================== -->
+    <section id="page-maze" class="page" data-page="05">
+        <div class="maze-container">
+            <h1 class="game-title">Find Your Way To Me 🏰</h1>
+            <p class="game-subtitle">Guide Mitthi through the maze to reach Krishna</p>
+            
+            <div class="maze-characters">
+                <div class="character">
+                    <div class="char-circle mitthi-char">M</div>
+                    <div class="char-name">Mitthi</div>
+                </div>
+                <div class="character">
+                    <div class="char-circle krishna-char">K</div>
+                    <div class="char-name">Krishna</div>
+                </div>
+            </div>
+            
+            <div class="maze-wrapper">
+                <canvas id="maze-canvas" width="600" height="500"></canvas>
+            </div>
+            
+            <div class="maze-controls">
+                <div class="control-row">
+                    <button class="control-btn" id="maze-up">↑</button>
+                </div>
+                <div class="control-row">
+                    <button class="control-btn" id="maze-left">←</button>
+                    <button class="control-btn" id="maze-down">↓</button>
+                    <button class="control-btn" id="maze-right">→</button>
+                </div>
+            </div>
+            
+            <div class="maze-stats">
+                <div class="maze-stat">
+                    <span class="stat-label">Moves:</span>
+                    <span id="maze-moves" class="stat-value">0</span>
+                </div>
+                <div class="maze-stat">
+                    <span class="stat-label">Time:</span>
+                    <span id="maze-time" class="stat-value">0s</span>
+                </div>
+            </div>
+            
+            <div id="maze-message" class="maze-message"></div>
+            
+            <p class="key-hint">Use arrow keys or buttons to move</p>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 06: TRANSITION 3 ==================== -->
+    <section id="page-transition3" class="page" data-page="06">
+        <div class="transition-container">
+            <div class="transition-content">
+                <div class="transition-gif">
+                    <img src="https://media.giphy.com/media/1JmGiBtqTuehfYxuy9/giphy.gif" 
+                         alt="Cat hugging heart"
+                         onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"350\" height=\"250\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffd6e0\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"28\" fill=\"%23d6336c\" text-anchor=\"middle\" dy=\".3em\">🐱 Hugs & Love 🐱</text></svg>'">
+                </div>
+                <h2 class="transition-text">7 days of love coming up...</h2>
+                <div class="loading-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 07: DAY 1 ==================== -->
+    <section id="page-day1" class="page day-page" data-page="07">
+        <div class="day-container">
+            <div class="day-header">
+                <h1 class="day-title">7 Days of Valentine 💕</h1>
+                <div class="day-counter">Day <span class="day-number">1</span> of 7</div>
+            </div>
+            
+            <div class="day-content">
+                <div class="day-message">
+                    <h2>Day 1: The Beginning ✨</h2>
+                    <p class="day-quote">"Every moment with you feels like magic. From our first hello to every memory we've created, you've colored my world with love."</p>
+                </div>
+                
+                <div class="day-photo-container">
+                    <img src="assets/photos/day1.jpg" 
+                         alt="Day 1 Memory" 
+                         class="day-photo blur-photo"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffb3c6\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\">Day 1: Our Beginning 💖</text></svg>'">
+                    <div class="reveal-instruction">
+                        <i class="fas fa-hand-point-up"></i> Click to reveal
+                    </div>
+                </div>
+                
+                <div class="day-navigation">
+                    <button class="nav-btn prev-btn" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button class="nav-btn next-btn" data-next="day2">
+                        Next Day <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 08: DAY 2 ==================== -->
+    <section id="page-day2" class="page day-page" data-page="08">
+        <div class="day-container">
+            <div class="day-header">
+                <h1 class="day-title">7 Days of Valentine 💕</h1>
+                <div class="day-counter">Day <span class="day-number">2</span> of 7</div>
+            </div>
+            
+            <div class="day-content">
+                <div class="day-message">
+                    <h2>Day 2: Laughter & Joy 😊</h2>
+                    <p class="day-quote">"Your laughter is my favorite sound. The way your eyes light up when you smile makes even ordinary days extraordinary."</p>
+                </div>
+                
+                <div class="day-photo-container">
+                    <img src="assets/photos/day2.jpg" 
+                         alt="Day 2 Memory" 
+                         class="day-photo blur-photo"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffb3c6\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\">Day 2: Laughter 😊</text></svg>'">
+                    <div class="reveal-instruction">
+                        <i class="fas fa-hand-point-up"></i> Click to reveal
+                    </div>
+                </div>
+                
+                <div class="day-navigation">
+                    <button class="nav-btn prev-btn" data-prev="day1">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button class="nav-btn next-btn" data-next="day3">
+                        Next Day <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 09: DAY 3 ==================== -->
+    <section id="page-day3" class="page day-page" data-page="09">
+        <div class="day-container">
+            <div class="day-header">
+                <h1 class="day-title">7 Days of Valentine 💕</h1>
+                <div class="day-counter">Day <span class="day-number">3</span> of 7</div>
+            </div>
+            
+            <div class="day-content">
+                <div class="day-message">
+                    <h2>Day 3: Comfort & Peace 🏡</h2>
+                    <p class="day-quote">"With you, I've found my safe place. Your presence is my calm in chaos, my peace in the storm."</p>
+                </div>
+                
+                <div class="day-photo-container">
+                    <img src="assets/photos/day3.jpg" 
+                         alt="Day 3 Memory" 
+                         class="day-photo blur-photo"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffb3c6\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\">Day 3: Comfort 🏡</text></svg>'">
+                    <div class="reveal-instruction">
+                        <i class="fas fa-hand-point-up"></i> Click to reveal
+                    </div>
+                </div>
+                
+                <div class="day-navigation">
+                    <button class="nav-btn prev-btn" data-prev="day2">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button class="nav-btn next-btn" data-next="day4">
+                        Next Day <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 10: DAY 4 ==================== -->
+    <section id="page-day4" class="page day-page" data-page="10">
+        <div class="day-container">
+            <div class="day-header">
+                <h1 class="day-title">7 Days of Valentine 💕</h1>
+                <div class="day-counter">Day <span class="day-number">4</span> of 7</div>
+            </div>
+            
+            <div class="day-content">
+                <div class="day-message">
+                    <h2>Day 4: Adventures Together 🧭</h2>
+                    <p class="day-quote">"Every day with you is an adventure. Whether we're exploring new places or enjoying quiet moments, I love experiencing life with you."</p>
+                </div>
+                
+                <div class="day-photo-container">
+                    <img src="assets/photos/day4.jpg" 
+                         alt="Day 4 Memory" 
+                         class="day-photo blur-photo"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffb3c6\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\">Day 4: Adventures 🧭</text></svg>'">
+                    <div class="reveal-instruction">
+                        <i class="fas fa-hand-point-up"></i> Click to reveal
+                    </div>
+                </div>
+                
+                <div class="day-navigation">
+                    <button class="nav-btn prev-btn" data-prev="day3">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button class="nav-btn next-btn" data-next="day5">
+                        Next Day <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 11: DAY 5 ==================== -->
+    <section id="page-day5" class="page day-page" data-page="11">
+        <div class="day-container">
+            <div class="day-header">
+                <h1 class="day-title">7 Days of Valentine 💕</h1>
+                <div class="day-counter">Day <span class="day-number">5</span> of 7</div>
+            </div>
+            
+            <div class="day-content">
+                <div class="day-message">
+                    <h2>Day 5: Sweet Moments 🍫</h2>
+                    <p class="day-quote">"Life is sweeter with you. From shared desserts to stolen kisses, every moment with you feels like a delicious treat."</p>
+                </div>
+                
+                <div class="day-photo-container">
+                    <img src="assets/photos/day5.jpg" 
+                         alt="Day 5 Memory" 
+                         class="day-photo blur-photo"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffb3c6\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\">Day 5: Sweetness 🍫</text></svg>'">
+                    <div class="reveal-instruction">
+                        <i class="fas fa-hand-point-up"></i> Click to reveal
+                    </div>
+                </div>
+                
+                <div class="day-navigation">
+                    <button class="nav-btn prev-btn" data-prev="day4">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button class="nav-btn next-btn" data-next="day6">
+                        Next Day <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 12: DAY 6 ==================== -->
+    <section id="page-day6" class="page day-page" data-page="12">
+        <div class="day-container">
+            <div class="day-header">
+                <h1 class="day-title">7 Days of Valentine 💕</h1>
+                <div class="day-counter">Day <span class="day-number">6</span> of 7</div>
+            </div>
+            
+            <div class="day-content">
+                <div class="day-message">
+                    <h2>Day 6: Heartbeats ❤️</h2>
+                    <p class="day-quote">"My heart beats only for you. With every pulse, it whispers your name and celebrates the love we share."</p>
+                </div>
+                
+                <div class="day-photo-container">
+                    <img src="assets/photos/day6.jpg" 
+                         alt="Day 6 Memory" 
+                         class="day-photo blur-photo"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffb3c6\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\">Day 6: Heartbeats ❤️</text></svg>'">
+                    <div class="reveal-instruction">
+                        <i class="fas fa-hand-point-up"></i> Click to reveal
+                    </div>
+                </div>
+                
+                <div class="day-navigation">
+                    <button class="nav-btn prev-btn" data-prev="day5">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button class="nav-btn next-btn" data-next="song">
+                        Our Song <i class="fas fa-music"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 13: SONG PAGE ==================== -->
+    <section id="page-song" class="page" data-page="13">
+        <div class="song-container">
+            <h1 class="song-title">Our Song 💿</h1>
+            <p class="song-subtitle">A melody that reminds me of us</p>
+            
+            <div class="player-wrapper">
+                <div class="record-player">
+                    <div class="record" id="record">
+                        <div class="record-label">Mitthi & Krishna</div>
+                        <div class="record-center"></div>
+                    </div>
+                    <div class="record-needle" id="needle"></div>
+                </div>
+                
+                <div class="player-controls">
+                    <button id="play-btn" class="play-btn">
+                        <i class="fas fa-play"></i> Play Our Song
+                    </button>
+                    <p class="song-info">"Perfect" by Ed Sheeran</p>
+                </div>
+            </div>
+            
+            <!-- YouTube Embed (First 45 seconds) -->
+            <div class="youtube-wrapper">
+                <div class="youtube-container">
+                    <iframe 
+                        id="youtube-player"
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/2Vv-BfVoq4g?start=0&end=45&controls=1&modestbranding=1&rel=0"
+                        title="Perfect by Ed Sheeran"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                    <p class="youtube-note">Click play above to hear our song</p>
+                </div>
+            </div>
+            
+            <div class="dance-animation">
+                <div class="dance-couple">💃🕺</div>
+                <div class="rain-effect"></div>
+                <p class="dance-text">Dancing in the rain with you...</p>
+            </div>
+            
+            <button id="continue-after-song" class="continue-btn">
+                Continue Our Journey <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 14: TRANSITION 4 ==================== -->
+    <section id="page-transition4" class="page" data-page="14">
+        <div class="transition-container">
+            <div class="transition-content">
+                <div class="transition-gif">
+                    <img src="https://media.giphy.com/media/l0Hek8mXSBY772iMo/giphy.gif" 
+                         alt="Typing love letter"
+                         onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"350\" height=\"250\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffd6e0\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"28\" fill=\"%23d6336c\" text-anchor=\"middle\" dy=\".3em\">💌 More Love 💌</text></svg>'">
+                </div>
+                <h2 class="transition-text">Decoding my heart...</h2>
+                <div class="loading-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 15: GAME 3 - RIDDLES ==================== -->
+    <section id="page-riddle" class="page" data-page="15">
+        <div class="riddle-container">
+            <h1 class="game-title">Decode My Heart 🔐</h1>
+            <p class="game-subtitle">Choose what describes "Us" best</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="riddle-progress"></div>
+                </div>
+                <div class="progress-text">
+                    Question <span id="current-riddle">1</span> of 10
+                </div>
+            </div>
+            
+            <div class="riddle-question-container">
+                <div class="riddle-card">
+                    <div class="riddle-number">Question <span id="riddle-num">1</span></div>
+                    <div id="riddle-text" class="riddle-text">
+                        What do you call a couple who's always laughing together?
+                    </div>
+                </div>
+            </div>
+            
+            <div id="riddle-options" class="riddle-options">
+                <!-- Options will be generated here -->
+            </div>
+            
+            <div class="riddle-feedback">
+                <div id="riddle-feedback" class="feedback-message"></div>
+                <div class="hearts-earned">
+                    ❤️ Earned: <span id="hearts-earned">0</span>/10
+                </div>
+            </div>
+            
+            <div class="riddle-stats">
+                <div class="riddle-stat">
+                    <div class="stat-label">Correct</div>
+                    <div id="riddle-correct" class="stat-value">0</div>
+                </div>
+                <div class="riddle-stat">
+                    <div class="stat-label">Streak</div>
+                    <div id="riddle-streak" class="stat-value">0</div>
+                </div>
+            </div>
+            
+            <button id="next-riddle-btn" class="next-btn" disabled>
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 16: TRANSITION 5 ==================== -->
+    <section id="page-transition5" class="page" data-page="16">
+        <div class="transition-container">
+            <div class="transition-content">
+                <div class="transition-gif">
+                    <img src="https://media.giphy.com/media/1JmGiBtqTuehfYxuy9/giphy.gif" 
+                         alt="Cat hugging heart"
+                         onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"350\" height=\"250\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffd6e0\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"28\" fill=\"%23d6336c\" text-anchor=\"middle\" dy=\".3em\">🐾 Almost There 🐾</text></svg>'">
+                </div>
+                <h2 class="transition-text">Matching our memories...</h2>
+                <div class="loading-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 17: GAME 4 - MEMORY ==================== -->
+    <section id="page-memory" class="page" data-page="17">
+        <div class="memory-container">
+            <h1 class="game-title">Match Our Story 💞</h1>
+            <p class="game-subtitle">Find all the matching pairs of our memories</p>
+            
+            <div class="memory-stats">
+                <div class="memory-stat">
+                    <div class="stat-label">Moves</div>
+                    <div id="memory-moves" class="stat-value">0</div>
+                </div>
+                <div class="memory-stat">
+                    <div class="stat-label">Time</div>
+                    <div id="memory-time" class="stat-value">0s</div>
+                </div>
+                <div class="memory-stat">
+                    <div class="stat-label">Matches</div>
+                    <div id="memory-matches" class="stat-value">0/6</div>
+                </div>
+            </div>
+            
+            <div class="memory-grid" id="memory-grid">
+                <!-- Cards will be generated here -->
+            </div>
+            
+            <div class="memory-feedback">
+                <div id="memory-message" class="feedback-message"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="memory-progress"></div>
+                    </div>
+                    <div id="memory-progress-text" class="progress-text">0% Complete</div>
+                </div>
+            </div>
+            
+            <div class="memory-controls">
+                <button id="memory-reset" class="control-btn">
+                    <i class="fas fa-redo"></i> Restart Game
+                </button>
+                <button id="memory-hint" class="control-btn hint-btn">
+                    <i class="fas fa-lightbulb"></i> Show Hint
+                </button>
+            </div>
+            
+            <p class="game-instruction">
+                <i class="fas fa-info-circle"></i> Click two cards to find matching pairs
+            </p>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 18: TRANSITION 6 ==================== -->
+    <section id="page-transition6" class="page" data-page="18">
+        <div class="transition-container">
+            <div class="transition-content">
+                <div class="transition-gif">
+                    <img src="https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif" 
+                         alt="Cute transition"
+                         onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"350\" height=\"250\"><rect width=\"100%\" height=\"100%\" fill=\"%23ffd6e0\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"28\" fill=\"%23d6336c\" text-anchor=\"middle\" dy=\".3em\">🌟 Final Chapter 🌟</text></svg>'">
+                </div>
+                <h2 class="transition-text">The final chapter of our story...</h2>
+                <div class="loading-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 19: DAY 7 ==================== -->
+    <section id="page-day7" class="page day-page" data-page="19">
+        <div class="day-container">
+            <div class="day-header">
+                <h1 class="day-title">7 Days of Valentine 💕</h1>
+                <div class="day-counter">Day <span class="day-number">7</span> of 7</div>
+            </div>
+            
+            <div class="day-content">
+                <div class="day-message">
+                    <h2>Day 7: Forever Begins 🌟</h2>
+                    <p class="day-quote">"This isn't an ending, but a beautiful beginning. Today, tomorrow, and always - my heart belongs to you."</p>
+                </div>
+                
+                <div class="day7-special">
+                    <div class="final-photo-container">
+                        <img src="assets/photos/day7.jpg" 
+                             alt="Our Forever" 
+                             class="final-photo blur-photo"
+                             onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"450\" height=\"350\"><rect width=\"100%\" height=\"100%\" fill=\"%23ff4d6d\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"28\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\">Day 7: Forever 🌟</text></svg>'">
+                        <div class="reveal-instruction">
+                            <i class="fas fa-gem"></i> Click for our forever
+                        </div>
+                    </div>
+                    
+                    <div class="final-message">
+                        <p class="forever-text">
+                            "My heart has found its home in you.<br>
+                            Every beat whispers your name.<br>
+                            Every dream includes your smile.<br>
+                            Forever begins with you, Mitthi."
+                        </p>
+                    </div>
+                </div>
+                
+                <button id="to-final-page" class="final-btn">
+                    To My Final Promise <i class="fas fa-heart"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAGE 20: FINAL PAGE ==================== -->
+    <section id="page-final" class="page" data-page="20">
+        <div class="final-container">
+            <div class="final-content">
+                <div class="final-heart">❤️</div>
+                
+                <h1 class="final-title">For My Mitthi ❤️</h1>
+                
+                <div class="final-message">
+                    <p class="love-letter">
+                        My Dearest Mitthi,<br><br>
+                        
+                        This journey was my way of showing you what's in my heart.<br>
+                        Every game, every memory, every word - it all comes down to this:<br><br>
+                        
+                        <span class="highlight">Tu sirf meri hai.</span><br>
+                        <span class="highlight">You are mine, and I am yours.</span><br>
+                        <span class="highlight">Today, tomorrow, and forever.</span><br><br>
+                        
+                        Thank you for being my Valentine.<br>
+                        Thank you for being you.<br><br>
+                        
+                        With all my love,
+                    </p>
+                    
+                    <div class="signature">
+                        <div class="signature-line"></div>
+                        <div class="signature-name">Forever Yours</div>
+                    </div>
+                </div>
+                
+                <div class="final-actions">
+                    <button id="restart-journey" class="action-btn">
+                        <i class="fas fa-redo"></i> Experience Again
+                    </button>
+                    <button id="share-love" class="action-btn share-btn">
+                        <i class="fas fa-share-heart"></i> Share This Love
+                    </button>
+                </div>
+                
+                <div class="final-note">
+                    <i class="fas fa-heart"></i> Made with infinite love for you
+                </div>
+            </div>
+            
+            <div class="heart-rain" id="heart-rain">
+                <!-- Hearts will be generated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SKIP PANEL (Hidden) ==================== -->
+    <div id="skip-panel" class="skip-panel">
+        <div class="skip-header">
+            <h3><i class="fas fa-fast-forward"></i> Jump to Page</h3>
+            <button id="close-skip" class="close-btn">&times;</button>
+        </div>
+        
+        <div class="skip-pages">
+            <div class="skip-section">
+                <h4>Main Flow</h4>
+                <button class="skip-btn" data-page="start">00: Start</button>
+                <button class="skip-btn" data-page="question">01: Valentine Question</button>
+                <button class="skip-btn" data-page="game1">03: Game 1 - Hearts</button>
+                <button class="skip-btn" data-page="maze">05: Game 2 - Maze</button>
+                <button class="skip-btn" data-page="day1">07: Day 1</button>
+                <button class="skip-btn" data-page="song">13: Our Song</button>
+                <button class="skip-btn" data-page="riddle">15: Game 3 - Riddles</button>
+                <button class="skip-btn" data-page="memory">17: Game 4 - Memory</button>
+                <button class="skip-btn" data-page="day7">19: Day 7</button>
+                <button class="skip-btn" data-page="final">20: Final</button>
+            </div>
+            
+            <div class="skip-section">
+                <h4>All Days</h4>
+                <button class="skip-btn" data-page="day1">Day 1</button>
+                <button class="skip-btn" data-page="day2">Day 2</button>
+                <button class="skip-btn" data-page="day3">Day 3</button>
+                <button class="skip-btn" data-page="day4">Day 4</button>
+                <button class="skip-btn" data-page="day5">Day 5</button>
+                <button class="skip-btn" data-page="day6">Day 6</button>
+                <button class="skip-btn" data-page="day7">Day 7</button>
+            </div>
+            
+            <div class="skip-section">
+                <h4>Transitions</h4>
+                <button class="skip-btn" data-page="transition1">Transition 1</button>
+                <button class="skip-btn" data-page="transition2">Transition 2</button>
+                <button class="skip-btn" data-page="transition3">Transition 3</button>
+                <button class="skip-btn" data-page="transition4">Transition 4</button>
+                <button class="skip-btn" data-page="transition5">Transition 5</button>
+                <button class="skip-btn" data-page="transition6">Transition 6</button>
+            </div>
+        </div>
+        
+        <div class="skip-footer">
+            <p><i class="fas fa-info-circle"></i> Triple-click top-left corner to show/hide</p>
+            <button id="refresh-page" class="refresh-btn">
+                <i class="fas fa-sync-alt"></i> Restart Entire Journey
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== LOADING OVERLAY ==================== -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-heart">❤️</div>
+            <h2>Loading Our Love Story...</h2>
+            <div class="loading-spinner"></div>
+            <p>Preparing something special for you, Mitthi</p>
+        </div>
+    </div>
+
+    <!-- ==================== ERROR MESSAGE ==================== -->
+    <div id="error-message" class="error-message">
+        <div class="error-content">
+            <i class="fas fa-heart-broken"></i>
+            <h3>Something went wrong</h3>
+            <p>Don't worry, our love story continues!</p>
+            <button id="refresh-error" class="error-btn">
+                <i class="fas fa-redo"></i> Restart Journey
+            </button>
+        </div>
+    </div>
+
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
