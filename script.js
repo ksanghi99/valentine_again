@@ -1220,7 +1220,7 @@ function selectAnswer(answerIndex) {
         }
         
         // Draw connection line
-        drawSimpleConnection(questionId, answerIndex);
+       // drawSimpleConnection(questionId, answerIndex);
         
         // Update UI
         updateQuestionItem(questionId, 'completed');
@@ -1441,12 +1441,7 @@ function clearQuestionDisplay() {
     document.getElementById('question-hint').style.color = "#888";
 }
 
-function clearConnections() {
-    const visualContainer = document.querySelector('.connection-visual');
-    if (visualContainer) {
-        visualContainer.remove();
-    }
-}
+
 
 function resetMatchGame() {
     initializeMatchGame();
