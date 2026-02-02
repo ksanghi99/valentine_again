@@ -642,53 +642,52 @@
             </div>
         </section>
         
-      <!-- PAGE 21: NOSTALGIC DANCE VIDEO (FIXED) -->
+    <!-- PAGE 21: NOSTALGIC DANCE VIDEO (FIXED - Manual Play Button) -->
 <section id="page21" class="page">
     <div class="page-content">
         <h2>Our First Dance 💃🕺</h2>
         <p class="subtitle">Relive our magical moment...</p>
         
-        <!-- SIMPLE VIDEO PLAYER - No fancy overlays -->
-        <div class="simple-video-player">
-            <video id="nostalgic-video" width="100%" height="450" controls controlsList="nodownload">
-                <!-- Direct MP4 source -->
-                <source src="videos/our-dance.mp4" type="video/mp4">
-                <!-- Fallback message -->
-                <div class="video-fallback">
-                    <i class="fas fa-video-slash"></i>
-                    <h3>Video not loading?</h3>
-                    <p>Please ensure:</p>
-                    <ol>
-                        <li><strong>File exists:</strong> videos/our-dance.mp4</li>
-                        <li><strong>File is valid:</strong> Working MP4 video</li>
-                        <li><strong>File size:</strong> Less than 50MB</li>
-                        <li><strong>Refresh page</strong> after adding video</li>
-                    </ol>
-                    <button class="btn" onclick="reloadVideo()">
-                        <i class="fas fa-sync-alt"></i> Reload Video
-                    </button>
+        <!-- Video Container with Manual Play Button -->
+        <div class="video-container">
+            <div class="video-placeholder" id="video-placeholder">
+                <div class="play-button-large" onclick="playVideoManually()">
+                    <i class="fas fa-play"></i>
                 </div>
-            </video>
+                <div class="play-text">
+                    <i class="fas fa-heart"></i>
+                    <p>Click to play our beautiful memory</p>
+                </div>
+            </div>
             
-            <!-- Simple play prompt -->
-            <div class="video-instruction">
-                <i class="fas fa-play-circle"></i>
-                <p>Click the play button above to watch our beautiful memory</p>
+            <!-- Actual Video (hidden initially) -->
+            <video id="nostalgic-video" width="100%" height="450" controls style="display: none;">
+                <source src="videos/our-dance.mp4" type="video/mp4">
+                Your browser doesn't support video playback.
+            </video>
+        </div>
+        
+        <!-- Video Loading Status -->
+        <div id="video-status" style="margin: 20px auto; max-width: 600px; display: none;">
+            <div class="loading-message" style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                <i class="fas fa-spinner fa-spin" style="color: #e74c89; font-size: 1.5rem;"></i>
+                <span style="color: #e74c89; font-size: 1.2rem;">Loading your beautiful memory...</span>
             </div>
         </div>
         
-        <!-- Video status indicator -->
-        <div id="video-status" class="video-status">
-            <div id="video-loading" style="display: none;">
-                <i class="fas fa-spinner fa-spin"></i> Loading video...
-            </div>
-            <div id="video-error" style="display: none; color: #ff6b6b;">
-                <i class="fas fa-exclamation-triangle"></i> 
-                <span id="error-message">Video loading failed</span>
-            </div>
-            <div id="video-ready" style="display: none; color: #2ecc71;">
-                <i class="fas fa-check-circle"></i> Video ready to play
-            </div>
+        <!-- Error Message -->
+        <div id="video-error" style="display: none; max-width: 600px; margin: 20px auto; padding: 20px; background: #fff9fa; border-radius: 15px; border: 2px solid #ffccd5;">
+            <i class="fas fa-exclamation-triangle" style="color: #ff6b6b; font-size: 2rem; display: block; margin-bottom: 15px;"></i>
+            <h4 style="color: #ff6b6b; margin-bottom: 15px;">Video Loading Issue</h4>
+            <p>Please check:</p>
+            <ol style="text-align: left; margin-left: 20px;">
+                <li>The file <strong>our-dance.mp4</strong> exists in the <strong>videos/</strong> folder</li>
+                <li>Refresh the page (F5) and try again</li>
+                <li>Make sure the video file is a valid MP4</li>
+            </ol>
+            <button class="btn secondary-btn" onclick="retryVideo()" style="margin-top: 20px;">
+                <i class="fas fa-redo"></i> Try Again
+            </button>
         </div>
         
         <!-- Romantic Text -->
@@ -701,9 +700,6 @@
         <div style="text-align:center; margin-top:40px;">
             <button class="btn" onclick="goToPage(22)">
                 Continue to Final Message <i class="fas fa-arrow-right"></i>
-            </button>
-            <button class="btn secondary-btn" onclick="testVideo()" style="margin-top: 10px;">
-                <i class="fas fa-video"></i> Test Video Player
             </button>
         </div>
     </div>
