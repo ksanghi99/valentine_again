@@ -642,7 +642,7 @@
             </div>
         </section>
         
-    <!-- PAGE 21: NOSTALGIC DANCE VIDEO (FIXED - Manual Play Button) -->
+   <!-- PAGE 21: NOSTALGIC DANCE VIDEO (MOV format support) -->
 <section id="page21" class="page">
     <div class="page-content">
         <h2>Our First Dance 💃🕺</h2>
@@ -651,43 +651,70 @@
         <!-- Video Container with Manual Play Button -->
         <div class="video-container">
             <div class="video-placeholder" id="video-placeholder">
-                <div class="play-button-large" onclick="playVideoManually()">
+                <div class="play-button-large" onclick="playMOVVideo()">
                     <i class="fas fa-play"></i>
                 </div>
                 <div class="play-text">
                     <i class="fas fa-heart"></i>
                     <p>Click to play our beautiful memory</p>
+                    <p class="format-note"><small>(MOV format - Works best on Chrome/Safari)</small></p>
                 </div>
             </div>
             
             <!-- Actual Video (hidden initially) -->
             <video id="nostalgic-video" width="100%" height="450" controls style="display: none;">
+                <!-- Try multiple formats for compatibility -->
+                <source src="videos/our-dance.mov" type="video/quicktime">
                 <source src="videos/our-dance.mp4" type="video/mp4">
-                Your browser doesn't support video playback.
+                <source src="videos/our-dance.webm" type="video/webm">
+                
+                <!-- Fallback for unsupported formats -->
+                <div class="video-fallback">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Format not supported</h3>
+                    <p>Your browser doesn't support MOV format. Please:</p>
+                    <ol>
+                        <li>Convert to MP4 using <a href="https://convertio.co/mov-mp4/" target="_blank">online converter</a></li>
+                        <li>Or open in Chrome/Safari which supports MOV</li>
+                        <li>Or <a href="videos/our-dance.mov" download>download the video</a> to watch</li>
+                    </ol>
+                </div>
             </video>
         </div>
         
-        <!-- Video Loading Status -->
-        <div id="video-status" style="margin: 20px auto; max-width: 600px; display: none;">
-            <div class="loading-message" style="display: flex; align-items: center; justify-content: center; gap: 15px;">
-                <i class="fas fa-spinner fa-spin" style="color: #e74c89; font-size: 1.5rem;"></i>
-                <span style="color: #e74c89; font-size: 1.2rem;">Loading your beautiful memory...</span>
+        <!-- Browser Compatibility Note -->
+        <div class="compatibility-note">
+            <i class="fas fa-info-circle"></i>
+            <p><strong>Note:</strong> MOV format works best on <strong>Chrome, Safari, and Edge</strong>. 
+            If video doesn't play, try converting to MP4 or use a different browser.</p>
+        </div>
+        
+        <!-- Video Status -->
+        <div id="video-status" style="display: none; margin: 20px auto; max-width: 600px;">
+            <div class="loading-message">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Loading your beautiful memory...</span>
             </div>
         </div>
         
         <!-- Error Message -->
         <div id="video-error" style="display: none; max-width: 600px; margin: 20px auto; padding: 20px; background: #fff9fa; border-radius: 15px; border: 2px solid #ffccd5;">
             <i class="fas fa-exclamation-triangle" style="color: #ff6b6b; font-size: 2rem; display: block; margin-bottom: 15px;"></i>
-            <h4 style="color: #ff6b6b; margin-bottom: 15px;">Video Loading Issue</h4>
-            <p>Please check:</p>
+            <h4 style="color: #ff6b6b; margin-bottom: 15px;">MOV Format Detected</h4>
+            <p>For best compatibility:</p>
             <ol style="text-align: left; margin-left: 20px;">
-                <li>The file <strong>our-dance.mp4</strong> exists in the <strong>videos/</strong> folder</li>
-                <li>Refresh the page (F5) and try again</li>
-                <li>Make sure the video file is a valid MP4</li>
+                <li><strong>Convert to MP4</strong> using free online tools</li>
+                <li><strong>Try Chrome/Safari</strong> (best MOV support)</li>
+                <li><strong>Download video</strong> to watch locally</li>
             </ol>
-            <button class="btn secondary-btn" onclick="retryVideo()" style="margin-top: 20px;">
-                <i class="fas fa-redo"></i> Try Again
-            </button>
+            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                <button class="btn secondary-btn" onclick="retryVideo()">
+                    <i class="fas fa-redo"></i> Try Anyway
+                </button>
+                <button class="btn" onclick="downloadVideo()">
+                    <i class="fas fa-download"></i> Download Video
+                </button>
+            </div>
         </div>
         
         <!-- Romantic Text -->
@@ -700,6 +727,9 @@
         <div style="text-align:center; margin-top:40px;">
             <button class="btn" onclick="goToPage(22)">
                 Continue to Final Message <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="btn secondary-btn" onclick="testMOVSupport()" style="margin-top: 10px;">
+                <i class="fas fa-video"></i> Check Video Support
             </button>
         </div>
     </div>
