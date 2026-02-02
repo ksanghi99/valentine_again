@@ -13,37 +13,6 @@
         .page { display: none; }
         .page.active { display: flex; }
         .btn { transition: all 0.3s; }
-        
-        /* Video play button styling */
-        .video-play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: rgba(231, 76, 137, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            border: 5px solid white;
-            box-shadow: 0 0 30px rgba(231, 76, 137, 0.8);
-            transition: all 0.3s ease;
-        }
-        
-        .video-play-button:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-            background: rgba(255, 107, 139, 0.9);
-        }
-        
-        .video-play-button i {
-            font-size: 2.5rem;
-            color: white;
-            margin-left: 5px;
-        }
     </style>
 </head>
 <body>
@@ -143,18 +112,14 @@
             </div>
         </section>
         
-        <!-- PAGE 7: GAME 2 - MAZE -->
+        <!-- PAGE 7: GAME 2 - MAZE (COMPLETELY FIXED) -->
         <section id="page7" class="page">
             <div class="page-content">
                 <h2>Love Maze</h2>
                 <p>Guide the pink heart through to reach the green heart</p>
                 
                 <div id="maze-game-container">
-                    <div id="maze-container">
-                        <!-- Maze walls drawn by JavaScript -->
-                        <div id="player">❤️</div>
-                        <div id="end-point">💚</div>
-                    </div>
+                    <canvas id="maze-canvas" width="650" height="500"></canvas>
                 </div>
                 
                 <div class="key-instructions">
@@ -505,28 +470,34 @@
             </div>
         </section>
         
-        <!-- PAGE 21: NOSTALGIC DANCE VIDEO -->
+        <!-- PAGE 21: NOSTALGIC DANCE VIDEO (FIXED) -->
         <section id="page21" class="page">
             <div class="page-content">
                 <h2>Our First Dance 💃🕺</h2>
                 <p class="subtitle">Relive our magical moment...</p>
                 
-                <!-- Video Player with Play Button -->
+                <!-- Video Player with Fallback -->
                 <div class="video-player-container">
                     <div class="video-wrapper">
-                        <video id="nostalgic-video" width="100%" height="450">
-                            <!-- YOUR DANCE VIDEO -->
+                        <video id="nostalgic-video" width="100%" height="450" preload="metadata" controls>
+                            <!-- Multiple video sources for compatibility -->
                             <source src="videos/our-dance.mp4" type="video/mp4">
-                            Your browser doesn't support video
+                            <source src="videos/our-dance.webm" type="video/webm">
+                            <source src="videos/our-dance.ogg" type="video/ogg">
+                            Your browser doesn't support HTML5 video. 
+                            <a href="videos/our-dance.mp4">Download the video</a> instead.
                         </video>
-                        <div class="video-play-button" onclick="playVideo()">
-                            <i class="fas fa-play"></i>
+                        <div class="video-play-overlay" onclick="playVideo()">
+                            <div class="video-play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="video-play-text">Click to play our beautiful memory</div>
                         </div>
                     </div>
                     
                     <div class="video-note">
                         <i class="fas fa-heart"></i>
-                        <p>Click the play button to watch our beautiful memory!</p>
+                        <p>If video doesn't load, make sure <strong>our-dance.mp4</strong> is in the <strong>videos/</strong> folder</p>
                     </div>
                 </div>
                 
@@ -583,40 +554,48 @@
     
     <script src="script.js"></script>
     
-    <!-- Simple fallback navigation -->
+    <!-- Video fallback script -->
     <script>
-        if (typeof goToPage !== 'function') {
-            window.goToPage = function(pageNum) {
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                const page = document.getElementById('page' + pageNum);
-                if (page) page.classList.add('active');
-            };
-        }
-        
         // Video play function
         function playVideo() {
             const video = document.getElementById('nostalgic-video');
-            const playButton = document.querySelector('.video-play-button');
+            const overlay = document.querySelector('.video-play-overlay');
             
-            if (video && playButton) {
-                video.play();
-                playButton.style.display = 'none';
-                video.setAttribute('controls', 'controls');
+            if (video) {
+                video.play().then(() => {
+                    console.log("🎬 Video playing...");
+                    if (overlay) overlay.style.display = 'none';
+                }).catch(error => {
+                    console.error("Video error:", error);
+                    alert("⚠️ Video loading issue. Please check:\n1. Video file exists at videos/our-dance.mp4\n2. File is a valid MP4 video\n3. Refresh the page and try again");
+                });
             }
         }
         
-        // Hide play button when video starts playing
+        // Hide overlay when video starts playing
         document.addEventListener('DOMContentLoaded', function() {
             const video = document.getElementById('nostalgic-video');
-            if (video) {
+            const overlay = document.querySelector('.video-play-overlay');
+            
+            if (video && overlay) {
                 video.addEventListener('play', function() {
-                    const playButton = document.querySelector('.video-play-button');
-                    if (playButton) playButton.style.display = 'none';
+                    overlay.style.display = 'none';
                 });
                 
                 video.addEventListener('pause', function() {
-                    const playButton = document.querySelector('.video-play-button');
-                    if (playButton) playButton.style.display = 'flex';
+                    overlay.style.display = 'flex';
+                });
+                
+                // Check if video can play
+                video.addEventListener('error', function(e) {
+                    console.error("Video loading error:", video.error);
+                    overlay.innerHTML = `
+                        <div class="video-error">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Video not found</p>
+                            <p>Please add <strong>our-dance.mp4</strong> to the <strong>videos/</strong> folder</p>
+                        </div>
+                    `;
                 });
             }
         });
