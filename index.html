@@ -9,165 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .page { display: none; }
-        .page.active { display: flex; }
-        .btn { transition: all 0.3s; }
-        
-        /* Video play button */
-        .video-play-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-        }
-        
-        .video-play-button {
-            width: 100px;
-            height: 100px;
-            background: rgba(231, 76, 137, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            border: 5px solid white;
-            box-shadow: 0 0 40px rgba(231, 76, 137, 0.8);
-            transition: transform 0.3s;
-        }
-        
-        .video-play-button:hover {
-            transform: scale(1.1);
-        }
-        
-        .video-play-button i {
-            font-size: 3rem;
-            color: white;
-            margin-left: 8px;
-        }
-        
-        /* Love Scramble specific */
-        .word-tile {
-            display: inline-block;
-            margin: 8px;
-            padding: 12px 20px;
-            background: linear-gradient(135deg, rgba(255, 182, 193, 0.9), rgba(255, 105, 180, 0.9));
-            border-radius: 15px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #5a3d5c;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            user-select: none;
-        }
-        
-        .word-tile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
-            background: linear-gradient(135deg, rgba(255, 105, 180, 0.9), rgba(255, 182, 193, 0.9));
-        }
-        
-        .word-tile.selected {
-            background: linear-gradient(135deg, #e74c89, #ff6b8b);
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(231, 76, 137, 0.5);
-        }
-        
-        .word-tile.used {
-            opacity: 0.4;
-            cursor: default;
-            transform: none;
-        }
-        
-        .word-tile.used:hover {
-            transform: none;
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
-        }
-        
-        #sentence-area {
-            min-height: 120px;
-            background: linear-gradient(135deg, rgba(255, 250, 250, 0.9), rgba(255, 240, 245, 0.9));
-            border-radius: 20px;
-            border: 3px dashed #ffccd5;
-            padding: 25px;
-            margin: 30px auto;
-            max-width: 800px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            min-height: 100px;
-        }
-        
-        .sentence-word {
-            display: inline-block;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, #ff6b8b, #e74c89);
-            color: white;
-            border-radius: 12px;
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin: 5px;
-            animation: wordAppear 0.5s ease;
-            box-shadow: 0 5px 15px rgba(231, 76, 137, 0.3);
-        }
-        
-        #scramble-area {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 20px;
-            border: 3px solid #ffccd5;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-        }
-        
-        .scramble-stats {
-            display: flex;
-            justify-content: space-between;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            border: 2px solid #ffccd5;
-        }
-        
-        @keyframes wordAppear {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        
-        @keyframes wordSuccess {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .success-flash {
-            animation: successFlash 0.5s ease;
-        }
-        
-        @keyframes successFlash {
-            0%, 100% { background-color: #f8f9fa; }
-            50% { background-color: rgba(46, 204, 113, 0.3); }
-        }
-    </style>
 </head>
 <body>
     <!-- Skip Trigger -->
@@ -323,431 +164,213 @@
             </div>
         </section>
         
-        <!-- PAGE 8: TRANSITION 3 -->
+        <!-- PAGE 8: TRANSITION TO VALENTINE'S WEEK -->
         <section id="page8" class="page">
             <div class="page-content">
                 <img src="https://media.giphy.com/media/OhDXl3VTkxbrO/giphy.gif" alt="Panda with heart" class="gif">
                 <h2>You perfectly arranged my secret desire! ❤️</h2>
-                <p>Now let me share 7 days of our beautiful memories...</p>
+                <p>Now let's celebrate the 7 days of Valentine's Week together...</p>
+                <p>Each day has its own magic and memories!</p>
                 <div class="countdown">Starting in <span id="countdown3">8</span> seconds...</div>
             </div>
         </section>
         
-        <!-- PAGE 9: DAYS INTRO -->
+        <!-- ======================== -->
+        <!-- VALENTINE'S WEEK SECTION -->
+        <!-- ======================== -->
+        
+        <!-- PAGE 9: VALENTINE WEEK HUB -->
         <section id="page9" class="page">
-            <div class="page-content">
-                <h2>7 Days of Our Love</h2>
-                <p>For the next 7 days, I'll share something special each day</p>
-                <div class="day-navigation">
-                    <button class="day-btn active" onclick="goToPage(10)">1</button>
-                    <button class="day-btn" onclick="goToPage(11)">2</button>
-                    <button class="day-btn" onclick="goToPage(12)">3</button>
-                    <button class="day-btn" onclick="goToPage(13)">4</button>
-                    <button class="day-btn" onclick="goToPage(14)">5</button>
-                    <button class="day-btn" onclick="goToPage(15)">6</button>
-                    <button class="day-btn" onclick="goToPage(16)">7</button>
+            <div class="page-content week-hub">
+                <h1>7 Days of Valentine's Week</h1>
+                <p class="week-subtitle">A journey through love, day by day with you</p>
+                
+                <!-- Progress Tracker -->
+                <div class="week-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="week-progress-fill" style="width: 14%"></div>
+                    </div>
+                    <div class="progress-text">Day <span id="current-day">1</span>/7 • <span id="completed-days">0</span> completed</div>
                 </div>
-                <button class="btn" onclick="goToPage(10)">
-                    Start Day 1 <i class="fas fa-calendar-day"></i>
+                
+                <!-- Day Selection Grid -->
+                <div class="week-grid">
+                    <!-- Day 1 -->
+                    <div class="day-card" data-day="1" onclick="goToValentineDay(1)">
+                        <div class="day-icon">🌹</div>
+                        <div class="day-info">
+                            <h3>Rose Day</h3>
+                            <p class="day-date">Feb 7</p>
+                            <p class="day-theme">Where our love bloomed</p>
+                            <div class="day-status" id="day1-status">●○○○○○○</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Day 2 -->
+                    <div class="day-card" data-day="2" onclick="goToValentineDay(2)">
+                        <div class="day-icon">💍</div>
+                        <div class="day-info">
+                            <h3>Propose Day</h3>
+                            <p class="day-date">Feb 8</p>
+                            <p class="day-theme">My forever yes</p>
+                            <div class="day-status" id="day2-status">○○●○○○○</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Day 3 -->
+                    <div class="day-card" data-day="3" onclick="goToValentineDay(3)">
+                        <div class="day-icon">🍫</div>
+                        <div class="day-info">
+                            <h3>Chocolate Day</h3>
+                            <p class="day-date">Feb 9</p>
+                            <p class="day-theme">Sweet moments with you</p>
+                            <div class="day-status" id="day3-status">○○○●○○○</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Day 4 -->
+                    <div class="day-card" data-day="4" onclick="goToValentineDay(4)">
+                        <div class="day-icon">🧸</div>
+                        <div class="day-info">
+                            <h3>Teddy Day</h3>
+                            <p class="day-date">Feb 10</p>
+                            <p class="day-theme">Softness & comfort</p>
+                            <div class="day-status" id="day4-status">○○○○●○○</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Day 5 -->
+                    <div class="day-card" data-day="5" onclick="goToValentineDay(5)">
+                        <div class="day-icon">🤝</div>
+                        <div class="day-info">
+                            <h3>Promise Day</h3>
+                            <p class="day-date">Feb 11</p>
+                            <p class="day-theme">Vows for forever</p>
+                            <div class="day-status" id="day5-status">○○○○○●○</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Day 6 -->
+                    <div class="day-card" data-day="6" onclick="goToValentineDay(6)">
+                        <div class="day-icon">🤗</div>
+                        <div class="day-info">
+                            <h3>Hug Day</h3>
+                            <p class="day-date">Feb 12</p>
+                            <p class="day-theme">Embraces that speak</p>
+                            <div class="day-status" id="day6-status">○○○○○○●</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Day 7 -->
+                    <div class="day-card" data-day="7" onclick="goToValentineDay(7)">
+                        <div class="day-icon">💋</div>
+                        <div class="day-info">
+                            <h3>Kiss Day</h3>
+                            <p class="day-date">Feb 13</p>
+                            <p class="day-theme">Whispers without words</p>
+                            <div class="day-status" id="day7-status">○○○○○○○</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="week-instructions">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Click any day to begin! Complete interactive games and view photos to unlock memories.</p>
+                </div>
+                
+                <button class="btn start-week-btn" onclick="goToValentineDay(1)">
+                    Start with Rose Day <i class="fas fa-heart"></i>
                 </button>
+                
+                <p class="navigation-note">
+                    <i class="fas fa-arrow-right"></i> You can return to this hub anytime from any day
+                </p>
             </div>
         </section>
         
-        <!-- PAGE 10-16: 7 DAYS (Unchanged from before) -->
-        <!-- PAGE 10: DAY 1 -->
-        <section id="page10" class="page">
-            <div class="page-content">
-                <h2><i class="fas fa-calendar"></i> Day 1: Our Beginning</h2>
-                <div class="photo-frame">
-                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 1" class="day-photo">
-                </div>
-                <p>Remember when we first met? Every moment since has been special. My heart knew you were the one from the very first smile.</p>
-                <div class="day-navigation">
-                    <button class="day-btn active" onclick="goToPage(10)">1</button>
-                    <button class="day-btn" onclick="goToPage(11)">2</button>
-                    <button class="day-btn" onclick="goToPage(12)">3</button>
-                    <button class="day-btn" onclick="goToPage(13)">4</button>
-                    <button class="day-btn" onclick="goToPage(14)">5</button>
-                    <button class="day-btn" onclick="goToPage(15)">6</button>
-                    <button class="day-btn" onclick="goToPage(16)">7</button>
-                </div>
-                <button class="btn" onclick="goToPage(17)">
-                    Continue to Riddles <i class="fas fa-arrow-right"></i>
-                </button>
+        <!-- VALENTINE DAY TEMPLATE (Dynamic) -->
+        <section id="valentine-day-container" class="page" style="display:none;">
+            <div class="page-content day-content" id="day-content">
+                <!-- Content loads here dynamically -->
             </div>
         </section>
         
-        <!-- PAGE 11: DAY 2 -->
-        <section id="page11" class="page">
-            <div class="page-content">
-                <h2><i class="fas fa-calendar"></i> Day 2: First Laugh</h2>
-                <div class="photo-frame">
-                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 2" class="day-photo">
-                </div>
-                <p>That joke you told that made me laugh until I cried. Your laughter is music to my ears, and your joy is contagious.</p>
-                <div class="day-navigation">
-                    <button class="day-btn" onclick="goToPage(10)">1</button>
-                    <button class="day-btn active" onclick="goToPage(11)">2</button>
-                    <button class="day-btn" onclick="goToPage(12)">3</button>
-                    <button class="day-btn" onclick="goToPage(13)">4</button>
-                    <button class="day-btn" onclick="goToPage(14)">5</button>
-                    <button class="day-btn" onclick="goToPage(15)">6</button>
-                    <button class="day-btn" onclick="goToPage(16)">7</button>
-                </div>
-                <button class="btn" onclick="goToPage(17)">
-                    Continue to Riddles <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-        
-        <!-- PAGE 12: DAY 3 -->
-        <section id="page12" class="page">
-            <div class="page-content">
-                <h2><i class="fas fa-calendar"></i> Day 3: Our First Adventure</h2>
-                <div class="photo-frame">
-                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 3" class="day-photo">
-                </div>
-                <p>That day we got lost but found something better - more time together. Every adventure with you is my favorite story.</p>
-                <div class="day-navigation">
-                    <button class="day-btn" onclick="goToPage(10)">1</button>
-                    <button class="day-btn" onclick="goToPage(11)">2</button>
-                    <button class="day-btn active" onclick="goToPage(12)">3</button>
-                    <button class="day-btn" onclick="goToPage(13)">4</button>
-                    <button class="day-btn" onclick="goToPage(14)">5</button>
-                    <button class="day-btn" onclick="goToPage(15)">6</button>
-                    <button class="day-btn" onclick="goToPage(16)">7</button>
-                </div>
-                <button class="btn" onclick="goToPage(17)">
-                    Continue to Riddles <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-        
-        <!-- PAGE 13: DAY 4 -->
-        <section id="page13" class="page">
-            <div class="page-content">
-                <h2><i class="fas fa-calendar"></i> Day 4: Quiet Moments</h2>
-                <div class="photo-frame">
-                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 4" class="day-photo">
-                </div>
-                <p>Just sitting together, not saying a word, but feeling completely connected. Our silence speaks louder than words ever could.</p>
-                <div class="day-navigation">
-                    <button class="day-btn" onclick="goToPage(10)">1</button>
-                    <button class="day-btn" onclick="goToPage(11)">2</button>
-                    <button class="day-btn" onclick="goToPage(12)">3</button>
-                    <button class="day-btn active" onclick="goToPage(13)">4</button>
-                    <button class="day-btn" onclick="goToPage(14)">5</button>
-                    <button class="day-btn" onclick="goToPage(15)">6</button>
-                    <button class="day-btn" onclick="goToPage(16)">7</button>
-                </div>
-                <button class="btn" onclick="goToPage(17)">
-                    Continue to Riddles <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-        
-        <!-- PAGE 14: DAY 5 -->
-        <section id="page14" class="page">
-            <div class="page-content">
-                <h2><i class="fas fa-calendar"></i> Day 5: That Song</h2>
-                <div class="photo-frame">
-                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 5" class="day-photo">
-                </div>
-                <p>The song that was playing when we first danced. It's our song now, and every time I hear it, I'm dancing with you in my heart.</p>
-                <div class="day-navigation">
-                    <button class="day-btn" onclick="goToPage(10)">1</button>
-                    <button class="day-btn" onclick="goToPage(11)">2</button>
-                    <button class="day-btn" onclick="goToPage(12)">3</button>
-                    <button class="day-btn" onclick="goToPage(13)">4</button>
-                    <button class="day-btn active" onclick="goToPage(14)">5</button>
-                    <button class="day-btn" onclick="goToPage(15)">6</button>
-                    <button class="day-btn" onclick="goToPage(16)">7</button>
-                </div>
-                <button class="btn" onclick="goToPage(17)">
-                    Continue to Riddles <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-        
-        <!-- PAGE 15: DAY 6 -->
-        <section id="page15" class="page">
-            <div class="page-content">
-                <h2><i class="fas fa-calendar"></i> Day 6: Your Smile</h2>
-                <div class="photo-frame">
-                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 6" class="day-photo">
-                </div>
-                <p>Your smile is my favorite thing in the world. It brightens even my darkest days and makes everything feel right.</p>
-                <div class="day-navigation">
-                    <button class="day-btn" onclick="goToPage(10)">1</button>
-                    <button class="day-btn" onclick="goToPage(11)">2</button>
-                    <button class="day-btn" onclick="goToPage(12)">3</button>
-                    <button class="day-btn" onclick="goToPage(13)">4</button>
-                    <button class="day-btn" onclick="goToPage(14)">5</button>
-                    <button class="day-btn active" onclick="goToPage(15)">6</button>
-                    <button class="day-btn" onclick="goToPage(16)">7</button>
-                </div>
-                <button class="btn" onclick="goToPage(17)">
-                    Continue to Riddles <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-        
-        <!-- PAGE 16: DAY 7 -->
-        <section id="page16" class="page">
-            <div class="page-content">
-                <h2><i class="fas fa-calendar"></i> Day 7: Today & Forever</h2>
-                <div class="photo-frame">
-                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=600&h=400&fit=crop" alt="Day 7" class="day-photo">
-                </div>
-                <p>Every day with you is a blessing. I can't wait for all our tomorrows, because forever with you isn't long enough.</p>
-                <div class="day-navigation">
-                    <button class="day-btn" onclick="goToPage(10)">1</button>
-                    <button class="day-btn" onclick="goToPage(11)">2</button>
-                    <button class="day-btn" onclick="goToPage(12)">3</button>
-                    <button class="day-btn" onclick="goToPage(13)">4</button>
-                    <button class="day-btn" onclick="goToPage(14)">5</button>
-                    <button class="day-btn" onclick="goToPage(15)">6</button>
-                    <button class="day-btn active" onclick="goToPage(16)">7</button>
-                </div>
-                <button class="btn" onclick="goToPage(17)">
-                    Continue to Riddles <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-        
-        <!-- PAGE 17: TRANSITION 4 -->
+        <!-- PAGE 17: TRANSITION FROM WEEK TO VIDEO -->
         <section id="page17" class="page">
             <div class="page-content">
                 <img src="https://media.giphy.com/media/yjvfyJN1regrQLDxGl/giphy.gif" alt="Panda with heart" class="gif">
-                <h2>Love Riddles Time!</h2>
-                <p>Solve these riddles about love and us!</p>
-                <div class="countdown">Starting in <span id="countdown4">8</span> seconds...</div>
+                <h2>You've completed Valentine's Week! 💖</h2>
+                <p>You've collected all our beautiful memories from Rose Day to Kiss Day!</p>
+                <p>Now, let's relive one of our most special moments together...</p>
+                <div class="countdown">Our dance video in <span id="countdown4">8</span> seconds...</div>
             </div>
         </section>
         
-        <!-- PAGE 18: GAME 3 - RIDDLES -->
+        <!-- PAGE 18: NOSTALGIC DANCE VIDEO -->
         <section id="page18" class="page">
             <div class="page-content">
-                <h2>Love Riddles <span id="riddle-number">1</span>/10</h2>
+                <h2>Our First Dance 💃🕺</h2>
+                <p class="subtitle">Relive our magical moment...</p>
                 
-                <div class="love-bar-container">
-                    <div class="love-bar-label">Love Progress:</div>
-                    <div class="love-bar">
-                        <div class="love-fill" id="love-fill-3" style="width: 0%"></div>
+                <!-- Simple Video Container -->
+                <div class="video-container-simple">
+                    <div class="video-wrapper">
+                        <video id="nostalgic-video" controls playsinline>
+                            <source src="videos/our-dance.mp4" type="video/mp4">
+                            <source src="videos/our-dance.mov" type="video/quicktime">
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                        <!-- Play Button Overlay -->
+                        <div class="video-overlay" id="video-overlay">
+                            <div class="play-button" onclick="playVideo()">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <p>Click to play our beautiful memory</p>
+                        </div>
                     </div>
-                    <div class="love-percent" id="love-percent-3">0%</div>
                 </div>
                 
-                <div class="riddle-box">
-                    <p id="riddle-text">Loading question...</p>
-                    <div class="options-container" id="options-container">
-                        <!-- Options appear here -->
-                    </div>
+                <!-- Video Controls -->
+                <div class="video-controls">
+                    <button class="btn secondary-btn" onclick="toggleVideo()" id="play-pause-btn">
+                        <i class="fas fa-play"></i> Play
+                    </button>
+                    <button class="btn secondary-btn" onclick="restartVideo()">
+                        <i class="fas fa-redo"></i> Restart
+                    </button>
+                    <button class="btn" onclick="goToPage(19)">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
                 
-                <button class="btn secondary-btn" onclick="showHint()" id="hint-btn">
-                    Need a hint? <i class="fas fa-lightbulb"></i>
-                </button>
+                <!-- Romantic Note -->
+                <div class="love-note">
+                    <p>"That awkward, perfect dance where we stepped on each other's feet more times than we count... 
+                    and I wouldn't change a single moment of it. You were, and always will be, my perfect dance partner."</p>
+                    <p class="signature">— Forever your dance partner</p>
+                </div>
             </div>
         </section>
         
-        <!-- PAGE 19: TRANSITION 5 -->
+        <!-- PAGE 19: FINAL MESSAGE -->
         <section id="page19" class="page">
-            <div class="page-content">
-                <img src="https://media.giphy.com/media/ZqihO0jGDKc8SJYmRB/giphy.gif" class="gif">
-                <h2>Great thinking! ❤️</h2>
-                <p>Now for our final game - test your memory!</p>
-                <div class="countdown">Starting in <span id="countdown5">8</span> seconds...</div>
-            </div>
-        </section>
-        
-        <!-- PAGE 20: GAME 4 - LOVE STORY MATCH -->
-        <section id="page20" class="page">
-            <div class="page-content">
-                <h2>Match Our Love Stories 💖</h2>
-                <p>Connect each memory with its beautiful answer</p>
-                
-                <div class="love-bar-container">
-                    <div class="love-bar-label">Memories Matched: <span id="connected-count">0</span>/8</div>
-                    <div class="love-bar">
-                        <div class="love-fill" id="love-fill-4" style="width: 0%"></div>
-                    </div>
-                    <div class="love-percent" id="love-percent-4">0%</div>
-                </div>
-                
-                <!-- Current Question Display -->
-                <div class="current-question-display" id="current-question-display">
-                    <div class="question-prompt">
-                        <i class="fas fa-heart question-icon"></i>
-                        <span id="current-question-text">Click a question number to begin</span>
-                    </div>
-                    <div class="question-hint" id="question-hint"></div>
-                </div>
-
-                <!-- Picture Display -->
-                <div class="picture-display-container">
-                    <div class="picture-placeholder" id="picture-placeholder">
-                        <i class="fas fa-heart"></i>
-                        <span>Select a memory to see its picture</span>
-                    </div>
-                    
-                    <img src="" alt="Our Beautiful Memory" class="memory-picture" id="memory-picture">
-                    
-                    <div class="picture-caption" id="picture-caption">
-                        Click a question number to see its picture!
-                    </div>
-                </div>
-                
-                <div class="hint-box" id="hint-box" style="display: none;">
-                    <i class="fas fa-lightbulb"></i> 
-                    <span id="hint-text">Need help? Try again!</span>
-                </div>
-                
-                <div class="love-match-game" id="love-match-game">
-                    <div class="match-column questions-column">
-                        <h3><i class="fas fa-question-circle"></i> Memories</h3>
-                        <div class="match-items" id="question-items">
-                            <!-- Questions will be added by JS -->
-                        </div>
-                    </div>
-                    
-                    <div class="match-column answers-column">
-                        <h3><i class="fas fa-star"></i> Answers</h3>
-                        <div class="match-items" id="answer-items">
-                            <!-- Answers will be added by JS -->
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="romantic-reveal-popup" id="romantic-reveal-popup">
-                    <div class="reveal-content">
-                        <button class="close-reveal" onclick="closeReveal()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        <div class="reveal-icon" id="reveal-icon">💖</div>
-                        <div class="reveal-title">Memory Matched! 💘</div>
-                        <div class="reveal-message" id="reveal-message"></div>
-                        <div class="reveal-footer">Our love story continues...</div>
-                    </div>
-                </div>
-                
-                <div class="game-controls">
-                    <button class="btn" onclick="resetMatchGame()">
-                        <i class="fas fa-redo"></i> Reset Game
-                    </button>
-                    <button class="btn secondary-btn" onclick="goToPage(21)" id="match-next-btn" style="display:none;">
-                        Continue to Video <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-        </section>
-        
-   <!-- PAGE 21: NOSTALGIC DANCE VIDEO (MOV format support) -->
-<section id="page21" class="page">
-    <div class="page-content">
-        <h2>Our First Dance 💃🕺</h2>
-        <p class="subtitle">Relive our magical moment...</p>
-        
-        <!-- Video Container with Manual Play Button -->
-        <div class="video-container">
-            <div class="video-placeholder" id="video-placeholder">
-                <div class="play-button-large" onclick="playMOVVideo()">
-                    <i class="fas fa-play"></i>
-                </div>
-                <div class="play-text">
-                    <i class="fas fa-heart"></i>
-                    <p>Click to play our beautiful memory</p>
-                    <p class="format-note"><small>(MOV format - Works best on Chrome/Safari)</small></p>
-                </div>
-            </div>
-            
-            <!-- Actual Video (hidden initially) -->
-            <video id="nostalgic-video" width="100%" height="450" controls style="display: none;">
-                <!-- Try multiple formats for compatibility -->
-                <source src="videos/our-dance.mov" type="video/quicktime">
-                <source src="videos/our-dance.mp4" type="video/mp4">
-                <source src="videos/our-dance.webm" type="video/webm">
-                
-                <!-- Fallback for unsupported formats -->
-                <div class="video-fallback">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h3>Format not supported</h3>
-                    <p>Your browser doesn't support MOV format. Please:</p>
-                    <ol>
-                        <li>Convert to MP4 using <a href="https://convertio.co/mov-mp4/" target="_blank">online converter</a></li>
-                        <li>Or open in Chrome/Safari which supports MOV</li>
-                        <li>Or <a href="videos/our-dance.mov" download>download the video</a> to watch</li>
-                    </ol>
-                </div>
-            </video>
-        </div>
-        
-        <!-- Browser Compatibility Note -->
-        <div class="compatibility-note">
-            <i class="fas fa-info-circle"></i>
-            <p><strong>Note:</strong> MOV format works best on <strong>Chrome, Safari, and Edge</strong>. 
-            If video doesn't play, try converting to MP4 or use a different browser.</p>
-        </div>
-        
-        <!-- Video Status -->
-        <div id="video-status" style="display: none; margin: 20px auto; max-width: 600px;">
-            <div class="loading-message">
-                <i class="fas fa-spinner fa-spin"></i>
-                <span>Loading your beautiful memory...</span>
-            </div>
-        </div>
-        
-        <!-- Error Message -->
-        <div id="video-error" style="display: none; max-width: 600px; margin: 20px auto; padding: 20px; background: #fff9fa; border-radius: 15px; border: 2px solid #ffccd5;">
-            <i class="fas fa-exclamation-triangle" style="color: #ff6b6b; font-size: 2rem; display: block; margin-bottom: 15px;"></i>
-            <h4 style="color: #ff6b6b; margin-bottom: 15px;">MOV Format Detected</h4>
-            <p>For best compatibility:</p>
-            <ol style="text-align: left; margin-left: 20px;">
-                <li><strong>Convert to MP4</strong> using free online tools</li>
-                <li><strong>Try Chrome/Safari</strong> (best MOV support)</li>
-                <li><strong>Download video</strong> to watch locally</li>
-            </ol>
-            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
-                <button class="btn secondary-btn" onclick="retryVideo()">
-                    <i class="fas fa-redo"></i> Try Anyway
-                </button>
-                <button class="btn" onclick="downloadVideo()">
-                    <i class="fas fa-download"></i> Download Video
-                </button>
-            </div>
-        </div>
-        
-        <!-- Romantic Text -->
-        <div class="love-note">
-            <p>"That awkward, perfect dance where we stepped on each other's feet more times than we count... 
-            and I wouldn't change a single moment of it. You were, and always will be, my perfect dance partner."</p>
-            <p class="signature">— Forever your dance partner</p>
-        </div>
-        
-        <div style="text-align:center; margin-top:40px;">
-            <button class="btn" onclick="goToPage(22)">
-                Continue to Final Message <i class="fas fa-arrow-right"></i>
-            </button>
-            <button class="btn secondary-btn" onclick="testMOVSupport()" style="margin-top: 10px;">
-                <i class="fas fa-video"></i> Check Video Support
-            </button>
-        </div>
-    </div>
-</section>
-        <!-- PAGE 22: FINAL MESSAGE -->
-        <section id="page22" class="page">
             <div class="page-content">
                 <div class="heart-icon">💖</div>
                 <h2>My Dearest Mithi,</h2>
                 <div class="love-letter">
-                    <p>You've completed this beautiful journey through our love story.</p>
-                    <p>Every game, every page, every moment was created with love, just for you.</p>
+                    <p>You've completed this beautiful journey through Valentine's Week and our love story.</p>
+                    <p>Every game, every photo, every memory was created with love, just for you.</p>
+                    <p>From Rose Day to our dance, every moment reminded me why I love you so much.</p>
                     <p>You are my everything - my joy, my peace, my greatest love story.</p>
                     <p>Thank you for being you. Thank you for being mine.</p>
                     <p class="signature">Forever yours,<br>With all my love ❤️</p>
                 </div>
                 <button class="btn" onclick="goToPage(1)">
                     Start Over <i class="fas fa-heart"></i>
+                </button>
+                <button class="btn secondary-btn" onclick="goToPage(9)">
+                    <i class="fas fa-calendar"></i> Revisit Valentine's Week
                 </button>
                 <p class="final-note">This website will remain here forever, just like my love for you.</p>
             </div>
@@ -771,38 +394,5 @@
     </div>
     
     <script src="script.js"></script>
-    
-    <!-- Video fallback script -->
-    <script>
-        function playVideo() {
-            const video = document.getElementById('nostalgic-video');
-            const overlay = document.querySelector('.video-play-overlay');
-            
-            if (video) {
-                video.play().then(() => {
-                    console.log("🎬 Video playing...");
-                    if (overlay) overlay.style.display = 'none';
-                }).catch(error => {
-                    console.error("Video error:", error);
-                    alert("⚠️ Video loading issue. Please check:\n1. Video file exists at videos/our-dance.mp4\n2. File is a valid MP4 video\n3. Refresh the page and try again");
-                });
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const video = document.getElementById('nostalgic-video');
-            const overlay = document.querySelector('.video-play-overlay');
-            
-            if (video && overlay) {
-                video.addEventListener('play', function() {
-                    overlay.style.display = 'none';
-                });
-                
-                video.addEventListener('pause', function() {
-                    overlay.style.display = 'flex';
-                });
-            }
-        });
-    </script>
 </body>
 </html>
