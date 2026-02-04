@@ -1,6 +1,6 @@
 /* ============================================
    VALENTINE SURPRISE - COMPLETE JAVASCRIPT
-   GAME 2: LOVE SCRAMBLE (replaces Maze)
+   UPDATED: Annoying NO button and removed Memory boxes
    ============================================ */
 
 console.log("💝 Valentine Surprise Started!");
@@ -10,6 +10,8 @@ console.log("💝 Valentine Surprise Started!");
 // ======================
 let currentPage = 1;
 let autoTransitionTimers = [];
+let noButtonInterval = null;
+let noButtonPosition = { x: 50, y: 50 }; // Starting position
 
 // Game 1: Tap Hearts
 let heartsCollected = 0;
@@ -249,6 +251,12 @@ function goToPage(pageNumber) {
     stopGame1();
     stopScrambleTimer();
     
+    // Stop NO button movement if leaving page 2
+    if (pageNumber !== 2 && noButtonInterval) {
+        clearInterval(noButtonInterval);
+        noButtonInterval = null;
+    }
+    
     // Hide all pages
     const allPages = document.querySelectorAll('.page');
     allPages.forEach(page => {
@@ -275,6 +283,11 @@ function initializePage(pageNumber) {
     console.log("Initializing page", pageNumber);
     
     switch(pageNumber) {
+        case 2: // Question page - setup annoying NO button
+            setTimeout(() => {
+                setupAnnoyingNoButton();
+            }, 100);
+            break;
         case 3: // Transition 1
             startAutoTransition(8, 4, 'countdown1');
             break;
@@ -313,71 +326,6 @@ function initializePage(pageNumber) {
     }
 }
 
-
-// ======================
-// ANNOYING NO BUTTON FUNCTIONALITY
-// ======================
-
-function setupAnnoyingNoButton() {
-    const noButton = document.getElementById('floating-no-btn');
-    if (!noButton) return;
-    
-    // Reset position
-    noButtonPosition = { x: 50, y: 50 };
-    updateNoButtonPosition();
-    
-    // Set up click event
-    noButton.onclick = function() {
-        showToast("Nice try! But you can't catch me that easily! 😜");
-        moveNoButtonAway();
-    };
-    
-    // Start moving the button randomly
-    if (noButtonInterval) {
-        clearInterval(noButtonInterval);
-    }
-    
-    noButtonInterval = setInterval(() => {
-        moveNoButtonRandomly();
-    }, 1500); // Move every 1.5 seconds
-}
-
-function moveNoButtonRandomly() {
-    // Generate random position (within bounds)
-    const newX = 20 + Math.random() * 60; // 20% to 80%
-    const newY = 20 + Math.random() * 60; // 20% to 80%
-    
-    noButtonPosition = { x: newX, y: newY };
-    updateNoButtonPosition();
-}
-
-function moveNoButtonAway() {
-    // Move button away from current position
-    const directionX = Math.random() > 0.5 ? 1 : -1;
-    const directionY = Math.random() > 0.5 ? 1 : -1;
-    
-    const newX = Math.max(10, Math.min(90, noButtonPosition.x + (directionX * 20)));
-    const newY = Math.max(10, Math.min(90, noButtonPosition.y + (directionY * 20)));
-    
-    noButtonPosition = { x: newX, y: newY };
-    updateNoButtonPosition();
-}
-
-function updateNoButtonPosition() {
-    const noButton = document.getElementById('floating-no-btn');
-    if (noButton) {
-        noButton.style.position = 'absolute';
-        noButton.style.left = `${noButtonPosition.x}%`;
-        noButton.style.top = `${noButtonPosition.y}%`;
-        noButton.style.transform = 'translate(-50%, -50%)';
-        noButton.style.transition = 'left 0.5s ease, top 0.5s ease';
-        noButton.style.zIndex = '100';
-    }
-}
-
-
-
-
 function startAutoTransition(seconds, nextPage, countdownId) {
     let countdown = seconds;
     const countdownElement = document.getElementById(countdownId);
@@ -404,6 +352,76 @@ function clearAllAutoTimers() {
         if (timerObj.timer) clearInterval(timerObj.timer);
     });
     autoTransitionTimers = [];
+}
+
+// ======================
+// ANNOYING NO BUTTON FUNCTIONALITY
+// ======================
+
+function setupAnnoyingNoButton() {
+    const noButton = document.getElementById('floating-no-btn');
+    if (!noButton) return;
+    
+    // Reset position
+    noButtonPosition = { x: 50, y: 50 };
+    updateNoButtonPosition();
+    
+    // Set up click event
+    noButton.onclick = function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        showToast("Nice try! But you can't catch me that easily! 😜");
+        moveNoButtonAway();
+        return false;
+    };
+    
+    // Start moving the button randomly
+    if (noButtonInterval) {
+        clearInterval(noButtonInterval);
+    }
+    
+    noButtonInterval = setInterval(() => {
+        moveNoButtonRandomly();
+    }, 1500); // Move every 1.5 seconds
+    
+    // Also move on mouse hover
+    noButton.addEventListener('mouseenter', function() {
+        moveNoButtonAway();
+    });
+}
+
+function moveNoButtonRandomly() {
+    // Generate random position (within bounds)
+    const newX = 20 + Math.random() * 60; // 20% to 80%
+    const newY = 20 + Math.random() * 60; // 20% to 80%
+    
+    noButtonPosition = { x: newX, y: newY };
+    updateNoButtonPosition();
+}
+
+function moveNoButtonAway() {
+    // Move button away from current position
+    const directionX = Math.random() > 0.5 ? 1 : -1;
+    const directionY = Math.random() > 0.5 ? 1 : -1;
+    
+    const newX = Math.max(10, Math.min(90, noButtonPosition.x + (directionX * 30)));
+    const newY = Math.max(10, Math.min(90, noButtonPosition.y + (directionY * 30)));
+    
+    noButtonPosition = { x: newX, y: newY };
+    updateNoButtonPosition();
+}
+
+function updateNoButtonPosition() {
+    const noButton = document.getElementById('floating-no-btn');
+    if (noButton) {
+        noButton.style.position = 'absolute';
+        noButton.style.left = `${noButtonPosition.x}%`;
+        noButton.style.top = `${noButtonPosition.y}%`;
+        noButton.style.transform = 'translate(-50%, -50%)';
+        noButton.style.transition = 'left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        noButton.style.zIndex = '1000';
+        noButton.style.cursor = 'pointer';
+    }
 }
 
 // ======================
@@ -1247,34 +1265,6 @@ function updateSkipPanel() {
 }
 
 // ======================
-// PAGE 2: FUNNY NO BUTTON
-// ======================
-
-function funnyNo() {
-    const messages = [
-        "Are you sure? 🥺",
-        "Think about it again! 💖",
-        "Pretty please? 🥰",
-        "I'll wait forever for you! ⏳",
-        "Try the YES button! 😊",
-        "My heart says you mean YES! ❤️",
-        "Let's try that again... 😉",
-        "You know you want to say YES! 💕"
-    ];
-    
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    
-    const messageDiv = document.createElement('div');
-    messageDiv.textContent = randomMessage;
-    messageDiv.className = 'floating-message';
-    
-    document.body.appendChild(messageDiv);
-    setTimeout(() => {
-        if (messageDiv.parentNode) messageDiv.remove();
-    }, 2000);
-}
-
-// ======================
 // INITIALIZATION
 // ======================
 
@@ -1285,7 +1275,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Expose functions to global scope
     window.goToPage = goToPage;
-    // Removed: window.funnyNo = funnyNo; (since we removed the function)
     window.useHint = useHint;
     window.checkScramble = checkScramble;
     window.resetScramble = resetScramble;
