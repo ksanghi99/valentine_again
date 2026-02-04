@@ -689,7 +689,7 @@ p {
     opacity: 1;
 }
 
-/* Content Sections */
+/* Content Sections - UPDATED: Only Special Message Section */
 .content-section {
     max-width: 800px;
     margin: 40px auto;
@@ -700,14 +700,11 @@ p {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.memory-section {
-    border-color: #ffccd5;
-    background: linear-gradient(135deg, #fff9fa, #ffeef1);
-}
+/* REMOVED: .memory-section and .promise-section */
 
-.promise-section {
-    border-color: #a8e6cf;
-    background: linear-gradient(135deg, #f0fff4, #e6fff7);
+.special-message-section {
+    border-color: #e74c89;
+    background: linear-gradient(135deg, #fff9fa, #ffeef1);
 }
 
 .section-title {
@@ -720,12 +717,8 @@ p {
     gap: 15px;
 }
 
-.memory-section .section-title {
+.special-message-section .section-title {
     color: #e74c89;
-}
-
-.promise-section .section-title {
-    color: #2ecc71;
 }
 
 .section-content {
@@ -735,12 +728,8 @@ p {
     text-align: left;
 }
 
-.memory-section .section-content {
+.special-message-section .section-content {
     color: #5a3d5c;
-}
-
-.promise-section .section-content {
-    color: #2c3e50;
 }
 
 /* Day Progress */
